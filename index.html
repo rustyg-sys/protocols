@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GCTC EMS Protocols</title>
+    
+    <!-- Mobile App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="GCTC EMS">
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="icon" type="image/png" href="icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GCTC EMS">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -149,7 +152,11 @@
             padding-left: 1.5rem;
         }
         .protocol-content li {
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        .protocol-content ul {
+            list-style-type: disc;
         }
         .protocol-content p {
             margin-bottom: 0.75rem;
@@ -170,8 +177,8 @@
             font-weight: bold;
         }
         .highlight-box {
-            background-color: #fef3c7; /* light yellow */
-            border-left: 4px solid #f59e0b; /* amber */
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
             padding: 1rem;
             margin-bottom: 1rem;
             border-radius: 0.25rem;
@@ -279,13 +286,13 @@
                         <div class="protocol-content">
                             <div class="highlight-box">
                                 <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                                <ol>
-                                    <li>Assessment: Scene Safety, Protective Equipment, Primary Survey, Secondary Survey (when appropriate)</li>
-                                    <li>Primary Survey Care: Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation (Dysrhythmia care? Rate control? Hypotension care?)</li>
-                                    <li>Minimize scene time in critical case unless working cardiac arrest</li>
-                                    <li>Enroute Care: Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
-                                    <li>Hospital per destination protocol.</li>
-                                </ol>
+                                <ul>
+                                    <li><strong>Assessment:</strong> Scene Safety, Protective Equipment, Primary Survey, Secondary Survey (when appropriate)</li>
+                                    <li><strong>Primary Survey Care:</strong> Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation (Dysrhythmia care? Rate control? Hypotension care?)</li>
+                                    <li><strong>Minimize scene time</strong> in critical case unless working cardiac arrest</li>
+                                    <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
+                                    <li><strong>Hospital</strong> per destination protocol</li>
+                                </ul>
                             </div>
                             <p>In general, approach the assessment of medical (non-trauma) patients, in A-B-C order:</p>
                             <ul>
@@ -354,19 +361,19 @@
                         <div class="protocol-content">
                             <div class="highlight-box">
                                 <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                                <ol>
-                                    <li>Assessment: Scene Safety, Protective Equipment, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey.</li>
-                                    <li>Primary Survey Care: Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax.</li>
-                                    <li>Minimize scene time in critical case.</li>
-                                    <li>Enroute Care: Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia.</li>
-                                    <li>Hospital per destination protocol.</li>
-                                </ol>
+                                <ul>
+                                    <li><strong>Assessment:</strong> Scene Safety, Protective Equipment, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey</li>
+                                    <li><strong>Primary Survey Care:</strong> Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax</li>
+                                    <li><strong>Minimize scene time</strong> in critical case</li>
+                                    <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
+                                    <li><strong>Hospital</strong> per destination protocol</li>
+                                </ul>
                             </div>
                             <p>Before entering any trauma scene, ensure your personal safety. Do not attempt patient contact until hazards can be appropriately mitigated.</p>
                             
                             <h3>The Primary Survey</h3>
                             <p>Designed to rapidly identify life-threatening injuries. Should be completed within 2 minutes of patient contact. ONLY INTERRUPTED FOR LIFE-THREATENING ARTERIAL BLEEDING, AIRWAY OBSTRUCTION, OR RESPIRATORY/CARDIAC ARREST.</p>
-                            <ol>
+                            <ul>
                                 <li>Manually stabilize cervical spine while assessing airway and level of consciousness.</li>
                                 <li>Evaluate breathing - present? rapid? normal? slow? shallow?</li>
                                 <li>Evaluate circulation - carotid and radial pulses? Control external hemorrhage.</li>
@@ -376,7 +383,7 @@
                                 <li>Auscultate the chest for breath sounds in mid-axilla bilaterally - present? equal?</li>
                                 <li>Exam the abdomen and pelvis for DCAP-BLS.</li>
                                 <li>Exam the extremities for DCAP-BLS, and pulse, movement, sensation.</li>
-                            </ol>
+                            </ul>
 
                             <div class="bg-red-100 border-l-4 border-red-500 p-4 my-4 rounded">
                                 <p class="font-bold text-red-700 m-0">LOAD & GO PATIENTS:</p>
@@ -385,21 +392,21 @@
 
                             <h3>The Secondary Survey</h3>
                             <p>Always done enroute on critical patients. If no critical conditions found, may be conducted on scene (complete within 5 minutes after primary survey).</p>
-                            <ol>
+                            <ul>
                                 <li>Obtain vital signs (pulse, respiratory rate, BP, pulse oximetry).</li>
                                 <li>Obtain history of traumatic event and pertinent medical history (allergies, medications, past illness, last oral intake).</li>
                                 <li>Head to toe exam look for "DCAP-BLS" in every body area. Calculate GCS score.</li>
                                 <li>Perform indicated bandaging and splinting.</li>
-                            </ol>
+                            </ul>
 
                             <h3>The Reassessment Survey</h3>
                             <p>Abbreviated exam after interventions; done at least every five minutes for critical patients.</p>
-                            <ol>
+                            <ul>
                                 <li>Repeat the primary survey.</li>
                                 <li>Repeat vital signs and GCS calculation.</li>
                                 <li>Check every intervention (proper placement of intubation? IV/IO?).</li>
                                 <li>Check results of every intervention (improved oxygenation/BP?).</li>
-                            </ol>
+                            </ul>
                         </div>
                     `
                 },
@@ -410,11 +417,11 @@
                         <div class="protocol-content">
                             <div class="highlight-box">
                                 <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                                <ol>
-                                    <li>Assessment: SCENE SAFETY, PROTECTIVE EQUIPMENT, ABCs unless cardiac arrest (CAB if cardiac arrest), Early vital signs, Get best history possible.</li>
-                                    <li>Evaluate/treat underlying medical cause per protocol(s).</li>
-                                    <li>Early transport & ED notification for patients with time sensitive conditions (Resp Failure, STEMI, Stroke).</li>
-                                </ol>
+                                <ul>
+                                    <li><strong>Assessment:</strong> SCENE SAFETY, PROTECTIVE EQUIPMENT, ABCs unless cardiac arrest (CAB if cardiac arrest), Early vital signs, Get best history possible</li>
+                                    <li><strong>Evaluate/treat</strong> underlying medical cause per protocol(s)</li>
+                                    <li><strong>Early transport & ED notification</strong> for patients with time sensitive conditions (Resp Failure, STEMI, Stroke)</li>
+                                </ul>
                             </div>
 
                             <h3>Provider Level Actions</h3>
@@ -422,28 +429,28 @@
                             <ul>
                                 <li><strong>EMD:</strong> Questions to address scene safety issues.</li>
                                 <li><strong>EMR / EMT:</strong> 
-                                    <ul class="list-disc ml-4 mt-2">
-                                        <li>Airway Management / Support Oxygenation/Ventilation.</li>
-                                        <li>Obtain Vital Signs.</li>
-                                        <li>Apply Cardiac Monitor / Obtain 12-Lead ECG (when indicated & equipped).</li>
-                                        <li>Transmit 12-Lead ECG to receiving hospital.</li>
-                                        <li>Monitor End-Tidal CO2 & Waveform Capnography (*Mandatory if pt intubated).</li>
-                                        <li>Assist Pt with Pt's own medication if directed by protocol.</li>
-                                        <li>Determine blood glucose / treat hypoglycemia per protocol.</li>
+                                    <ul class="mt-2">
+                                        <li>Airway Management / Support Oxygenation/Ventilation</li>
+                                        <li>Obtain Vital Signs</li>
+                                        <li>Apply Cardiac Monitor / Obtain 12-Lead ECG (when indicated & equipped)</li>
+                                        <li>Transmit 12-Lead ECG to receiving hospital</li>
+                                        <li>Monitor End-Tidal CO2 & Waveform Capnography (*Mandatory if pt intubated)</li>
+                                        <li>Assist Pt with Pt's own medication if directed by protocol</li>
+                                        <li>Determine blood glucose / treat hypoglycemia per protocol</li>
                                     </ul>
                                 </li>
                                 <li><strong>EMT-I85 / AEMT:</strong>
-                                    <ul class="list-disc ml-4 mt-2">
-                                        <li>Intubate if indicated.</li>
-                                        <li>IV/IO access if indicated.</li>
-                                        <li>Fluid bolus as directed by specific medical protocol(s).</li>
-                                        <li>Medication administration per specific medical protocol(s).</li>
+                                    <ul class="mt-2">
+                                        <li>Intubate if indicated</li>
+                                        <li>IV/IO access if indicated</li>
+                                        <li>Fluid bolus as directed by specific medical protocol(s)</li>
+                                        <li>Medication administration per specific medical protocol(s)</li>
                                     </ul>
                                 </li>
                                 <li><strong>PARAMEDIC:</strong>
-                                    <ul class="list-disc ml-4 mt-2">
-                                        <li>Continuous treatment and assessment per specific medical protocol(s).</li>
-                                        <li>Interpretation of 12-Lead ECGs (when indicated & equipped).</li>
+                                    <ul class="mt-2">
+                                        <li>Continuous treatment and assessment per specific medical protocol(s)</li>
+                                        <li>Interpretation of 12-Lead ECGs (when indicated & equipped)</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -461,13 +468,13 @@
                         <div class="protocol-content">
                             <div class="highlight-box">
                                 <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                                <ol>
-                                    <li>Assessment: SCENE SAFETY, PROTECTIVE EQUIPMENT, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey.</li>
-                                    <li>Primary Survey Care: Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax.</li>
-                                    <li>Minimize scene time in critical case.</li>
-                                    <li>Enroute Care: Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia.</li>
-                                    <li>Hospital per destination protocol.</li>
-                                </ol>
+                                <ul>
+                                    <li><strong>Assessment:</strong> SCENE SAFETY, PROTECTIVE EQUIPMENT, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey</li>
+                                    <li><strong>Primary Survey Care:</strong> Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax</li>
+                                    <li><strong>Minimize scene time</strong> in critical case</li>
+                                    <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
+                                    <li><strong>Hospital</strong> per destination protocol</li>
+                                </ul>
                             </div>
 
                             <h3>Provider Level Actions</h3>
@@ -475,25 +482,25 @@
                             <ul>
                                 <li><strong>EMD:</strong> Questions to address scene safety issues.</li>
                                 <li><strong>EMR / EMT:</strong> 
-                                    <ul class="list-disc ml-4 mt-2">
-                                        <li><strong>Serious Hemorrhage Control:</strong> Tourniquet if indicated, Bandage/Dressing/Direct Pressure, Pressure Dressing if indicated/equipped, Topical Hemostatic Agent if indicated/equipped.</li>
-                                        <li>Airway Management & Support Oxygenation/Ventilation.</li>
-                                        <li>Obtain vital signs / assess for and treat shock.</li>
-                                        <li>Prevent Hypothermia.</li>
+                                    <ul class="mt-2">
+                                        <li><strong>Serious Hemorrhage Control:</strong> Tourniquet if indicated, Bandage/Dressing/Direct Pressure, Pressure Dressing if indicated/equipped, Topical Hemostatic Agent if indicated/equipped</li>
+                                        <li>Airway Management & Support Oxygenation/Ventilation</li>
+                                        <li>Obtain vital signs / assess for and treat shock</li>
+                                        <li>Prevent Hypothermia</li>
                                     </ul>
                                 </li>
                                 <li><strong>EMT-I85 / AEMT:</strong>
-                                    <ul class="list-disc ml-4 mt-2">
-                                        <li>Intubate if indicated.</li>
-                                        <li>IV/IO access if indicated.</li>
-                                        <li>Fluid bolus as directed by specific trauma protocol(s).</li>
+                                    <ul class="mt-2">
+                                        <li>Intubate if indicated</li>
+                                        <li>IV/IO access if indicated</li>
+                                        <li>Fluid bolus as directed by specific trauma protocol(s)</li>
                                     </ul>
                                 </li>
                                 <li><strong>PARAMEDIC:</strong>
-                                    <ul class="list-disc ml-4 mt-2">
-                                        <li>Cricothyrotomy if indicated.</li>
-                                        <li>Needle thoracostomy if tension pneumothorax suspected.</li>
-                                        <li>Continuous treatment and assessment per specific trauma protocol(s).</li>
+                                    <ul class="mt-2">
+                                        <li>Cricothyrotomy if indicated</li>
+                                        <li>Needle thoracostomy if tension pneumothorax suspected</li>
+                                        <li>Continuous treatment and assessment per specific trauma protocol(s)</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -510,14 +517,14 @@
                         <div class="protocol-content">
                             <div class="highlight-box">
                                 <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                                <ol>
-                                    <li>Preserve patient warmth/avoid hypothermia.</li>
-                                    <li>Assessment: Primary Survey, Secondary Survey (when appropriate).</li>
-                                    <li>Primary Survey Care: Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation.</li>
-                                    <li>Minimize scene time in critical case unless working cardiac arrest.</li>
-                                    <li>Enroute Care: Reassess all primary care, Support oxygenation/ventilation, Secondary Survey (if able).</li>
-                                    <li>Hospital per destination protocol.</li>
-                                </ol>
+                                <ul>
+                                    <li><strong>Preserve patient warmth</strong>/avoid hypothermia</li>
+                                    <li><strong>Assessment:</strong> Primary Survey, Secondary Survey (when appropriate)</li>
+                                    <li><strong>Primary Survey Care:</strong> Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation</li>
+                                    <li><strong>Minimize scene time</strong> in critical case unless working cardiac arrest</li>
+                                    <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Secondary Survey (if able)</li>
+                                    <li><strong>Hospital</strong> per destination protocol</li>
+                                </ul>
                             </div>
                             
                             <p>In general, approach the resuscitation of the newborn or infant within the first 30 days of life focusing on basic life support interventions. Invasive, advanced procedures are rarely warranted and are rarely more effective than simple, yet important basic interventions.</p>
