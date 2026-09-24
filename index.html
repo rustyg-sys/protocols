@@ -1,1 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCTC EMS Protocols</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Maroon & Grey Color Palette */
+        :root {
+            --maroon-dark: #630015;
+            --maroon-main: #800020;
+            --maroon-light: #a31535;
+            --grey-dark: #4b5563;
+            --grey-main: #9ca3af;
+            --grey-light: #f3f4f6;
+        }
+        
+        body {
+            background-color: var(--grey-light);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
 
+        /* Splash Screen Styles */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .splash-logo {
+            width: 70%;
+            max-width: 350px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .loading-bar-container {
+            width: 60%;
+            max-width: 250px;
+            height: 6px;
+            background-color: var(--grey-light);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--grey-main);
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--maroon-main);
+            animation: load 2s forwards ease-in-out;
+        }
+
+        .loading-text {
+            color: var(--maroon-main);
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+        }
+
+        /* App Styles */
+        .header-bar {
+            background-color: var(--maroon-main);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .top-logo-container {
+            background-color: white;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 3px solid var(--maroon-main);
+        }
+
+        .top-logo {
+            max-height: 70px;
+            margin: 0 auto;
+        }
+
+        .bucket-btn {
+            background-color: white;
+            border-left: 5px solid var(--maroon-main);
+            color: var(--grey-dark);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .bucket-btn:active {
+            transform: scale(0.98);
+            background-color: var(--grey-light);
+        }
+
+        .bucket-icon {
+            color: var(--maroon-main);
+        }
+
+        .protocol-item {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .protocol-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Formatted Content Styles inside Protocols */
+        .protocol-content h3 {
+            color: var(--maroon-main);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--grey-main);
+            padding-bottom: 0.25rem;
+        }
+        .protocol-content ul, .protocol-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        .protocol-content li {
+            margin-bottom: 0.25rem;
+        }
+        .protocol-content p {
+            margin-bottom: 0.75rem;
+        }
+        .protocol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+        .protocol-table th, .protocol-table td {
+            border: 1px solid var(--grey-main);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .protocol-table th {
+            background-color: var(--grey-light);
+            font-weight: bold;
+        }
+        .highlight-box {
+            background-color: #fef3c7; /* light yellow */
+            border-left: 4px solid #f59e0b; /* amber */
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <img src="GCTC coin 9.png" alt="Paramedic Coin Logo" class="splash-logo" onerror="this.src='https://via.placeholder.com/350?text=Logo+Missing'">
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-text">LOADING PROTOCOLS...</div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app-container" style="display: none; opacity: 0; transition: opacity 0.5s ease-in;">
+        
+        <!-- School Logo Header -->
+        <div class="top-logo-container">
+            <img src="GCTCLogo_4color2 Transperant smaller.png" alt="GCTC Logo" class="top-logo" onerror="this.src='https://via.placeholder.com/300x70?text=GCTC+Logo'">
+        </div>
+
+        <!-- Navigation Header -->
+        <header class="header-bar p-3 sticky top-0 z-50 flex items-center justify-between">
+            <button id="back-btn" class="text-white hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20">
+                <i class="fa-solid fa-arrow-left text-xl"></i>
+            </button>
+            <h1 id="screen-title" class="text-lg font-bold flex-1 text-center truncate px-2">Categories</h1>
+            <button id="home-btn" class="text-white hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20">
+                <i class="fa-solid fa-house text-xl"></i>
+            </button>
+            <div id="header-spacer" class="w-10"></div>
+        </header>
+
+        <!-- Screen 1: Categories -->
+        <main id="categories-screen" class="p-4 pb-12">
+            <div class="grid grid-cols-2 gap-3" id="categories-grid">
+                <!-- Injected by JS -->
+            </div>
+        </main>
+
+        <!-- Screen 2: Protocol List -->
+        <main id="protocol-list-screen" class="p-4 pb-12 hidden">
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden" id="protocol-list-container">
+                <!-- Injected by JS -->
+            </div>
+        </main>
+
+        <!-- Screen 3: Protocol Detail -->
+        <main id="protocol-detail-screen" class="p-4 pb-12 hidden">
+            <div class="bg-white rounded-lg shadow-sm p-4" id="protocol-detail-container">
+                <!-- Injected by JS -->
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // Splash Screen Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const app = document.getElementById('app-container');
+                
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    app.style.display = 'block';
+                    void app.offsetWidth; 
+                    app.style.opacity = '1';
+                }, 500);
+            }, 2500);
+        });
+
+        // The 16 Categories
+        const categories = [
+            { id: 1, name: "ASSESSMENT", icon: "fa-clipboard-list" },
+            { id: 2, name: "AIRWAY", icon: "fa-head-side-mask" },
+            { id: 3, name: "RESPIRATORY", icon: "fa-lungs" },
+            { id: 4, name: "CARDIAC ARREST", icon: "fa-heart-crack" },
+            { id: 5, name: "CARDIAC", icon: "fa-heart-pulse" },
+            { id: 6, name: "NEURO/AMS", icon: "fa-brain" },
+            { id: 7, name: "TOXIC/POISON", icon: "fa-skull-crossbones" },
+            { id: 8, name: "MEDICAL", icon: "fa-staff-snake" },
+            { id: 9, name: "TRAUMA", icon: "fa-bandage" },
+            { id: 10, name: "ENVIRONMENTAL", icon: "fa-temperature-half" },
+            { id: 11, name: "FIRE RELATED", icon: "fa-fire" },
+            { id: 12, name: "OB/GYN", icon: "fa-person-pregnant" },
+            { id: 13, name: "OPERATIONS", icon: "fa-gears" },
+            { id: 14, name: "MASS CASUALTY", icon: "fa-users" },
+            { id: 15, name: "MEDICATIONS", icon: "fa-pills" },
+            { id: 16, name: "INFO/LINKS", icon: "fa-circle-info" }
+        ];
+
+        // Database mapping Category ID to its Protocols
+        const protocolsDatabase = {
+            1: [ // ASSESSMENT BUCKET
+                { 
+                    id: "1A", 
+                    title: "1A Medical General Assessment - Adult & Pediatric", 
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ol>
+                                    <li>Assessment: Scene Safety, Protective Equipment, Primary Survey, Secondary Survey (when appropriate)</li>
+                                    <li>Primary Survey Care: Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation (Dysrhythmia care? Rate control? Hypotension care?)</li>
+                                    <li>Minimize scene time in critical case unless working cardiac arrest</li>
+                                    <li>Enroute Care: Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
+                                    <li>Hospital per destination protocol.</li>
+                                </ol>
+                            </div>
+                            <p>In general, approach the assessment of medical (non-trauma) patients, in A-B-C order:</p>
+                            <ul>
+                                <li><strong>Airway:</strong> Evaluate the patency and mechanics of the airway. Rapid intervention may be required during the assessment phase if airway patency and protection is compromised.</li>
+                                <li><strong>Breathing:</strong> Expose the chest as required to accurately assess mechanics of respiration. Note rate, depth, and pattern. Auscultate breath sounds bilaterally. Liberally obtain pulse oximetry and waveform capnography (**Mandatory use if the patient is intubated).</li>
+                                <li><strong>Circulation:</strong> Assess level of consciousness and mental status first. Next assess location, rate, and character of pulse. Check a blood pressure (preferably manually first). Apply cardiac monitor liberally.</li>
+                                <li><strong>Cardiac Arrest</strong> is an exception to the above order. Aggressively initiate chest compressions and search for shockable rhythms at appropriate intervals.</li>
+                            </ul>
+                            
+                            <h3>Adult Glasgow Coma Scale</h3>
+                            <div class="overflow-x-auto">
+                                <table class="protocol-table">
+                                    <tr><th>Eyes Open</th><th>Best Motor Response</th><th>Best Verbal Response</th></tr>
+                                    <tr><td>Spontaneously (4)</td><td>Obeys verbal orders (6)</td><td>Oriented, conversant (5)</td></tr>
+                                    <tr><td>To command (3)</td><td>Localizes painful stimuli (5)</td><td>Disoriented, conversant (4)</td></tr>
+                                    <tr><td>To pain (2)</td><td>Withdraws (4)</td><td>Inappropriate words (3)</td></tr>
+                                    <tr><td>No response (1)</td><td>Painful stimulus, flexion (3)<br>Painful stimulus, extension (2)<br>No response (1)</td><td>Inappropriate sounds (2)<br>No response (1)</td></tr>
+                                </table>
+                            </div>
+                            <p class="text-sm"><em>Maximum 15 points.</em></p>
+
+                            <p>After addressing the A-B-C order in most medical patients, minimize scene time and initiate timely transport for time-sensitive medical conditions.</p>
+                            <p>Reassess patients frequently, typically at least every 10 minutes, and more often if critical illness is discovered (every 5 minutes for unstable patients).</p>
+
+                            <h3>Pediatric Assessment Comments</h3>
+                            <p>1. Pediatric respiratory distress may look just like adult respiratory distress, presenting with: slowing respirations, cyanosis, accessory muscle use, paleness, nasal flaring, lethargy/listlessness, retractions, irritability, tachypnea, stridor, mottling, grunting.</p>
+                            
+                            <p>2. Vital signs vary with age. In general, the younger the patient, the faster the respiratory rate, the faster the heart rate, and the lower the blood pressure:</p>
+                            <div class="overflow-x-auto">
+                                <table class="protocol-table">
+                                    <tr><th>AGE</th><th>HEART RATE (BPM)</th><th>RESP. RATE (BPM)</th><th>SYSTOLIC BP (mmHg)</th></tr>
+                                    <tr><td>Premature</td><td>100-190</td><td>40-60</td><td>-</td></tr>
+                                    <tr><td>Neonate</td><td>90-190</td><td>30-60</td><td>50-70</td></tr>
+                                    <tr><td>6 months</td><td>80-180</td><td>25-40</td><td>60-110</td></tr>
+                                    <tr><td>1 year</td><td>80-150</td><td>20-40</td><td>70-110</td></tr>
+                                    <tr><td>3-4 years</td><td>80-140</td><td>20-30</td><td>80-115</td></tr>
+                                    <tr><td>5-6 years</td><td>70-120</td><td>20-25</td><td>80-115</td></tr>
+                                    <tr><td>7-8 years</td><td>70-110</td><td>20-25</td><td>85-120</td></tr>
+                                    <tr><td>11-12 years</td><td>60-110</td><td>15-20</td><td>95-135</td></tr>
+                                </table>
+                            </div>
+                            <ul class="text-sm">
+                                <li>Average normal systolic BP estimated by: 80 + (2 x age in years).</li>
+                                <li>Lower limits of normal systolic BP estimated by: 70 + (2 x age in years).</li>
+                            </ul>
+
+                            <h3>Pediatric Glasgow Coma Scale Scores</h3>
+                            <div class="overflow-x-auto">
+                                <table class="protocol-table">
+                                    <tr><th>Points</th><th>Best eye</th><th>Best verbal</th><th>Best Motor</th></tr>
+                                    <tr><td>6</td><td></td><td></td><td>obeys</td></tr>
+                                    <tr><td>5</td><td></td><td>smiles, oriented to sound, follows objects, interacts</td><td>localizes pain</td></tr>
+                                    <tr><td>4</td><td>spontaneous</td><td>crying consolable / Interaction inappropriate</td><td>withdraws to pain</td></tr>
+                                    <tr><td>3</td><td>to speech</td><td>inconsistently consolable / moaning</td><td>flexion (decorticate)</td></tr>
+                                    <tr><td>2</td><td>to pain</td><td>inconsolable / restless</td><td>extensor (decerebrate)</td></tr>
+                                    <tr><td>1</td><td>none</td><td>none</td><td>none</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    id: "1B", 
+                    title: "1B Trauma General Assessment - Adult & Pediatric", 
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ol>
+                                    <li>Assessment: Scene Safety, Protective Equipment, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey.</li>
+                                    <li>Primary Survey Care: Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax.</li>
+                                    <li>Minimize scene time in critical case.</li>
+                                    <li>Enroute Care: Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia.</li>
+                                    <li>Hospital per destination protocol.</li>
+                                </ol>
+                            </div>
+                            <p>Before entering any trauma scene, ensure your personal safety. Do not attempt patient contact until hazards can be appropriately mitigated.</p>
+                            
+                            <h3>The Primary Survey</h3>
+                            <p>Designed to rapidly identify life-threatening injuries. Should be completed within 2 minutes of patient contact. ONLY INTERRUPTED FOR LIFE-THREATENING ARTERIAL BLEEDING, AIRWAY OBSTRUCTION, OR RESPIRATORY/CARDIAC ARREST.</p>
+                            <ol>
+                                <li>Manually stabilize cervical spine while assessing airway and level of consciousness.</li>
+                                <li>Evaluate breathing - present? rapid? normal? slow? shallow?</li>
+                                <li>Evaluate circulation - carotid and radial pulses? Control external hemorrhage.</li>
+                                <li>Exam the head for DCAP-BLS (deformity, contusions, abrasions, penetrations, burns, lacerations, swelling).</li>
+                                <li>Exam the neck for DCAP-BLS, or subcutaneous emphysema.</li>
+                                <li>Exam the chest for DCAP-BLS, or paradoxical movement.</li>
+                                <li>Auscultate the chest for breath sounds in mid-axilla bilaterally - present? equal?</li>
+                                <li>Exam the abdomen and pelvis for DCAP-BLS.</li>
+                                <li>Exam the extremities for DCAP-BLS, and pulse, movement, sensation.</li>
+                            </ol>
+
+                            <div class="bg-red-100 border-l-4 border-red-500 p-4 my-4 rounded">
+                                <p class="font-bold text-red-700 m-0">LOAD & GO PATIENTS:</p>
+                                <p class="text-sm mt-1">Any trauma patient with altered level of consciousness, abnormal respiration, abnormal circulation, or signs/conditions likely to lead to shock (distended abdomen, pelvic instability, bilateral femur fractures) should be rapidly immobilized and transported after completing the primary survey.</p>
+                            </div>
+
+                            <h3>The Secondary Survey</h3>
+                            <p>Always done enroute on critical patients. If no critical conditions found, may be conducted on scene (complete within 5 minutes after primary survey).</p>
+                            <ol>
+                                <li>Obtain vital signs (pulse, respiratory rate, BP, pulse oximetry).</li>
+                                <li>Obtain history of traumatic event and pertinent medical history (allergies, medications, past illness, last oral intake).</li>
+                                <li>Head to toe exam look for "DCAP-BLS" in every body area. Calculate GCS score.</li>
+                                <li>Perform indicated bandaging and splinting.</li>
+                            </ol>
+
+                            <h3>The Reassessment Survey</h3>
+                            <p>Abbreviated exam after interventions; done at least every five minutes for critical patients.</p>
+                            <ol>
+                                <li>Repeat the primary survey.</li>
+                                <li>Repeat vital signs and GCS calculation.</li>
+                                <li>Check every intervention (proper placement of intubation? IV/IO?).</li>
+                                <li>Check results of every intervention (improved oxygenation/BP?).</li>
+                            </ol>
+                        </div>
+                    `
+                },
+                {
+                    id: "1C",
+                    title: "1C General Supportive Care - Adult & Pediatric",
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ol>
+                                    <li>Assessment: SCENE SAFETY, PROTECTIVE EQUIPMENT, ABCs unless cardiac arrest (CAB if cardiac arrest), Early vital signs, Get best history possible.</li>
+                                    <li>Evaluate/treat underlying medical cause per protocol(s).</li>
+                                    <li>Early transport & ED notification for patients with time sensitive conditions (Resp Failure, STEMI, Stroke).</li>
+                                </ol>
+                            </div>
+
+                            <h3>Provider Level Actions</h3>
+                            <p><em>If chief complaint is medical in nature, choose protocol that best fits foremost symptoms.</em></p>
+                            <ul>
+                                <li><strong>EMD:</strong> Questions to address scene safety issues.</li>
+                                <li><strong>EMR / EMT:</strong> 
+                                    <ul class="list-disc ml-4 mt-2">
+                                        <li>Airway Management / Support Oxygenation/Ventilation.</li>
+                                        <li>Obtain Vital Signs.</li>
+                                        <li>Apply Cardiac Monitor / Obtain 12-Lead ECG (when indicated & equipped).</li>
+                                        <li>Transmit 12-Lead ECG to receiving hospital.</li>
+                                        <li>Monitor End-Tidal CO2 & Waveform Capnography (*Mandatory if pt intubated).</li>
+                                        <li>Assist Pt with Pt's own medication if directed by protocol.</li>
+                                        <li>Determine blood glucose / treat hypoglycemia per protocol.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>EMT-I85 / AEMT:</strong>
+                                    <ul class="list-disc ml-4 mt-2">
+                                        <li>Intubate if indicated.</li>
+                                        <li>IV/IO access if indicated.</li>
+                                        <li>Fluid bolus as directed by specific medical protocol(s).</li>
+                                        <li>Medication administration per specific medical protocol(s).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>PARAMEDIC:</strong>
+                                    <ul class="list-disc ml-4 mt-2">
+                                        <li>Continuous treatment and assessment per specific medical protocol(s).</li>
+                                        <li>Interpretation of 12-Lead ECGs (when indicated & equipped).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3>Clinical Operational Notes</h3>
+                            <p>1. The practice of EMS medicine is built upon the foundation of "taking medical care to the patient". Appropriate equipment (airway kit, med/trauma kit, suction, monitor, packaging) should be brought to the patient's side to minimize critical treatment delays.</p>
+                            <p>2. Minimize active movement on the patient's part in settings of suspected myocardial ischemia, stroke, and dyspnea. Move and package with safety considerations.</p>
+                        </div>
+                    `
+                },
+                {
+                    id: "1D",
+                    title: "1D Trauma and Hypovolemic Shock Supportive Care",
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ol>
+                                    <li>Assessment: SCENE SAFETY, PROTECTIVE EQUIPMENT, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey.</li>
+                                    <li>Primary Survey Care: Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax.</li>
+                                    <li>Minimize scene time in critical case.</li>
+                                    <li>Enroute Care: Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia.</li>
+                                    <li>Hospital per destination protocol.</li>
+                                </ol>
+                            </div>
+
+                            <h3>Provider Level Actions</h3>
+                            <p><em>If chief complaint is traumatic in nature, choose protocol that best fits foremost symptoms.</em></p>
+                            <ul>
+                                <li><strong>EMD:</strong> Questions to address scene safety issues.</li>
+                                <li><strong>EMR / EMT:</strong> 
+                                    <ul class="list-disc ml-4 mt-2">
+                                        <li><strong>Serious Hemorrhage Control:</strong> Tourniquet if indicated, Bandage/Dressing/Direct Pressure, Pressure Dressing if indicated/equipped, Topical Hemostatic Agent if indicated/equipped.</li>
+                                        <li>Airway Management & Support Oxygenation/Ventilation.</li>
+                                        <li>Obtain vital signs / assess for and treat shock.</li>
+                                        <li>Prevent Hypothermia.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>EMT-I85 / AEMT:</strong>
+                                    <ul class="list-disc ml-4 mt-2">
+                                        <li>Intubate if indicated.</li>
+                                        <li>IV/IO access if indicated.</li>
+                                        <li>Fluid bolus as directed by specific trauma protocol(s).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>PARAMEDIC:</strong>
+                                    <ul class="list-disc ml-4 mt-2">
+                                        <li>Cricothyrotomy if indicated.</li>
+                                        <li>Needle thoracostomy if tension pneumothorax suspected.</li>
+                                        <li>Continuous treatment and assessment per specific trauma protocol(s).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3>Clinical Operational Note</h3>
+                            <p>The practice of EMS medicine is built upon the foundation of "taking medical care to the patient". To achieve this objective, appropriate equipment (airway equipment kit, med/trauma equipment kit, suction device, patient packaging equipment) should be brought to the patient's side to minimize critical treatment delays in secondarily fetching equipment from the response apparatus.</p>
+                        </div>
+                    `
+                },
+                {
+                    id: "1E",
+                    title: "1E Neonatal Resuscitation Pediatric",
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ol>
+                                    <li>Preserve patient warmth/avoid hypothermia.</li>
+                                    <li>Assessment: Primary Survey, Secondary Survey (when appropriate).</li>
+                                    <li>Primary Survey Care: Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation.</li>
+                                    <li>Minimize scene time in critical case unless working cardiac arrest.</li>
+                                    <li>Enroute Care: Reassess all primary care, Support oxygenation/ventilation, Secondary Survey (if able).</li>
+                                    <li>Hospital per destination protocol.</li>
+                                </ol>
+                            </div>
+                            
+                            <p>In general, approach the resuscitation of the newborn or infant within the first 30 days of life focusing on basic life support interventions. Invasive, advanced procedures are rarely warranted and are rarely more effective than simple, yet important basic interventions.</p>
+
+                            <ul>
+                                <li><strong>Warmth (Body Temperature Conservation):</strong> Due to high surface to body weight ratios, the neonate rapidly loses body heat which can lead to respiratory and circulatory distress. Keep the neonate warm and minimize skin exposures unless absolutely warranted.</li>
+                                <li><strong>Airway:</strong> Evaluate the patency and mechanics of the airway. Is the patient able to oxygenate and ventilate? Simple positioning intervention may be required if airway patency/protection is compromised.</li>
+                                <li><strong>Breathing:</strong> Briefly expose the chest as required to accurately assess mechanics of respiration. Note rate, depth, pattern, and effort. Auscultate breath sounds bilaterally in the axilla to avoid confusing sounds from the other side of the chest. Gentle tactile stimulation (e.g. rubbing back, flicking soles of feet) may be required early and often proves very effective. Liberally obtain pulse oximetry and waveform capnography (**Mandatory use if the patient is intubated).</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ]
+            // We will add 2, 3, 4, etc. later when you provide those PDFs!
+        };
+
+        // DOM Elements
+        const screens = {
+            categories: document.getElementById('categories-screen'),
+            list: document.getElementById('protocol-list-screen'),
+            detail: document.getElementById('protocol-detail-screen')
+        };
+        const backBtn = document.getElementById('back-btn');
+        const homeBtn = document.getElementById('home-btn');
+        const screenTitle = document.getElementById('screen-title');
+        const headerSpacer = document.getElementById('header-spacer');
+        
+        let currentCategory = null;
+
+        // Initialize Categories UI
+        function initCategories() {
+            const grid = document.getElementById('categories-grid');
+            grid.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'bucket-btn w-full rounded-lg p-4 flex flex-col items-center justify-center gap-3 h-28';
+                btn.onclick = () => openCategory(cat);
+                
+                btn.innerHTML = `
+                    <i class="fa-solid ${cat.icon} text-3xl bucket-icon"></i>
+                    <span class="text-xs font-bold text-center leading-tight uppercase">${cat.name}</span>
+                `;
+                grid.appendChild(btn);
+            });
+        }
+
+        // Navigation Functions
+        function showScreen(screenName, title) {
+            Object.values(screens).forEach(s => s.classList.add('hidden'));
+            screens[screenName].classList.remove('hidden');
+            
+            screenTitle.textContent = title;
+            window.scrollTo(0, 0);
+
+            if (screenName === 'categories') {
+                backBtn.classList.add('hidden');
+                homeBtn.classList.add('hidden');
+                headerSpacer.classList.remove('hidden');
+            } else if (screenName === 'list') {
+                backBtn.classList.remove('hidden');
+                homeBtn.classList.remove('hidden');
+                headerSpacer.classList.add('hidden');
+                backBtn.onclick = () => showScreen('categories', 'Categories');
+            } else if (screenName === 'detail') {
+                backBtn.classList.remove('hidden');
+                homeBtn.classList.remove('hidden');
+                headerSpacer.classList.add('hidden');
+                backBtn.onclick = () => showScreen('list', currentCategory.name);
+            }
+        }
+
+        function openCategory(category) {
+            currentCategory = category;
+            const container = document.getElementById('protocol-list-container');
+            container.innerHTML = '';
+
+            const protocols = protocolsDatabase[category.id] || [];
+
+            if (protocols.length === 0) {
+                container.innerHTML = `
+                    <div class="p-8 text-center text-gray-500">
+                        <i class="fa-regular fa-folder-open text-4xl mb-3 text-gray-300"></i>
+                        <p>No protocols have been added to this category yet.</p>
+                    </div>
+                `;
+            } else {
+                protocols.forEach(protocol => {
+                    const item = document.createElement('div');
+                    item.className = 'protocol-item p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 active:bg-gray-100';
+                    item.onclick = () => openProtocol(protocol);
+                    
+                    item.innerHTML = `
+                        <span class="font-semibold text-gray-800 pr-4">${protocol.title}</span>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+
+            showScreen('list', category.name);
+        }
+
+        function openProtocol(protocol) {
+            const container = document.getElementById('protocol-detail-container');
+            container.innerHTML = `
+                <h2 class="text-xl font-bold text-[var(--maroon-main)] mb-2 pb-3 border-b-2 border-gray-100">${protocol.title}</h2>
+                <div class="text-gray-700 leading-relaxed">
+                    ${protocol.content}
+                </div>
+            `;
+            
+            showScreen('detail', protocol.id);
+        }
+
+        // Setup Home Button
+        homeBtn.onclick = () => showScreen('categories', 'Categories');
+
+        // Start App
+        initCategories();
+    </script>
+</body>
+</html>
