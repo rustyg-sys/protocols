@@ -5,258 +5,199 @@ const protocolsDatabase = {
     1: [ // ASSESSMENT BUCKET
         { 
             id: "1A", 
-            title: "1A Medical General Assessment - Adult & Pediatric", 
+            title: "1A: Medical General Assessment - Adult & Pediatric", 
             content: `
                 <div class="protocol-content">
-                    <div class="highlight-box">
-                        <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                        <ul>
-                            <li><strong>Assessment:</strong> Scene Safety, Protective Equipment, Primary Survey, Secondary Survey (when appropriate)</li>
-                            <li><strong>Primary Survey Care:</strong> Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation (Dysrhythmia care? Rate control? Hypotension care?)</li>
-                            <li><strong>Minimize scene time</strong> in critical case unless working cardiac arrest</li>
-                            <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
-                            <li><strong>Hospital</strong> per destination protocol</li>
-                        </ul>
-                    </div>
-                    <p>In general, approach the assessment of medical (non-trauma) patients, in A-B-C order:</p>
+                    <h3>1. Overview & Scope</h3>
                     <ul>
-                        <li><strong>Airway:</strong> Evaluate the patency and mechanics of the airway. Rapid intervention may be required during the assessment phase if airway patency and protection is compromised.</li>
-                        <li><strong>Breathing:</strong> Expose the chest as required to accurately assess mechanics of respiration. Note rate, depth, and pattern. Auscultate breath sounds bilaterally. Liberally obtain pulse oximetry and waveform capnography (**Mandatory use if the patient is intubated).</li>
-                        <li><strong>Circulation:</strong> Assess level of consciousness and mental status first. Next assess location, rate, and character of pulse. Check a blood pressure (preferably manually first). Apply cardiac monitor liberally.</li>
-                        <li><strong>Cardiac Arrest</strong> is an exception to the above order. Aggressively initiate chest compressions and search for shockable rhythms at appropriate intervals.</li>
-                    </ul>
-                    
-                    <h3>Adult Glasgow Coma Scale</h3>
-                    <div class="overflow-x-auto">
-                        <table class="protocol-table">
-                            <tr><th>Eyes Open</th><th>Best Motor Response</th><th>Best Verbal Response</th></tr>
-                            <tr><td>Spontaneously (4)</td><td>Obeys verbal orders (6)</td><td>Oriented, conversant (5)</td></tr>
-                            <tr><td>To command (3)</td><td>Localizes painful stimuli (5)</td><td>Disoriented, conversant (4)</td></tr>
-                            <tr><td>To pain (2)</td><td>Withdraws (4)</td><td>Inappropriate words (3)</td></tr>
-                            <tr><td>No response (1)</td><td>Painful stimulus, flexion (3)<br>Painful stimulus, extension (2)<br>No response (1)</td><td>Inappropriate sounds (2)<br>No response (1)</td></tr>
-                        </table>
-                    </div>
-                    <p class="text-sm"><em>Maximum 15 points.</em></p>
-
-                    <p>After addressing the A-B-C order in most medical patients, minimize scene time and initiate timely transport for time-sensitive medical conditions.</p>
-                    <p>Reassess patients frequently, typically at least every 10 minutes, and more often if critical illness is discovered (every 5 minutes for unstable patients).</p>
-
-                    <h3>Pediatric Assessment Comments</h3>
-                    <p>1. Pediatric respiratory distress may look just like adult respiratory distress, presenting with: slowing respirations, cyanosis, accessory muscle use, paleness, nasal flaring, lethargy/listlessness, retractions, irritability, tachypnea, stridor, mottling, grunting.</p>
-                    
-                    <p>2. Vital signs vary with age. In general, the younger the patient, the faster the respiratory rate, the faster the heart rate, and the lower the blood pressure:</p>
-                    <div class="overflow-x-auto">
-                        <table class="protocol-table">
-                            <tr><th>AGE</th><th>HEART RATE (BPM)</th><th>RESP. RATE (BPM)</th><th>SYSTOLIC BP (mmHg)</th></tr>
-                            <tr><td>Premature</td><td>100-190</td><td>40-60</td><td>-</td></tr>
-                            <tr><td>Neonate</td><td>90-190</td><td>30-60</td><td>50-70</td></tr>
-                            <tr><td>6 months</td><td>80-180</td><td>25-40</td><td>60-110</td></tr>
-                            <tr><td>1 year</td><td>80-150</td><td>20-40</td><td>70-110</td></tr>
-                            <tr><td>3-4 years</td><td>80-140</td><td>20-30</td><td>80-115</td></tr>
-                            <tr><td>5-6 years</td><td>70-120</td><td>20-25</td><td>80-115</td></tr>
-                            <tr><td>7-8 years</td><td>70-110</td><td>20-25</td><td>85-120</td></tr>
-                            <tr><td>11-12 years</td><td>60-110</td><td>15-20</td><td>95-135</td></tr>
-                        </table>
-                    </div>
-                    <ul class="text-sm">
-                        <li>Average normal systolic BP estimated by: 80 + (2 x age in years).</li>
-                        <li>Lower limits of normal systolic BP estimated by: 70 + (2 x age in years).</li>
+                        <li><strong>Target Population:</strong> Adult and Pediatric patients.[cite: 2]</li>
+                        <li><strong>Entry Criteria:</strong> Patients presenting with medical (non-trauma) complaints.[cite: 2]</li>
                     </ul>
 
-                    <h3>Pediatric Glasgow Coma Scale Scores</h3>
-                    <div class="overflow-x-auto">
-                        <table class="protocol-table">
-                            <tr><th>Points</th><th>Best eye</th><th>Best verbal</th><th>Best Motor</th></tr>
-                            <tr><td>6</td><td></td><td></td><td>obeys</td></tr>
-                            <tr><td>5</td><td></td><td>smiles, oriented to sound, follows objects, interacts</td><td>localizes pain</td></tr>
-                            <tr><td>4</td><td>spontaneous</td><td>crying consolable / Interaction inappropriate</td><td>withdraws to pain</td></tr>
-                            <tr><td>3</td><td>to speech</td><td>inconsistently consolable / moaning</td><td>flexion (decorticate)</td></tr>
-                            <tr><td>2</td><td>to pain</td><td>inconsolable / restless</td><td>extensor (decerebrate)</td></tr>
-                            <tr><td>1</td><td>none</td><td>none</td><td>none</td></tr>
-                        </table>
-                    </div>
+                    <h3>2. General Supportive & Initial Assessment</h3>
+                    <ul>
+                        <li><strong>Assessment Priorities:</strong> Ensure scene safety and utilize protective equipment. Conduct a primary survey, followed by a secondary survey when appropriate.[cite: 2]</li>
+                        <li><strong>Primary Survey Care (A-B-C Approach):</strong>[cite: 2]
+                            <ul>
+                                <li><strong>Airway:</strong> Evaluate patency and mechanics. Rapid intervention is required if airway protection is compromised.[cite: 2]</li>
+                                <li><strong>Breathing:</strong> Expose the chest to assess respiration mechanics, note rate/depth/pattern, and auscultate bilaterally. Utilize pulse oximetry and waveform capnography (mandatory use if the patient is intubated).[cite: 2]</li>
+                                <li><strong>Circulation:</strong> Evaluate level of consciousness, pulse, and obtain a manual blood pressure. Apply cardiac monitor if equipped.[cite: 2]</li>
+                                <li><strong>Cardiac Arrest Exception:</strong> Aggressively initiate chest compressions and search for shockable rhythms rather than following the standard A-B-C order.[cite: 2]</li>
+                            </ul>
+                        </li>
+                        <li><strong>Scene Time:</strong> Minimize scene time for critical cases (unless working a cardiac arrest) and initiate early transport for time-sensitive conditions.[cite: 2]</li>
+                        <li><strong>Enroute Care:</strong> Reassess primary care, support oxygenation/ventilation, obtain vascular access, complete secondary survey, and prevent hypothermia.[cite: 2]</li>
+                    </ul>
+
+                    <h3>3. Clinical Pearls & Cross-References</h3>
+                    <ul>
+                        <li><strong>Reassessment Intervals:</strong> Reassess patients at least every 10 minutes, or every 5 minutes if the patient is unstable or hemodynamic changes are occurring.[cite: 2]</li>
+                        <li><strong>Pediatric Respiratory Distress:</strong> May present with slowing respirations, cyanosis, accessory muscle use, paleness, nasal flaring, lethargy, retractions, irritability, tachypnea, stridor, mottling, or grunting.[cite: 2]</li>
+                        <li><strong>Pediatric Blood Pressure Estimation:</strong> Average normal systolic BP is estimated by 80 + (2 x age in years). The lower limit of normal systolic BP is estimated by 70 + (2 x age in years).[cite: 2]</li>
+                    </ul>
                 </div>
             `
         },
         { 
             id: "1B", 
-            title: "1B Trauma General Assessment - Adult & Pediatric", 
+            title: "1B: Trauma General Assessment - Adult & Pediatric", 
             content: `
                 <div class="protocol-content">
-                    <div class="highlight-box">
-                        <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                        <ul>
-                            <li><strong>Assessment:</strong> Scene Safety, Protective Equipment, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey</li>
-                            <li><strong>Primary Survey Care:</strong> Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax</li>
-                            <li><strong>Minimize scene time</strong> in critical case</li>
-                            <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
-                            <li><strong>Hospital</strong> per destination protocol</li>
-                        </ul>
-                    </div>
-                    <p>Before entering any trauma scene, ensure your personal safety. Do not attempt patient contact until hazards can be appropriately mitigated.</p>
-                    
-                    <h3>The Primary Survey</h3>
-                    <p>Designed to rapidly identify life-threatening injuries. Should be completed within 2 minutes of patient contact. ONLY INTERRUPTED FOR LIFE-THREATENING ARTERIAL BLEEDING, AIRWAY OBSTRUCTION, OR RESPIRATORY/CARDIAC ARREST.</p>
+                    <h3>1. Overview & Scope</h3>
                     <ul>
-                        <li>Manually stabilize cervical spine while assessing airway and level of consciousness.</li>
-                        <li>Evaluate breathing - present? rapid? normal? slow? shallow?</li>
-                        <li>Evaluate circulation - carotid and radial pulses? Control external hemorrhage.</li>
-                        <li>Exam the head for DCAP-BLS (deformity, contusions, abrasions, penetrations, burns, lacerations, swelling).</li>
-                        <li>Exam the neck for DCAP-BLS, or subcutaneous emphysema.</li>
-                        <li>Exam the chest for DCAP-BLS, or paradoxical movement.</li>
-                        <li>Auscultate the chest for breath sounds in mid-axilla bilaterally - present? equal?</li>
-                        <li>Exam the abdomen and pelvis for DCAP-BLS.</li>
-                        <li>Exam the extremities for DCAP-BLS, and pulse, movement, sensation.</li>
+                        <li><strong>Target Population:</strong> Adult and Pediatric patients.[cite: 2]</li>
+                        <li><strong>Entry Criteria:</strong> Patients presenting with traumatic injuries.[cite: 2]</li>
                     </ul>
 
-                    <div class="bg-red-100 border-l-4 border-red-500 p-4 my-4 rounded">
-                        <p class="font-bold text-red-700 m-0">LOAD & GO PATIENTS:</p>
-                        <p class="text-sm mt-1">Any trauma patient with altered level of consciousness, abnormal respiration, abnormal circulation, or signs/conditions likely to lead to shock (distended abdomen, pelvic instability, bilateral femur fractures) should be rapidly immobilized and transported after completing the primary survey.</p>
-                    </div>
-
-                    <h3>The Secondary Survey</h3>
-                    <p>Always done enroute on critical patients. If no critical conditions found, may be conducted on scene (complete within 5 minutes after primary survey).</p>
+                    <h3>2. General Supportive & Initial Assessment</h3>
                     <ul>
-                        <li>Obtain vital signs (pulse, respiratory rate, BP, pulse oximetry).</li>
-                        <li>Obtain history of traumatic event and pertinent medical history (allergies, medications, past illness, last oral intake).</li>
-                        <li>Head to toe exam look for "DCAP-BLS" in every body area. Calculate GCS score.</li>
-                        <li>Perform indicated bandaging and splinting.</li>
-                    </ul>
-
-                    <h3>The Reassessment Survey</h3>
-                    <p>Abbreviated exam after interventions; done at least every five minutes for critical patients.</p>
-                    <ul>
-                        <li>Repeat the primary survey.</li>
-                        <li>Repeat vital signs and GCS calculation.</li>
-                        <li>Check every intervention (proper placement of intubation? IV/IO?).</li>
-                        <li>Check results of every intervention (improved oxygenation/BP?).</li>
+                        <li><strong>Assessment Priorities:</strong> Ensure scene safety, utilize protective equipment, consider mechanisms of injury, and identify special extrication needs. Conduct a primary survey and issue a "Trauma Alert" to the receiving ED if indicated.[cite: 2]</li>
+                        <li><strong>Primary Survey Care (Completed within 2 minutes):</strong>[cite: 2]
+                            <ul>
+                                <li>The primary survey is only interrupted for life-threatening arterial bleeding, airway obstruction, or respiratory/cardiac arrest.[cite: 2]</li>
+                                <li>Manually stabilize the cervical spine while assessing the airway and level of consciousness.[cite: 2]</li>
+                                <li>Control arterial bleeding and evaluate circulation (carotid/radial pulses).[cite: 2]</li>
+                                <li>Open the airway and evaluate breathing.[cite: 2]</li>
+                                <li>Seal "sucking" chest wound(s).[cite: 2]</li>
+                                <li>Perform needle thoracostomy for closed chest tension pneumothorax.[cite: 2]</li>
+                                <li>Examine head, neck, chest, abdomen/pelvis, and extremities for DCAP-BLS (deformity, contusions, abrasions, penetrations, burns, lacerations, swelling).[cite: 2]</li>
+                            </ul>
+                        </li>
+                        <li><strong>"LOAD & GO" Criteria:</strong> Rapidly immobilize and transport any trauma patient with an altered level of consciousness, abnormal respiration, abnormal circulation, or signs likely to lead to shock (distended abdomen, pelvic instability, bilateral femur fractures) immediately after the primary survey.[cite: 2]</li>
+                        <li><strong>Secondary & Reassessment Surveys:</strong> Perform the secondary survey enroute for critical patients; it includes vital signs, SAMPLE history, and a detailed head-to-toe GCS calculation. Reassess critical patients at least every five minutes.[cite: 2]</li>
                     </ul>
                 </div>
             `
         },
         {
             id: "1C",
-            title: "1C General Supportive Care - Adult & Pediatric",
+            title: "1C: General Supportive Care - Adult & Pediatric",
             content: `
                 <div class="protocol-content">
-                    <div class="highlight-box">
-                        <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                        <ul>
-                            <li><strong>Assessment:</strong> SCENE SAFETY, PROTECTIVE EQUIPMENT, ABCs unless cardiac arrest (CAB if cardiac arrest), Early vital signs, Get best history possible</li>
-                            <li><strong>Evaluate/treat</strong> underlying medical cause per protocol(s)</li>
-                            <li><strong>Early transport & ED notification</strong> for patients with time sensitive conditions (Resp Failure, STEMI, Stroke)</li>
-                        </ul>
-                    </div>
-
-                    <h3>Provider Level Actions</h3>
-                    <p><em>If chief complaint is medical in nature, choose protocol that best fits foremost symptoms.</em></p>
+                    <h3>1. Overview & Scope</h3>
                     <ul>
-                        <li><strong>EMD:</strong> Questions to address scene safety issues.</li>
-                        <li><strong>EMR / EMT:</strong> 
-                            <ul class="mt-2">
-                                <li>Airway Management / Support Oxygenation/Ventilation</li>
-                                <li>Obtain Vital Signs</li>
-                                <li>Apply Cardiac Monitor / Obtain 12-Lead ECG (when indicated & equipped)</li>
-                                <li>Transmit 12-Lead ECG to receiving hospital</li>
-                                <li>Monitor End-Tidal CO2 & Waveform Capnography (*Mandatory if pt intubated)</li>
-                                <li>Assist Pt with Pt's own medication if directed by protocol</li>
-                                <li>Determine blood glucose / treat hypoglycemia per protocol</li>
+                        <li><strong>Target Population:</strong> Adult and Pediatric patients.[cite: 2]</li>
+                        <li><strong>Treatment Priorities:</strong> Ensure scene safety and protective equipment. Address ABCs (or CAB if cardiac arrest), obtain early vital signs, and gather the best history possible. Evaluate and treat the underlying medical cause per specific protocols, providing early transport and ED notification for time-sensitive conditions (e.g., Respiratory Failure, STEMI, Stroke).[cite: 2]</li>
+                    </ul>
+
+                    <h3>2. Treatment Steps by Scope of Practice</h3>
+                    <ul>
+                        <li><strong>[EMD]:</strong> If the chief complaint is medical, choose the protocol that best fits the foremost symptoms (priority symptoms take precedence). Address scene safety issues.[cite: 2]</li>
+                        <li><strong>[EMR / EMT]:</strong>
+                            <ul>
+                                <li>Manage airway and support oxygenation/ventilation.[cite: 2]</li>
+                                <li>Obtain vital signs.[cite: 2]</li>
+                                <li>Apply cardiac monitor / obtain 12-lead ECG (when indicated and if equipped). Transmit the 12-lead ECG to the receiving hospital.[cite: 2]</li>
+                                <li>Monitor End-Tidal CO2 and waveform capnography (mandatory use if the patient is intubated).[cite: 2]</li>
+                                <li>Assist the patient with their own medication if directed by protocol.[cite: 2]</li>
+                                <li>Determine blood glucose and treat hypoglycemia per protocol.[cite: 2]</li>
                             </ul>
                         </li>
-                        <li><strong>EMT-I85 / AEMT:</strong>
-                            <ul class="mt-2">
-                                <li>Intubate if indicated</li>
-                                <li>IV/IO access if indicated</li>
-                                <li>Fluid bolus as directed by specific medical protocol(s)</li>
-                                <li>Medication administration per specific medical protocol(s)</li>
+                        <li><strong>[AEMT]:</strong>
+                            <ul>
+                                <li>Intubate if indicated.[cite: 2]</li>
+                                <li>Establish IV/IO access if indicated.[cite: 2]</li>
+                                <li>Administer fluid bolus and medications as directed by specific medical protocol(s).[cite: 2]</li>
                             </ul>
                         </li>
-                        <li><strong>PARAMEDIC:</strong>
-                            <ul class="mt-2">
-                                <li>Continuous treatment and assessment per specific medical protocol(s)</li>
-                                <li>Interpretation of 12-Lead ECGs (when indicated & equipped)</li>
+                        <li><strong>[Paramedic]:</strong>
+                            <ul>
+                                <li>Provide continuous treatment and assessment per specific medical protocol(s).[cite: 2]</li>
+                                <li>Interpret 12-lead ECGs (when indicated and if equipped).[cite: 2]</li>
                             </ul>
                         </li>
                     </ul>
 
-                    <h3>Clinical Operational Notes</h3>
-                    <p>1. The practice of EMS medicine is built upon the foundation of "taking medical care to the patient". Appropriate equipment (airway kit, med/trauma kit, suction, monitor, packaging) should be brought to the patient's side to minimize critical treatment delays.</p>
-                    <p>2. Minimize active movement on the patient's part in settings of suspected myocardial ischemia, stroke, and dyspnea. Move and package with safety considerations.</p>
+                    <h3>3. Clinical Pearls & Cross-References</h3>
+                    <ul>
+                        <li><strong>Operational Note:</strong> Take medical care to the patient by bringing appropriate equipment (airway kit, med/trauma kit, suction, AED/monitor) to the patient's side to minimize critical treatment delays.[cite: 2]</li>
+                        <li><strong>Movement Restrictions:</strong> Minimize active movement by the patient in settings of suspected myocardial ischemia, stroke, and dyspnea.[cite: 2]</li>
+                    </ul>
                 </div>
             `
         },
         {
             id: "1D",
-            title: "1D Trauma and Hypovolemic Shock Supportive Care",
+            title: "1D: Trauma and Hypovolemic Shock Supportive Care - Adult & Pediatric",
             content: `
                 <div class="protocol-content">
-                    <div class="highlight-box">
-                        <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                        <ul>
-                            <li><strong>Assessment:</strong> SCENE SAFETY, PROTECTIVE EQUIPMENT, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey</li>
-                            <li><strong>Primary Survey Care:</strong> Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax</li>
-                            <li><strong>Minimize scene time</strong> in critical case</li>
-                            <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
-                            <li><strong>Hospital</strong> per destination protocol</li>
-                        </ul>
-                    </div>
-
-                    <h3>Provider Level Actions</h3>
-                    <p><em>If chief complaint is traumatic in nature, choose protocol that best fits foremost symptoms.</em></p>
+                    <h3>1. Overview & Scope</h3>
                     <ul>
-                        <li><strong>EMD:</strong> Questions to address scene safety issues.</li>
-                        <li><strong>EMR / EMT:</strong> 
-                            <ul class="mt-2">
-                                <li><strong>Serious Hemorrhage Control:</strong> Tourniquet if indicated, Bandage/Dressing/Direct Pressure, Pressure Dressing if indicated/equipped, Topical Hemostatic Agent if indicated/equipped</li>
-                                <li>Airway Management & Support Oxygenation/Ventilation</li>
-                                <li>Obtain vital signs / assess for and treat shock</li>
-                                <li>Prevent Hypothermia</li>
+                        <li><strong>Target Population:</strong> Adult and Pediatric patients.[cite: 2]</li>
+                        <li><strong>Treatment Priorities:</strong> Ensure scene safety and protective equipment. Conduct a Primary Survey and initiate a "Trauma Alert" to the receiving ED if indicated.[cite: 2]</li>
+                    </ul>
+
+                    <h3>2. Treatment Steps by Scope of Practice</h3>
+                    <ul>
+                        <li><strong>[EMD]:</strong> If the chief complaint is traumatic, choose the protocol that best fits the foremost symptoms (priority symptoms take precedence). Address scene safety issues.[cite: 2]</li>
+                        <li><strong>[EMR/EMT]:</strong>
+                            <ul>
+                                <li><strong>Serious Hemorrhage Control:</strong> Apply tourniquet if indicated, utilize bandage/dressing/direct pressure, apply a pressure dressing (if equipped), and apply a topical hemostatic agent (if equipped).[cite: 2]</li>
+                                <li>Manage airway and support oxygenation/ventilation.[cite: 2]</li>
+                                <li>Obtain vital signs, assess for shock, and treat accordingly.[cite: 2]</li>
+                                <li>Prevent hypothermia.[cite: 2]</li>
                             </ul>
                         </li>
-                        <li><strong>EMT-I85 / AEMT:</strong>
-                            <ul class="mt-2">
-                                <li>Intubate if indicated</li>
-                                <li>IV/IO access if indicated</li>
-                                <li>Fluid bolus as directed by specific trauma protocol(s)</li>
+                        <li><strong>[AEMT]:</strong>
+                            <ul>
+                                <li>Intubate if indicated.[cite: 2]</li>
+                                <li>Establish IV/IO access if indicated.[cite: 2]</li>
+                                <li>Administer fluid bolus as directed by specific trauma protocol(s).[cite: 2]</li>
                             </ul>
                         </li>
-                        <li><strong>PARAMEDIC:</strong>
-                            <ul class="mt-2">
-                                <li>Cricothyrotomy if indicated</li>
-                                <li>Needle thoracostomy if tension pneumothorax suspected</li>
-                                <li>Continuous treatment and assessment per specific trauma protocol(s)</li>
+                        <li><strong>[Paramedic]:</strong>
+                            <ul>
+                                <li>Perform cricothyrotomy if indicated.[cite: 2]</li>
+                                <li>Perform needle thoracostomy if a tension pneumothorax is suspected.[cite: 2]</li>
+                                <li>Provide continuous treatment and assessment per specific trauma protocol(s).[cite: 2]</li>
                             </ul>
                         </li>
                     </ul>
 
-                    <h3>Clinical Operational Note</h3>
-                    <p>The practice of EMS medicine is built upon the foundation of "taking medical care to the patient". To achieve this objective, appropriate equipment (airway equipment kit, med/trauma equipment kit, suction device, patient packaging equipment) should be brought to the patient's side to minimize critical treatment delays in secondarily fetching equipment from the response apparatus.</p>
+                    <h3>3. Clinical Pearls & Cross-References</h3>
+                    <ul>
+                        <li><strong>Operational Note:</strong> Bring appropriate equipment (airway kit, med/trauma kit, suction, packaging equipment) directly to the patient's side to minimize critical treatment delays.[cite: 2]</li>
+                    </ul>
                 </div>
             `
         },
         {
             id: "1E",
-            title: "1E Neonatal Resuscitation Pediatric",
+            title: "1E: Neonatal Resuscitation - Pediatric",
             content: `
                 <div class="protocol-content">
-                    <div class="highlight-box">
-                        <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
-                        <ul>
-                            <li><strong>Preserve patient warmth</strong>/avoid hypothermia</li>
-                            <li><strong>Assessment:</strong> Primary Survey, Secondary Survey (when appropriate)</li>
-                            <li><strong>Primary Survey Care:</strong> Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation</li>
-                            <li><strong>Minimize scene time</strong> in critical case unless working cardiac arrest</li>
-                            <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Secondary Survey (if able)</li>
-                            <li><strong>Hospital</strong> per destination protocol</li>
-                        </ul>
-                    </div>
-                    
-                    <p>In general, approach the resuscitation of the newborn or infant within the first 30 days of life focusing on basic life support interventions. Invasive, advanced procedures are rarely warranted and are rarely more effective than simple, yet important basic interventions.</p>
-
+                    <h3>1. Overview & Scope</h3>
                     <ul>
-                        <li><strong>Warmth (Body Temperature Conservation):</strong> Due to high surface to body weight ratios, the neonate rapidly loses body heat which can lead to respiratory and circulatory distress. Keep the neonate warm and minimize skin exposures unless absolutely warranted.</li>
-                        <li><strong>Airway:</strong> Evaluate the patency and mechanics of the airway. Is the patient able to oxygenate and ventilate? Simple positioning intervention may be required if airway patency/protection is compromised.</li>
-                        <li><strong>Breathing:</strong> Briefly expose the chest as required to accurately assess mechanics of respiration. Note rate, depth, pattern, and effort. Auscultate breath sounds bilaterally in the axilla to avoid confusing sounds from the other side of the chest. Gentle tactile stimulation (e.g. rubbing back, flicking soles of feet) may be required early and often proves very effective. Liberally obtain pulse oximetry and waveform capnography (**Mandatory use if the patient is intubated).</li>
+                        <li><strong>Target Population:</strong> Newborns and infants within the first 30 days of life.[cite: 2]</li>
+                        <li><strong>Treatment Priorities:</strong> Preserve patient warmth/avoid hypothermia and focus on basic life support interventions. Invasive, advanced procedures are rarely warranted or more effective than simple basic interventions.[cite: 2]</li>
+                    </ul>
+
+                    <h3>2. General Supportive & Initial Assessment</h3>
+                    <ul>
+                        <li><strong>Warmth:</strong> Neonates rapidly lose body heat due to high surface-to-body weight ratios. Keep the neonate warm and minimize skin exposures.[cite: 2]</li>
+                        <li><strong>Airway & Breathing:</strong> Evaluate patency; simple positioning may be required. Briefly expose the chest to assess respirations. Gentle tactile stimulation (rubbing the back, flicking soles of feet) is often effective in improving breathing activity. Use pulse oximetry liberally and waveform capnography (mandatory if intubated).[cite: 2]</li>
+                        <li><strong>Circulation:</strong> Evaluate activity level, body warmth, and brachial pulse.[cite: 2]
+                            <ul>
+                                <li>Pulse rates &lt; 100/minute are abnormal and indicate impending cardiovascular collapse.[cite: 2]</li>
+                                <li>Pulse rates &lt; 60/minute indicate cardiovascular collapse; chest compressions should be initiated.[cite: 2]</li>
+                            </ul>
+                        </li>
+                        <li><strong>Blood Pressure:</strong> Blood pressure is difficult to measure and often unreliable in the field. Evaluate perfusion via activity level, skin temperature/color, capillary refill (normally &lt; 3 seconds), and muscular tone.[cite: 2]</li>
+                        <li><strong>APGAR Scoring:</strong> Obtain scores at 1 and 5 minutes post-birth. Continue every 5 minutes if the APGAR score is &lt; 7.[cite: 2]</li>
+                    </ul>
+
+                    <h3>3. Clinical Pearls & Cross-References</h3>
+                    <ul>
+                        <li><strong>Cardiac Arrest Exception:</strong> Aggressively initiate chest compressions while conserving warmth and initiating supplemental oxygenation/ventilation.[cite: 2]</li>
+                        <li><strong>APGAR Score Parameters:</strong>[cite: 2]
+                            <ul>
+                                <li><strong>Appearance:</strong> Blue/pale (0), Body pink/extremities blue (1), Completely pink (2).[cite: 2]</li>
+                                <li><strong>Pulse (Heart Rate):</strong> Absent (0), &le; 100 bpm (1), &gt; 100 bpm (2).[cite: 2]</li>
+                                <li><strong>Grimace (Reaction to catheter):</strong> No response (0), Grimace (1), Cough or sneeze (2).[cite: 2]</li>
+                                <li><strong>Activity (Muscle Tone):</strong> Limp (0), Some flexion (1), Active motion (2).[cite: 2]</li>
+                                <li><strong>Respiratory Rate:</strong> Absent (0), Slow/irregular (1), Good/crying (2).[cite: 2]</li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             `
