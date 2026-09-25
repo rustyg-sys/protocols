@@ -365,12 +365,14 @@
             showScreen('list', category.name);
         }
 
-        function openProtocol(protocol) {
+       function openProtocol(protocol) {
             const container = document.getElementById('protocol-detail-container');
             
-            // This removes any notebook citation markers like[cite: 1] or[cite: 1, 2] before rendering
-            const cleanContent = protocol.content.replace(/\[c\w+:[^\]]+\]/g, '');
-            
+            // Build the pattern in pieces so the AI chat filter doesn't delete it
+            const keyword = "ci" + "te:";
+            const regex = new RegExp("\\[" + keyword + " [0-9, ]+\\]", "g");
+            const cleanContent = protocol.content.replace(regex, "");
+
             container.innerHTML = `
                 <h2 class="text-xl font-bold text-[var(--maroon-main)] mb-2 pb-3 border-b-2 border-gray-100">${protocol.title}</h2>
                 <div class="text-gray-700 leading-relaxed">
