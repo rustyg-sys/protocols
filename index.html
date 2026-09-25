@@ -367,10 +367,14 @@
 
         function openProtocol(protocol) {
             const container = document.getElementById('protocol-detail-container');
+            
+            // This removes any notebook citation markers like[cite: 1] or[cite: 1, 2] before rendering
+            const cleanContent = protocol.content.replace(/\]+\]/g, '');
+
             container.innerHTML = `
                 <h2 class="text-xl font-bold text-[var(--maroon-main)] mb-2 pb-3 border-b-2 border-gray-100">${protocol.title}</h2>
                 <div class="text-gray-700 leading-relaxed">
-                    ${protocol.content}
+                    ${cleanContent}
                 </div>
             `;
             
