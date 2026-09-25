@@ -369,7 +369,7 @@
             const container = document.getElementById('protocol-detail-container');
             
             // This removes any notebook citation markers like[cite: 1] or[cite: 1, 2] before rendering
-            const cleanContent = protocol.content.replace(/\]+\]/g, '');
+            const cleanContent = protocol.content.replace(/\[c\w+:[^\]]+\]/g, '');
             
             container.innerHTML = `
                 <h2 class="text-xl font-bold text-[var(--maroon-main)] mb-2 pb-3 border-b-2 border-gray-100">${protocol.title}</h2>
