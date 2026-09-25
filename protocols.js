@@ -81,7 +81,7 @@ const protocolsDatabase = {
 
                     <h3>2. Treatment Steps by Scope of Practice</h3>
                     <ul>
-                        <li><strong>[EMT]:</strong>
+                        <li><strong>EMT:</strong>
                             <ul>
                                 <li>Manage the airway and support oxygenation/ventilation.</li>
                                 <li>Obtain vital signs.</li>
@@ -89,14 +89,14 @@ const protocolsDatabase = {
                                 <li>Measure End-Tidal CO2 and monitor waveform capnography (mandatory use if the patient is intubated).</li>
                             </ul>
                         </li>
-                        <li><strong>[AEMT]:</strong>
+                        <li><strong>AEMT:</strong>
                             <ul>
                                 <li>Intubate if indicated.</li>
                                 <li>Establish IV/IO access if indicated.</li>
                                 <li>Administer fluid bolus and medications as directed by specific medical protocol(s).</li>
                             </ul>
                         </li>
-                        <li><strong>[Paramedic]:</strong>
+                        <li><strong>Paramedic:</strong>
                             <ul>
                                 <li>Interpret 12-lead ECGs (when indicated and if equipped).</li>
                                 <li>Provide continuous treatment and assessment per specific medical protocol(s).</li>
@@ -119,7 +119,7 @@ const protocolsDatabase = {
 
                     <h3>2. Treatment Steps by Scope of Practice</h3>
                     <ul>
-                        <li><strong>[EMT]:</strong>
+                        <li><strong>EMT:</strong>
                             <ul>
                                 <li><strong>Serious Hemorrhage Control:</strong> Apply a tourniquet if indicated, utilize bandage/dressing/direct pressure, apply a pressure dressing (if equipped), and use a topical hemostatic agent if indicated and equipped.</li>
                                 <li>Manage the airway and support oxygenation/ventilation.</li>
@@ -127,14 +127,14 @@ const protocolsDatabase = {
                                 <li>Prevent hypothermia.</li>
                             </ul>
                         </li>
-                        <li><strong>[AEMT]:</strong>
+                        <li><strong>AEMT:</strong>
                             <ul>
                                 <li>Intubate if indicated.</li>
                                 <li>Establish IV/IO access if indicated.</li>
                                 <li>Administer a fluid bolus as directed by specific trauma protocol(s).</li>
                             </ul>
                         </li>
-                        <li><strong>[Paramedic]:</strong>
+                        <li><strong>Paramedic:</strong>
                             <ul>
                                 <li>Perform cricothyrotomy if indicated.</li>
                                 <li>Perform needle thoracostomy if a tension pneumothorax is suspected.</li>
