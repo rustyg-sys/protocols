@@ -3,158 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Math Calculator</title>
+    <title>Medication Bolus Calculator</title>
+    
+    <!-- Mobile App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* Custom styles to remove the number input spinners for a cleaner math look */
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
+        :root {
+            --maroon-main: #800020;
+            --grey-light: #f3f4f6;
         }
-        input[type=number] {
-            -moz-appearance: textfield;
-            font-family: 'Times New Roman', Times, serif; /* Mathematical serif font */
+        body {
+            background-color: var(--grey-light);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
         }
-        
-        .math-font {
-            font-family: 'Times New Roman', Times, serif;
-        }
-
-        /* Subtle focus glow for inputs */
-        .math-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-            border-color: #3b82f6;
+        .header-bar {
+            background-color: var(--maroon-main);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="flex flex-col min-h-screen">
 
-    <div class="bg-white shadow-xl rounded-2xl p-8 max-w-4xl w-full border border-gray-200">
+    <!-- Header with Back Button -->
+    <header class="header-bar p-3 sticky top-0 z-50 flex items-center justify-between">
+        <!-- Make sure href points back to your main app file -->
+        <a href="index.html" class="text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20 transition">
+            <i class="fa-solid fa-arrow-left text-xl"></i>
+        </a>
+        <h1 class="text-lg font-bold flex-1 text-center truncate pr-10">Medication Bolus</h1>
+    </header>
+
+    <!-- Calculator Main Container -->
+    <main class="flex-1 max-w-lg w-full mx-auto p-4">
         
-        <div class="mb-8 text-center">
-            <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Medication Dosage Calculator</h1>
-            <p class="text-gray-500 mt-2 text-sm">Enter the values below to automatically calculate the dose to give.</p>
-        </div>
-
-        <div class="flex flex-col md:flex-row items-center justify-center overflow-x-auto py-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 space-y-5">
+            <p class="text-sm text-gray-600 text-center mb-2">Enter parameters to calculate total dose and volume.</p>
             
-            <!-- Result Output Side -->
-            <div class="flex items-center text-xl md:text-2xl math-font text-blue-900 mb-6 md:mb-0 md:mr-6 whitespace-nowrap">
-                <span>Dose to give (mL)</span>
-                <span class="mx-3">=</span>
-                <span id="result-display" class="font-bold text-3xl text-blue-700 min-w-[3rem] text-center bg-blue-50 px-3 py-1 rounded border border-blue-100 shadow-inner">?</span>
+            <!-- Patient Weight -->
+            <div class="flex gap-3">
+                <div class="w-1/2">
+                    <label class="block text-xs font-bold text-[#800020] uppercase mb-1">Patient Weight</label>
+                    <input type="number" id="bolus-weight" oninput="calculateBolus()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#800020] focus:border-[#800020] block p-3" placeholder="Weight" min="0">
+                </div>
+                <div class="w-1/2">
+                    <label class="block text-xs font-bold text-[#800020] uppercase mb-1">Unit</label>
+                    <select id="bolus-unit" onchange="calculateBolus()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#800020] focus:border-[#800020] block p-3">
+                        <option value="kg">Kilograms (kg)</option>
+                        <option value="lbs">Pounds (lbs)</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="flex flex-col items-center">
-                
-                <!-- Numerator (Top of fraction) -->
-                <div class="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 border-b-2 border-black pb-3 w-full justify-center px-4">
-                    
-                    <div class="flex flex-col items-center">
-                        <input type="number" id="desired-dose" 
-                               class="math-input w-28 sm:w-32 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-gray-800 transition-all bg-gray-50" 
-                               placeholder="0" step="any">
-                        <label for="desired-dose" class="text-xs text-gray-500 mt-1 font-sans font-medium">Desired Dose</label>
-                    </div>
-
-                    <span class="text-2xl font-bold text-gray-700 math-font sm:pb-5">×</span>
-
-                    <div class="flex flex-col items-center">
-                        <input type="number" id="volume" 
-                               class="math-input w-28 sm:w-32 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-gray-800 transition-all bg-gray-50" 
-                               placeholder="0" step="any">
-                        <label for="volume" class="text-xs text-gray-500 mt-1 font-sans font-medium">Volume (mL)</label>
-                    </div>
-
-                </div>
-
-                <!-- Denominator (Bottom of fraction) -->
-                <div class="flex flex-col items-center pt-3 w-full px-4">
-                    <div class="flex flex-col items-center">
-                        <input type="number" id="dose-on-hand" 
-                               class="math-input w-36 sm:w-40 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-gray-800 transition-all bg-gray-50" 
-                               placeholder="0" step="any">
-                        <label for="dose-on-hand" class="text-xs text-gray-500 mt-1 font-sans font-medium">Dose on Hand</label>
+            <!-- Desired Dose -->
+            <div>
+                <label class="block text-xs font-bold text-[#800020] uppercase mb-1">Desired Dose (per kg)</label>
+                <div class="relative">
+                    <input type="number" id="bolus-dose" oninput="calculateBolus()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#800020] focus:border-[#800020] block p-3 pr-20" placeholder="e.g., 5" min="0">
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-500 font-bold">
+                        units/kg
                     </div>
                 </div>
+            </div>
 
+            <hr class="border-gray-200 my-2">
+
+            <!-- Medication Concentration -->
+            <div>
+                <label class="block text-xs font-bold text-[#800020] uppercase mb-1">Concentration On Hand</label>
+                <div class="flex items-center gap-3">
+                    <div class="w-1/2 relative">
+                        <input type="number" id="bolus-amount" oninput="calculateBolus()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#800020] focus:border-[#800020] block p-3 pr-10" placeholder="Amount" min="0">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500 text-xs font-bold">
+                            mg/mcg
+                        </div>
+                    </div>
+                    <span class="text-gray-400 font-bold text-xl">/</span>
+                    <div class="w-1/2 relative">
+                        <input type="number" id="bolus-volume" oninput="calculateBolus()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#800020] focus:border-[#800020] block p-3 pr-10" placeholder="Volume" min="0">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500 text-xs font-bold">
+                            mL
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Info / Error Message Area -->
-        <div id="message-area" class="mt-8 text-center min-h-[1.5rem] text-sm text-red-500 font-medium"></div>
+        <!-- Results Output Box -->
+        <div class="mt-5 bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-xl shadow-sm">
+            <h3 class="text-emerald-800 font-bold text-sm uppercase tracking-wider mb-3">Administration Guide</h3>
+            
+            <div class="flex justify-between items-end mb-3 pb-3 border-b border-emerald-200">
+                <span class="text-emerald-900 font-semibold">Total Dose:</span>
+                <span class="text-2xl font-black text-emerald-700"><span id="bolus-total-dose">0.00</span> <span class="text-base font-normal">units</span></span>
+            </div>
+            
+            <div class="flex justify-between items-end">
+                <span class="text-emerald-900 font-semibold">Volume to Administer:</span>
+                <span class="text-3xl font-black text-[#800020]"><span id="bolus-total-volume">0.00</span> <span class="text-lg font-normal text-emerald-700">mL</span></span>
+            </div>
+        </div>
+    </main>
 
-    </div>
-
+    <!-- Calculator Logic Script -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get DOM elements
-            const desiredDoseInput = document.getElementById('desired-dose');
-            const volumeInput = document.getElementById('volume');
-            const doseOnHandInput = document.getElementById('dose-on-hand');
-            const resultDisplay = document.getElementById('result-display');
-            const messageArea = document.getElementById('message-area');
+        function calculateBolus() {
+            // Grab values from inputs
+            const weight = parseFloat(document.getElementById('bolus-weight').value) || 0;
+            const isLbs = document.getElementById('bolus-unit').value === 'lbs';
+            const dosePerKg = parseFloat(document.getElementById('bolus-dose').value) || 0;
+            const amountOnHand = parseFloat(document.getElementById('bolus-amount').value) || 0;
+            const volumeOnHand = parseFloat(document.getElementById('bolus-volume').value) || 0;
 
-            // Array of inputs for easy event binding
-            const inputs = [desiredDoseInput, volumeInput, doseOnHandInput];
+            // Convert pounds to kg if necessary
+            const weightKg = isLbs ? (weight / 2.20462) : weight;
 
-            // Function to perform the calculation
-            function calculateDose() {
-                const desiredDose = parseFloat(desiredDoseInput.value);
-                const volume = parseFloat(volumeInput.value);
-                const doseOnHand = parseFloat(doseOnHandInput.value);
+            // Calculate Total Dose
+            const totalDose = weightKg * dosePerKg;
 
-                // Clear previous messages
-                messageArea.textContent = "";
-                messageArea.className = "mt-8 text-center min-h-[1.5rem] text-sm text-red-500 font-medium";
-
-                // Check if any input is empty or not a number
-                if (isNaN(desiredDose) || isNaN(volume) || isNaN(doseOnHand)) {
-                    resultDisplay.textContent = "?";
-                    resultDisplay.classList.add('text-blue-700');
-                    resultDisplay.classList.remove('text-green-600');
-                    return; // Wait for user to enter all fields
-                }
-
-                // Check for division by zero
-                if (doseOnHand === 0) {
-                    resultDisplay.textContent = "Error";
-                    messageArea.textContent = "Dose on hand cannot be zero.";
-                    return;
-                }
-                
-                // Prevent negative inputs just in case
-                if (desiredDose < 0 || volume < 0 || doseOnHand < 0) {
-                    resultDisplay.textContent = "Error";
-                    messageArea.textContent = "Values cannot be negative.";
-                    return;
-                }
-
-                // Perform the calculation: (Desired Dose * Volume) / Dose on Hand
-                const doseToGive = (desiredDose * volume) / doseOnHand;
-
-                // Format the output (up to 2 decimal places, remove trailing zeros)
-                // parseFloat is used to format 2.50 to 2.5, but keep 2.55 as 2.55
-                const formattedDose = parseFloat(doseToGive.toFixed(2));
-
-                // Update the UI
-                resultDisplay.textContent = formattedDose;
-                
-                // Add success color to result
-                resultDisplay.classList.remove('text-blue-700');
-                resultDisplay.classList.add('text-green-600');
-                
-                messageArea.className = "mt-8 text-center min-h-[1.5rem] text-sm text-green-600 font-medium";
-                messageArea.textContent = `Give ${formattedDose} mL`;
+            // Calculate Total Volume
+            let totalVolume = 0;
+            if (amountOnHand > 0 && volumeOnHand > 0) {
+                const concentration = amountOnHand / volumeOnHand;
+                totalVolume = totalDose / concentration;
             }
 
-            // Attach input event listeners to all fields to calculate in real-time
-            inputs.forEach(input => {
-                input.addEventListener('input', calculateDose);
-            });
-        });
+            // Update UI with 2 decimal places
+            document.getElementById('bolus-total-dose').innerText = totalDose > 0 ? totalDose.toFixed(2) : "0.00";
+            document.getElementById('bolus-total-volume').innerText = totalVolume > 0 ? totalVolume.toFixed(2) : "0.00";
+        }
     </script>
 </body>
 </html>
