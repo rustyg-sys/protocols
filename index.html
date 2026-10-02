@@ -6,54 +6,103 @@
     <title>EMS Protocol App</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Self-Contained Fallback & Tile Layout CSS -->
     <style>
         :root {
             --maroon-main: #800000;
             --maroon-dark: #600000;
-            --maroon-light: #fef2f2;
+            --maroon-light: #fff5f5;
+            --bg-gray: #f8fafc;
         }
 
-        .bg-maroon { background-color: var(--maroon-main); }
-        .text-maroon { color: var(--maroon-main); }
-        .border-maroon { border-color: var(--maroon-main); }
+        body {
+            background-color: var(--bg-gray);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
 
-        /* Custom Dashboard Card Tile Styling */
-        .bucket-grid {
+        /* 2-Column Responsive Dashboard Grid */
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.75rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.85rem;
+            padding: 0.25rem;
         }
 
         @media (min-width: 640px) {
-            .bucket-grid {
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
                 gap: 1rem;
             }
         }
 
-        .bucket-card {
-            background-color: #ffffff;
+        /* Graphic Card Tile Styling */
+        .bucket-tile {
+            background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-top: 4px solid var(--maroon-main);
-            border-radius: 0.75rem;
-            padding: 0.875rem 0.75rem;
+            border-radius: 0.85rem;
+            padding: 0.85rem 0.75rem;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             transition: all 0.2s ease-in-out;
             cursor: pointer;
             text-align: left;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid var(--maroon-main);
             width: 100%;
+            min-height: 95px;
+            box-sizing: border-box;
+            outline: none;
         }
 
-        .bucket-card:hover {
+        .bucket-tile:active {
+            transform: scale(0.97);
+        }
+
+        .bucket-tile:hover {
+            box-shadow: 0 6px 16px rgba(128, 0, 0, 0.12);
             border-color: #cbd5e1;
             border-top-color: var(--maroon-main);
-            box-shadow: 0 4px 12px rgba(128, 0, 0, 0.12);
-            transform: translateY(-2px);
         }
 
-        /* Custom styling for embedded protocol tables */
+        /* Icon Container */
+        .tile-icon-bg {
+            width: 36px;
+            height: 36px;
+            border-radius: 0.6rem;
+            background-color: var(--maroon-light);
+            color: var(--maroon-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.6rem;
+        }
+
+        /* Number Badge */
+        .tile-badge {
+            position: absolute;
+            top: 0.6rem;
+            right: 0.6rem;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #94a3b8;
+            background: #f1f5f9;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.35rem;
+        }
+
+        .bucket-tile:hover .tile-badge {
+            background-color: var(--maroon-main);
+            color: #ffffff;
+        }
+
+        /* Table & Content Typography Styles */
         .protocol-table {
             width: 100%;
             border-collapse: collapse;
@@ -70,7 +119,6 @@
             font-weight: 600;
         }
 
-        /* Standardized content typography */
         .protocol-content h3 {
             font-weight: 700;
             font-size: 1.125rem;
@@ -103,10 +151,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col font-sans">
+<body class="min-h-screen flex flex-col">
 
-    <!-- Header / Navbar -->
-    <header class="bg-maroon text-white sticky top-0 z-50 shadow-md">
+    <!-- Header Bar -->
+    <header class="bg-[#800000] text-white sticky top-0 z-50 shadow-md">
         <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <button id="back-btn" onclick="goBack()" class="hidden bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded text-sm font-semibold transition">
@@ -123,309 +171,241 @@
     <!-- Main Container -->
     <main class="flex-1 max-w-3xl w-full mx-auto p-3 sm:p-4">
 
-        <!-- SCREEN 1: BUCKET GRID (HOME) -->
+        <!-- SCREEN 1: GRAPHIC BUCKET TILES (HOME) -->
         <div id="screen-home" class="space-y-3">
             <div class="bg-white p-3.5 sm:p-5 rounded-xl shadow-sm border border-gray-200">
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between mb-4 px-1">
                     <h2 class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">Protocol Categories</h2>
-                    <span class="text-xs bg-red-50 text-maroon font-bold px-2 py-0.5 rounded-full border border-red-100">18 Buckets</span>
+                    <span class="text-xs bg-red-50 text-[#800000] font-bold px-2 py-0.5 rounded-full border border-red-100">18 Buckets</span>
                 </div>
                 
-                <div class="bucket-grid">
-                    <!-- Bucket 1 -->
-                    <button onclick="openBucket(1)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                01
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">ASSESSMENT</span>
-                            </div>
+                <div class="dashboard-grid">
+                    
+                    <!-- 1. ASSESSMENT -->
+                    <button onclick="openBucket(1)" class="bucket-tile">
+                        <span class="tile-badge">#01</span>
+                        <div class="tile-icon-bg">
+                            <!-- Clipboard / Assessment SVG -->
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 01</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">ASSESSMENT</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 2 -->
-                    <button onclick="openBucket(2)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                02
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">AIRWAY</span>
-                            </div>
+                    <!-- 2. AIRWAY -->
+                    <button onclick="openBucket(2)" class="bucket-tile">
+                        <span class="tile-badge">#02</span>
+                        <div class="tile-icon-bg">
+                            <!-- Airway / Mask SVG -->
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 02</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">AIRWAY</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 3 -->
-                    <button onclick="openBucket(3)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                03
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 3</span>
-                            </div>
+                    <!-- 3. BUCKET 3 -->
+                    <button onclick="openBucket(3)" class="bucket-tile">
+                        <span class="tile-badge">#03</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 03</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 3</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 4 -->
-                    <button onclick="openBucket(4)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                04
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 4</span>
-                            </div>
+                    <!-- 4. BUCKET 4 -->
+                    <button onclick="openBucket(4)" class="bucket-tile">
+                        <span class="tile-badge">#04</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 04</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 4</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 5 -->
-                    <button onclick="openBucket(5)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                05
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 5</span>
-                            </div>
+                    <!-- 5. BUCKET 5 -->
+                    <button onclick="openBucket(5)" class="bucket-tile">
+                        <span class="tile-badge">#05</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 05</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 5</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 6 -->
-                    <button onclick="openBucket(6)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                06
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 6</span>
-                            </div>
+                    <!-- 6. BUCKET 6 -->
+                    <button onclick="openBucket(6)" class="bucket-tile">
+                        <span class="tile-badge">#06</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 06</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 6</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 7 -->
-                    <button onclick="openBucket(7)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                07
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 7</span>
-                            </div>
+                    <!-- 7. BUCKET 7 -->
+                    <button onclick="openBucket(7)" class="bucket-tile">
+                        <span class="tile-badge">#07</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 07</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 7</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 8 -->
-                    <button onclick="openBucket(8)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                08
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 8</span>
-                            </div>
+                    <!-- 8. BUCKET 8 -->
+                    <button onclick="openBucket(8)" class="bucket-tile">
+                        <span class="tile-badge">#08</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 08</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 8</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 9 -->
-                    <button onclick="openBucket(9)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                09
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 9</span>
-                            </div>
+                    <!-- 9. BUCKET 9 -->
+                    <button onclick="openBucket(9)" class="bucket-tile">
+                        <span class="tile-badge">#09</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 09</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 9</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 10 -->
-                    <button onclick="openBucket(10)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                10
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 10</span>
-                            </div>
+                    <!-- 10. BUCKET 10 -->
+                    <button onclick="openBucket(10)" class="bucket-tile">
+                        <span class="tile-badge">#10</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 10</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 10</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 11 -->
-                    <button onclick="openBucket(11)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                11
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 11</span>
-                            </div>
+                    <!-- 11. BUCKET 11 -->
+                    <button onclick="openBucket(11)" class="bucket-tile">
+                        <span class="tile-badge">#11</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 11</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 11</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 12 -->
-                    <button onclick="openBucket(12)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                12
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 12</span>
-                            </div>
+                    <!-- 12. BUCKET 12 -->
+                    <button onclick="openBucket(12)" class="bucket-tile">
+                        <span class="tile-badge">#12</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 12</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 12</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 13 -->
-                    <button onclick="openBucket(13)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                13
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 13</span>
-                            </div>
+                    <!-- 13. BUCKET 13 -->
+                    <button onclick="openBucket(13)" class="bucket-tile">
+                        <span class="tile-badge">#13</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 13</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 13</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 14 -->
-                    <button onclick="openBucket(14)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                14
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 14</span>
-                            </div>
+                    <!-- 14. BUCKET 14 -->
+                    <button onclick="openBucket(14)" class="bucket-tile">
+                        <span class="tile-badge">#14</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 14</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 14</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 15 -->
-                    <button onclick="openBucket(15)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                15
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 15</span>
-                            </div>
+                    <!-- 15. BUCKET 15 -->
+                    <button onclick="openBucket(15)" class="bucket-tile">
+                        <span class="tile-badge">#15</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 15</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 15</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 16 -->
-                    <button onclick="openBucket(16)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                16
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 16</span>
-                            </div>
+                    <!-- 16. BUCKET 16 -->
+                    <button onclick="openBucket(16)" class="bucket-tile">
+                        <span class="tile-badge">#16</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 16</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 16</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 17 -->
-                    <button onclick="openBucket(17)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                17
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 17</span>
-                            </div>
+                    <!-- 17. BUCKET 17 -->
+                    <button onclick="openBucket(17)" class="bucket-tile">
+                        <span class="tile-badge">#17</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 17</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 17</span>
                         </div>
                     </button>
 
-                    <!-- Bucket 18 -->
-                    <button onclick="openBucket(18)" class="bucket-card group">
-                        <div class="flex items-center space-x-2.5 overflow-hidden">
-                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
-                                18
-                            </div>
-                            <div class="truncate">
-                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
-                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 18</span>
-                            </div>
+                    <!-- 18. BUCKET 18 -->
+                    <button onclick="openBucket(18)" class="bucket-tile">
+                        <span class="tile-badge">#18</span>
+                        <div class="tile-icon-bg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
-                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
-                            &rarr;
+                        <div>
+                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 18</span>
+                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 18</span>
                         </div>
                     </button>
+
                 </div>
             </div>
         </div>
 
         <!-- SCREEN 2: PROTOCOL LIST -->
         <div id="screen-list" class="hidden space-y-3">
-            <h2 id="bucket-title" class="text-xl font-bold text-maroon pb-2 border-b-2 border-gray-200">Category Protocols</h2>
+            <h2 id="bucket-title" class="text-xl font-bold text-[#800000] pb-2 border-b-2 border-gray-200">Category Protocols</h2>
             <div id="protocol-list" class="space-y-2">
                 <!-- Dynamically populated -->
             </div>
@@ -528,17 +508,17 @@
             } else {
                 protocols.forEach(p => {
                     const btn = document.createElement('button');
-                    btn.className = "w-full text-left p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:border-maroon transition flex justify-between items-center group";
+                    btn.className = "w-full text-left p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:border-[#800000] transition flex justify-between items-center group";
                     btn.onclick = () => openProtocol(p);
                     
                     const cleanTitle = p.title.includes(': ') ? p.title.split(': ').slice(1).join(': ') : p.title;
 
                     btn.innerHTML = `
                         <div>
-                            <span class="font-bold text-maroon block text-base">${p.id}</span>
+                            <span class="font-bold text-[#800000] block text-base">${p.id}</span>
                             <span class="text-sm text-gray-700">${cleanTitle}</span>
                         </div>
-                        <span class="text-gray-400 group-hover:text-maroon font-bold">&rarr;</span>
+                        <span class="text-gray-400 group-hover:text-[#800000] font-bold">&rarr;</span>
                     `;
                     listContainer.appendChild(btn);
                 });
@@ -556,7 +536,7 @@
             const cleanContent = protocol.content.replace(regex, "");
 
             container.innerHTML = `
-                <h2 class="text-xl font-bold text-maroon mb-3 pb-2 border-b-2 border-gray-100">${protocol.title}</h2>
+                <h2 class="text-xl font-bold text-[#800000] mb-3 pb-2 border-b-2 border-gray-100">${protocol.title}</h2>
                 <div class="text-gray-800 leading-relaxed">
                     ${cleanContent}
                 </div>
