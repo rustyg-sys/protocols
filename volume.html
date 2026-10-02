@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IV Drip Rate Calculator</title>
+    
+    <!-- Mobile App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --maroon-main: #800020;
+            --grey-light: #f3f4f6;
+        }
+        body {
+            background-color: var(--grey-light);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+        }
+        .header-bar {
+            background-color: var(--maroon-main);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom styles to remove the number input spinners for a cleaner math look */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            font-family: 'Times New Roman', Times, serif; /* Mathematical serif font */
+        }
+        
+        .math-font {
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        /* Subtle focus glow for inputs - Updated to Maroon */
+        .math-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.3);
+            border-color: var(--maroon-main);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header with Back Button -->
+    <header class="header-bar p-3 sticky top-0 z-50 flex items-center justify-between">
+        <!-- Links back to the main app interface -->
+        <a href="index.html" class="text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20 transition">
+            <i class="fa-solid fa-arrow-left text-xl"></i>
+        </a>
+        <h1 class="text-lg font-bold flex-1 text-center truncate pr-10">IV Drip Rate</h1>
+    </header>
+
+    <!-- Calculator Main Container -->
+    <main class="flex-1 w-full mx-auto p-4 flex items-start justify-center pt-8">
+
+        <div class="bg-white shadow-xl rounded-2xl p-6 sm:p-8 max-w-4xl w-full border border-gray-200">
+            
+            <div class="mb-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 tracking-tight">IV Drip Rate Calculator</h2>
+                <p class="text-gray-500 mt-2 text-sm">Enter the values below to automatically calculate the drops per minute.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row items-center justify-center overflow-x-auto py-6">
+                
+                <!-- Result Output Side -->
+                <div class="flex items-center text-xl md:text-2xl math-font text-gray-700 mb-8 lg:mb-0 lg:mr-6 whitespace-nowrap">
+                    <span>gtt/min</span>
+                    <span class="mx-3">=</span>
+                    <!-- Output span uses maroon initially, turns emerald on success -->
+                    <span id="result-display" class="font-bold text-3xl text-[var(--maroon-main)] min-w-[3rem] text-center bg-gray-50 px-3 py-1 rounded border border-gray-200 shadow-inner transition-colors">?</span>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    
+                    <!-- Numerator (Top of fraction) -->
+                    <div class="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 border-b-2 border-black pb-3 w-full justify-center px-4">
+                        
+                        <div class="flex flex-col items-center">
+                            <input type="number" id="total-volume" 
+                                   class="math-input w-28 sm:w-36 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                                   placeholder="0" step="any">
+                            <label for="total-volume" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider">Total Volume (mL)</label>
+                        </div>
+
+                        <span class="text-2xl font-bold text-gray-700 math-font sm:pb-5">×</span>
+
+                        <div class="flex flex-col items-center">
+                            <input type="number" id="drop-factor" 
+                                   class="math-input w-28 sm:w-36 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                                   placeholder="0" step="any">
+                            <label for="drop-factor" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider">Drop Factor (gtt/mL)</label>
+                        </div>
+
+                    </div>
+
+                    <!-- Denominator (Bottom of fraction) -->
+                    <div class="flex flex-col items-center pt-3 w-full px-4">
+                        <div class="flex flex-col items-center">
+                            <input type="number" id="time" 
+                                   class="math-input w-36 sm:w-48 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                                   placeholder="0" step="any">
+                            <label for="time" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider">Time (min)</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Info / Error Message Area -->
+            <div id="message-area" class="mt-4 text-center min-h-[1.5rem] text-sm text-red-500 font-medium transition-colors"></div>
+
+        </div>
+
+    </main>
+
+    <!-- Calculator Logic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get DOM elements
+            const totalVolumeInput = document.getElementById('total-volume');
+            const dropFactorInput = document.getElementById('drop-factor');
+            const timeInput = document.getElementById('time');
+            const resultDisplay = document.getElementById('result-display');
+            const messageArea = document.getElementById('message-area');
+
+            // Array of inputs for easy event binding
+            const inputs = [totalVolumeInput, dropFactorInput, timeInput];
+
+            // Function to perform the calculation
+            function calculateDripRate() {
+                const totalVolume = parseFloat(totalVolumeInput.value);
+                const dropFactor = parseFloat(dropFactorInput.value);
+                const time = parseFloat(timeInput.value);
+
+                // Clear previous messages
+                messageArea.textContent = "";
+                messageArea.className = "mt-4 text-center min-h-[1.5rem] text-sm text-red-500 font-medium transition-colors";
+
+                // Check if any input is empty or not a number
+                if (isNaN(totalVolume) || isNaN(dropFactor) || isNaN(time)) {
+                    resultDisplay.textContent = "?";
+                    resultDisplay.classList.add('text-[var(--maroon-main)]');
+                    resultDisplay.classList.remove('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+                    resultDisplay.classList.add('bg-gray-50', 'border-gray-200');
+                    return; // Wait for user to enter all fields
+                }
+
+                // Check for division by zero (Time cannot be 0)
+                if (time === 0) {
+                    resultDisplay.textContent = "Error";
+                    messageArea.textContent = "Time (min) cannot be zero.";
+                    return;
+                }
+                
+                // Prevent negative inputs just in case
+                if (totalVolume < 0 || dropFactor < 0 || time < 0) {
+                    resultDisplay.textContent = "Error";
+                    messageArea.textContent = "Values cannot be negative.";
+                    return;
+                }
+
+                // Perform the calculation: (Total Volume * Drop Factor) / Time
+                const dripRate = (totalVolume * dropFactor) / time;
+
+                // Format the output (Round to the nearest whole number for drops)
+                const formattedRate = Math.round(dripRate);
+
+                // Update the UI
+                resultDisplay.textContent = formattedRate;
+                
+                // Add success color to result
+                resultDisplay.classList.remove('text-[var(--maroon-main)]', 'bg-gray-50', 'border-gray-200');
+                resultDisplay.classList.add('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+                
+                messageArea.className = "mt-4 text-center min-h-[1.5rem] text-sm text-emerald-600 font-bold tracking-wide transition-colors";
+                messageArea.textContent = `Set IV rate to ${formattedRate} drops per minute.`;
+            }
+
+            // Attach input event listeners to all fields to calculate in real-time
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateDripRate);
+            });
+        });
+    </script>
+</body>
+</html>
