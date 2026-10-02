@@ -3,393 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCTC EMS Protocols</title>
-    
-    <!-- Mobile App Meta Tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="GCTC EMS">
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="icon" type="image/png" href="icon.png">
-
+    <title>EMS Protocol App</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom Maroon & Grey Color Palette */
         :root {
-            --maroon-dark: #630015;
-            --maroon-main: #800020;
-            --maroon-light: #a31535;
-            --grey-dark: #4b5563;
-            --grey-main: #9ca3af;
-            --grey-light: #f3f4f6;
-        }
-        
-        body {
-            background-color: var(--grey-light);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            overflow-x: hidden;
+            --maroon-main: #800000;
+            --maroon-dark: #600000;
         }
 
-        /* Splash Screen Styles */
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #ffffff;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease-out;
-        }
-        
-        .splash-logo {
-            width: 70%;
-            max-width: 350px;
-            margin-bottom: 30px;
-            animation: pulse 2s infinite ease-in-out;
-        }
+        .bg-maroon { background-color: var(--maroon-main); }
+        .text-maroon { color: var(--maroon-main); }
+        .border-maroon { border-color: var(--maroon-main); }
 
-        .loading-bar-container {
-            width: 60%;
-            max-width: 250px;
-            height: 6px;
-            background-color: var(--grey-light);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid var(--grey-main);
-        }
-
-        .loading-bar {
-            height: 100%;
-            width: 0%;
-            background-color: var(--maroon-main);
-            animation: load 2s forwards ease-in-out;
-        }
-
-        .loading-text {
-            color: var(--maroon-main);
-            margin-top: 10px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            font-size: 0.875rem;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes load {
-            0% { width: 0%; }
-            50% { width: 60%; }
-            100% { width: 100%; }
-        }
-
-        /* App Styles */
-        .header-bar {
-            background-color: var(--maroon-main);
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        
-        .top-logo-container {
-            background-color: white;
-            padding: 10px;
-            text-align: center;
-            border-bottom: 3px solid var(--maroon-main);
-        }
-
-        .top-logo {
-            max-height: 70px;
-            margin: 0 auto;
-        }
-
-        .bucket-btn {
-            background-color: white;
-            border-left: 5px solid var(--maroon-main);
-            color: var(--grey-dark);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-        }
-        
-        .bucket-btn:active {
-            transform: scale(0.98);
-            background-color: var(--grey-light);
-        }
-
-        .bucket-icon {
-            color: var(--maroon-main);
-        }
-
-        .protocol-item {
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .protocol-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Formatted Content Styles inside Protocols */
-        .protocol-content h3 {
-            color: var(--maroon-main);
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid var(--grey-main);
-            padding-bottom: 0.25rem;
-        }
-        .protocol-content ul, .protocol-content ol {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-        }
-        .protocol-content li {
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
-        }
-        .protocol-content ul {
-            list-style-type: disc;
-        }
-        .protocol-content p {
-            margin-bottom: 0.75rem;
-        }
+        /* Custom styling for embedded protocol tables */
         .protocol-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
         }
         .protocol-table th, .protocol-table td {
-            border: 1px solid var(--grey-main);
-            padding: 0.5rem;
-            text-align: left;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 0.75rem;
         }
         .protocol-table th {
-            background-color: var(--grey-light);
-            font-weight: bold;
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-weight: 600;
         }
-        .highlight-box {
-            background-color: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 0.25rem;
+
+        /* Standardized content typography */
+        .protocol-content h3 {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--maroon-main);
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 0.25rem;
+        }
+        .protocol-content h4 {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #334155;
+            margin-top: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .protocol-content ul {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .protocol-content ul ul {
+            list-style-type: circle;
+            padding-left: 1.25rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .protocol-content li {
+            margin-bottom: 0.35rem;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col font-sans">
 
-    <!-- Splash Screen -->
-    <div id="splash-screen">
-        <img src="GCTC coin 9.png" alt="Paramedic Coin Logo" class="splash-logo" onerror="this.src='https://via.placeholder.com/350?text=Logo+Missing'">
-        <div class="loading-bar-container">
-            <div class="loading-bar"></div>
-        </div>
-        <div class="loading-text">LOADING PROTOCOLS...</div>
-    </div>
-
-    <!-- Main App Container -->
-    <div id="app-container" style="display: none; opacity: 0; transition: opacity 0.5s ease-in;">
-        
-        <!-- School Logo Header -->
-        <div class="top-logo-container">
-            <img src="GCTCLogo_4color2 Transperant smaller.png" alt="GCTC Logo" class="top-logo" onerror="this.src='https://via.placeholder.com/300x70?text=GCTC+Logo'">
-        </div>
-
-        <!-- Navigation Header -->
-        <header class="header-bar p-3 sticky top-0 z-50 flex items-center justify-between">
-            <button id="back-btn" class="text-white hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20">
-                <i class="fa-solid fa-arrow-left text-xl"></i>
+    <!-- Header / Navbar -->
+    <header class="bg-maroon text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <button id="back-btn" onclick="goBack()" class="hidden bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded text-sm font-semibold transition">
+                    &larr; Back
+                </button>
+                <h1 id="app-header-title" class="text-lg font-bold tracking-wide">EMS PROTOCOLS</h1>
+            </div>
+            <button onclick="showScreen('home')" class="text-xs bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded transition">
+                Home
             </button>
-            <h1 id="screen-title" class="text-lg font-bold flex-1 text-center truncate px-2">Categories</h1>
-            <button id="home-btn" class="text-white hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20">
-                <i class="fa-solid fa-house text-xl"></i>
-            </button>
-            <div id="header-spacer" class="w-10"></div>
-        </header>
+        </div>
+    </header>
 
-        <!-- Screen 1: Categories -->
-        <main id="categories-screen" class="p-4 pb-12">
-            <div class="grid grid-cols-2 gap-3" id="categories-grid">
-                <!-- Injected by JS -->
+    <!-- Main Container -->
+    <main class="flex-1 max-w-3xl w-full mx-auto p-4">
+
+        <!-- SCREEN 1: BUCKET GRID (HOME) -->
+        <div id="screen-home" class="space-y-4">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Protocol Categories</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button onclick="openBucket(1)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">1. ASSESSMENT</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+                    
+                    <button onclick="openBucket(2)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">2. AIRWAY</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(3)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">3. BUCKET 3</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(4)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">4. BUCKET 4</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(5)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">5. BUCKET 5</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(6)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">6. BUCKET 6</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(7)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">7. BUCKET 7</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(8)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">8. BUCKET 8</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(9)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">9. BUCKET 9</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(10)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">10. BUCKET 10</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(11)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">11. BUCKET 11</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(12)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">12. BUCKET 12</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(13)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">13. BUCKET 13</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(14)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">14. BUCKET 14</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(15)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">15. BUCKET 15</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(16)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">16. BUCKET 16</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(17)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">17. BUCKET 17</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+
+                    <button onclick="openBucket(18)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
+                        <span class="font-bold text-gray-800 group-hover:text-maroon">18. BUCKET 18</span>
+                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    </button>
+                </div>
             </div>
-        </main>
+        </div>
 
-        <!-- Screen 2: Protocol List -->
-        <main id="protocol-list-screen" class="p-4 pb-12 hidden">
-            <div class="bg-white rounded-lg shadow-sm overflow-hidden" id="protocol-list-container">
-                <!-- Injected by JS -->
+        <!-- SCREEN 2: PROTOCOL LIST -->
+        <div id="screen-list" class="hidden space-y-3">
+            <h2 id="bucket-title" class="text-xl font-bold text-maroon pb-2 border-b-2 border-gray-200">Category Protocols</h2>
+            <div id="protocol-list" class="space-y-2">
+                <!-- Dynamically populated -->
             </div>
-        </main>
+        </div>
 
-        <!-- Screen 3: Protocol Detail -->
-        <main id="protocol-detail-screen" class="p-4 pb-12 hidden">
-            <div class="bg-white rounded-lg shadow-sm p-4" id="protocol-detail-container">
-                <!-- Injected by JS -->
+        <!-- SCREEN 3: PROTOCOL DETAIL -->
+        <div id="screen-detail" class="hidden">
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                <div id="protocol-detail-container">
+                    <!-- Dynamically populated -->
+                </div>
             </div>
-        </main>
+        </div>
 
-    </div>
-<script src="protocols.js"></script>
-<script src="bucket1.js"></script>
-<script src="bucket2.js"></script>
+    </main>
+
+    <!-- Global Database Container -->
+    <script src="protocols.js"></script>
+
+    <!-- Bucket Scripts (1 - 18) -->
+    <script src="bucket1.js"></script>
+    <script src="bucket2.js"></script>
+    <script src="bucket3.js"></script>
+    <script src="bucket4.js"></script>
+    <script src="bucket5.js"></script>
+    <script src="bucket6.js"></script>
+    <script src="bucket7.js"></script>
+    <script src="bucket8.js"></script>
+    <script src="bucket9.js"></script>
+    <script src="bucket10.js"></script>
+    <script src="bucket11.js"></script>
+    <script src="bucket12.js"></script>
+    <script src="bucket13.js"></script>
+    <script src="bucket14.js"></script>
+    <script src="bucket15.js"></script>
+    <script src="bucket16.js"></script>
+    <script src="bucket17.js"></script>
+    <script src="bucket18.js"></script>
+
+    <!-- Application UI Controller Logic -->
     <script>
-        // Splash Screen Logic
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                const app = document.getElementById('app-container');
-                
-                splash.style.opacity = '0';
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                    app.style.display = 'block';
-                    void app.offsetWidth; 
-                    app.style.opacity = '1';
-                }, 500);
-            }, 2500);
-        });
-
-       // The 18 Categories
-        const categories = [
-            { id: 1, name: "ASSESSMENT", icon: "fa-clipboard-list" },
-            { id: 2, name: "AIRWAY", icon: "fa-head-side-mask" },
-            { id: 3, name: "RESPIRATORY", icon: "fa-lungs" },
-            { id: 4, name: "CARDIAC ARREST", icon: "fa-heart-crack" },
-            { id: 5, name: "CARDIAC", icon: "fa-heart-pulse" },
-            { id: 6, name: "NEURO/AMS", icon: "fa-brain" },
-            { id: 7, name: "TOXIC/POISON", icon: "fa-skull-crossbones" },
-            { id: 8, name: "MEDICAL", icon: "fa-staff-snake" },
-            { id: 9, name: "TRAUMA", icon: "fa-bandage" },
-            { id: 10, name: "ENVIRONMENTAL", icon: "fa-temperature-half" },
-            { id: 11, name: "OB/GYN", icon: "fa-person-pregnant" },
-            { id: 12, name: "OPERATIONS", icon: "fa-gears" },
-            { id: 13, name: "MASS CASUALTY", icon: "fa-users" },
-            { id: 14, name: "MEDICATIONS", icon: "fa-pills" },
-            { id: 15, name: "DRUG MATH", icon: "fa-calculator" },
-            { id: 16, name: "WEIGHTS & MEASURES", icon: "fa-scale-balanced" },
-            { id: 17, name: "PROCEDURES", icon: "fa-syringe" },
-            { id: 18, name: "INFO/LINKS", icon: "fa-circle-info" }
-        ];
-
-        // DOM Elements
-        const screens = {
-            categories: document.getElementById('categories-screen'),
-            list: document.getElementById('protocol-list-screen'),
-            detail: document.getElementById('protocol-detail-screen')
+        const bucketNames = {
+            1: "1. ASSESSMENT",
+            2: "2. AIRWAY",
+            3: "3. BUCKET 3",
+            4: "4. BUCKET 4",
+            5: "5. BUCKET 5",
+            6: "6. BUCKET 6",
+            7: "7. BUCKET 7",
+            8: "8. BUCKET 8",
+            9: "9. BUCKET 9",
+            10: "10. BUCKET 10",
+            11: "11. BUCKET 11",
+            12: "12. BUCKET 12",
+            13: "13. BUCKET 13",
+            14: "14. BUCKET 14",
+            15: "15. BUCKET 15",
+            16: "16. BUCKET 16",
+            17: "17. BUCKET 17",
+            18: "18. BUCKET 18"
         };
-        const backBtn = document.getElementById('back-btn');
-        const homeBtn = document.getElementById('home-btn');
-        const screenTitle = document.getElementById('screen-title');
-        const headerSpacer = document.getElementById('header-spacer');
-        
-        let currentCategory = null;
 
-        // Initialize Categories UI
-        function initCategories() {
-            const grid = document.getElementById('categories-grid');
-            grid.innerHTML = '';
-            
-            categories.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.className = 'bucket-btn w-full rounded-lg p-4 flex flex-col items-center justify-center gap-3 h-28';
-                btn.onclick = () => openCategory(cat);
-                
-                btn.innerHTML = `
-                    <i class="fa-solid ${cat.icon} text-3xl bucket-icon"></i>
-                    <span class="text-xs font-bold text-center leading-tight uppercase">${cat.name}</span>
-                `;
-                grid.appendChild(btn);
-            });
-        }
+        let currentScreen = 'home';
 
-        // Navigation Functions
-        function showScreen(screenName, title) {
-            Object.values(screens).forEach(s => s.classList.add('hidden'));
-            screens[screenName].classList.remove('hidden');
-            
-            screenTitle.textContent = title;
-            window.scrollTo(0, 0);
+        function showScreen(screen) {
+            document.getElementById('screen-home').classList.add('hidden');
+            document.getElementById('screen-list').classList.add('hidden');
+            document.getElementById('screen-detail').classList.add('hidden');
 
-            if (screenName === 'categories') {
+            document.getElementById(`screen-${screen}`).classList.remove('hidden');
+            currentScreen = screen;
+
+            const backBtn = document.getElementById('back-btn');
+            const appTitle = document.getElementById('app-header-title');
+
+            if (screen === 'home') {
                 backBtn.classList.add('hidden');
-                homeBtn.classList.add('hidden');
-                headerSpacer.classList.remove('hidden');
-            } else if (screenName === 'list') {
+                appTitle.innerText = "EMS PROTOCOLS";
+            } else {
                 backBtn.classList.remove('hidden');
-                homeBtn.classList.remove('hidden');
-                headerSpacer.classList.add('hidden');
-                backBtn.onclick = () => showScreen('categories', 'Categories');
-            } else if (screenName === 'detail') {
-                backBtn.classList.remove('hidden');
-                homeBtn.classList.remove('hidden');
-                headerSpacer.classList.add('hidden');
-                backBtn.onclick = () => showScreen('list', currentCategory.name);
             }
+
+            window.scrollTo(0, 0);
         }
 
-        function openCategory(category) {
-            currentCategory = category;
-            const container = document.getElementById('protocol-list-container');
-            container.innerHTML = '';
+        function openBucket(bucketId) {
+            const protocols = protocolsDatabase[bucketId] || [];
+            const listContainer = document.getElementById('protocol-list');
+            const bucketTitleEl = document.getElementById('bucket-title');
 
-            const protocols = protocolsDatabase[category.id] || [];
+            bucketTitleEl.innerText = bucketNames[bucketId] || `Bucket ${bucketId}`;
+            listContainer.innerHTML = '';
 
             if (protocols.length === 0) {
-                container.innerHTML = `
-                    <div class="p-8 text-center text-gray-500">
-                        <i class="fa-regular fa-folder-open text-4xl mb-3 text-gray-300"></i>
-                        <p>No protocols have been added to this category yet.</p>
+                listContainer.innerHTML = `
+                    <div class="p-6 text-center text-gray-500 bg-white rounded-xl border border-gray-200">
+                        No protocols loaded in this bucket yet.
                     </div>
                 `;
             } else {
-                protocols.forEach(protocol => {
-                    const item = document.createElement('div');
-                    item.className = 'protocol-item p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 active:bg-gray-100';
-                    item.onclick = () => openProtocol(protocol);
+                protocols.forEach(p => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:border-maroon transition flex justify-between items-center group";
+                    btn.onclick = () => openProtocol(p);
                     
-                    item.innerHTML = `
-                        <span class="font-semibold text-gray-800 pr-4">${protocol.title}</span>
-                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    const cleanTitle = p.title.includes(': ') ? p.title.split(': ').slice(1).join(': ') : p.title;
+
+                    btn.innerHTML = `
+                        <div>
+                            <span class="font-bold text-maroon block text-base">${p.id}</span>
+                            <span class="text-sm text-gray-700">${cleanTitle}</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-maroon font-bold">&rarr;</span>
                     `;
-                    container.appendChild(item);
+                    listContainer.appendChild(btn);
                 });
             }
 
-            showScreen('list', category.name);
+            showScreen('list');
         }
 
-       function openProtocol(protocol) {
+        function openProtocol(protocol) {
             const container = document.getElementById('protocol-detail-container');
             
-            // Build the pattern in pieces so the AI chat filter doesn't delete it
+            // Clean citations as a failsafe
             const keyword = "ci" + "te:";
             const regex = new RegExp("\\[" + keyword + " [0-9, ]+\\]", "g");
             const cleanContent = protocol.content.replace(regex, "");
 
             container.innerHTML = `
-                <h2 class="text-xl font-bold text-[var(--maroon-main)] mb-2 pb-3 border-b-2 border-gray-100">${protocol.title}</h2>
-                <div class="text-gray-700 leading-relaxed">
+                <h2 class="text-xl font-bold text-maroon mb-3 pb-2 border-b-2 border-gray-100">${protocol.title}</h2>
+                <div class="text-gray-800 leading-relaxed">
                     ${cleanContent}
                 </div>
             `;
             
-            showScreen('detail', protocol.id);
+            showScreen('detail');
         }
 
-        // Setup Home Button
-        homeBtn.onclick = () => showScreen('categories', 'Categories');
-
-        // Start App
-        initCategories();
+        function goBack() {
+            if (currentScreen === 'detail') {
+                showScreen('list');
+            } else if (currentScreen === 'list') {
+                showScreen('home');
+            }
+        }
     </script>
 </body>
 </html>
