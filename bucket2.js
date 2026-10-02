@@ -54,20 +54,20 @@ protocolsDatabase[2] = [
                 <h4 class="font-bold mt-4 mb-2">Mallampati Scoring Visual Guide</h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 text-sm">
                     <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg">
-                        <span class="font-bold text-emerald-800">Class 1</span>
-                        <p class="text-gray-700 mt-1">Entire posterior pharynx is fully exposed (Grade 1 laryngeal view).</p>
+                        <span class="font-bold text-emerald-800">Class 1 (Grade 1)</span>
+                        <p class="text-gray-700 mt-1">Entire posterior pharynx is fully exposed.</p>
                     </div>
                     <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg">
-                        <span class="font-bold text-emerald-800">Class 2</span>
-                        <p class="text-gray-700 mt-1">Posterior pharynx is partially exposed (Grade 2 laryngeal view).</p>
+                        <span class="font-bold text-emerald-800">Class 2 (Grade 2)</span>
+                        <p class="text-gray-700 mt-1">Posterior pharynx is partially exposed.</p>
                     </div>
                     <div class="bg-amber-50 border border-amber-200 p-3 rounded-lg">
-                        <span class="font-bold text-amber-800">Class 3</span>
-                        <p class="text-gray-700 mt-1">Posterior pharynx cannot be seen; only the base of the uvula is exposed (Grade 3 laryngeal view).</p>
+                        <span class="font-bold text-amber-800">Class 3 (Grade 3)</span>
+                        <p class="text-gray-700 mt-1">Posterior pharynx cannot be seen; only the base of the uvula is exposed.</p>
                     </div>
                     <div class="bg-rose-50 border border-rose-200 p-3 rounded-lg">
-                        <span class="font-bold text-rose-800">Class 4</span>
-                        <p class="text-gray-700 mt-1">No posterior pharyngeal structures can be seen (Grade 4 laryngeal view).</p>
+                        <span class="font-bold text-rose-800">Class 4 (Grade 4)</span>
+                        <p class="text-gray-700 mt-1">No posterior pharyngeal structures can be seen.</p>
                     </div>
                 </div>
 
@@ -211,28 +211,28 @@ protocolsDatabase[2] = [
                 <h4 class="font-bold mt-4 mb-2">COPES Mnemonic for Correct BVM Management</h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm mb-4">
                     <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
-                        <strong class="text-maroon-main">C - C-clamp (E-clamp):</strong> Hold mask with c-clamp using one or both hands.
+                        <strong class="text-[var(--maroon-main)]">C - C-clamp (E-clamp):</strong> Hold mask with c-clamp using one or both hands.
                     </div>
                     <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
-                        <strong class="text-maroon-main">O - Oropharyngeal / Nasopharyngeal:</strong> Use OPA and/or NPA(s).
+                        <strong class="text-[var(--maroon-main)]">O - Oropharyngeal / Nasopharyngeal:</strong> Use OPA and/or NPA(s).
                     </div>
                     <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
-                        <strong class="text-maroon-main">P - Position:</strong> Place in sniffing position (unless spinal injury suspected).
+                        <strong class="text-[var(--maroon-main)]">P - Position:</strong> Place in sniffing position (unless spinal injury suspected).
                     </div>
                     <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
-                        <strong class="text-maroon-main">E - Elevate:</strong> Elevate jaw to open airway.
+                        <strong class="text-[var(--maroon-main)]">E - Elevate:</strong> Elevate jaw to open airway.
                     </div>
                     <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
-                        <strong class="text-maroon-main">S - Seal:</strong> Seal mask over mouth and nose without excessive force.
+                        <strong class="text-[var(--maroon-main)]">S - Seal:</strong> Seal mask over mouth and nose without excessive force.
                     </div>
                     <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
-                        <strong class="text-maroon-main">S - Sellick Maneuver (BURP):</strong> Backward, upward, rightward pressure on cricoid cartilage in unconscious patients.
+                        <strong class="text-[var(--maroon-main)]">S - Sellick Maneuver (BURP):</strong> Backward, upward, rightward pressure on cricoid cartilage in unconscious patients.
                     </div>
                     <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
-                        <strong class="text-maroon-main">O - Oxygen:</strong> Use 100% O2 concentration (FiO2 = 1.0) and titrate.
+                        <strong class="text-[var(--maroon-main)]">O - Oxygen:</strong> Use 100% O2 concentration (FiO2 = 1.0) and titrate.
                     </div>
                     <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
-                        <strong class="text-maroon-main">S - Squeeze:</strong> Squeeze bag slowly over 1 second (6-8 mL/kg for arrest/shock; 8-10 mL/kg up to 1000 mL for non-shock).
+                        <strong class="text-[var(--maroon-main)]">S - Squeeze:</strong> Squeeze bag slowly over 1 second (6-8 mL/kg for arrest/shock; 8-10 mL/kg up to 1000 mL for non-shock).
                     </div>
                 </div>
 
@@ -260,6 +260,100 @@ protocolsDatabase[2] = [
                 <h3>7. Clinical Pearls & Cross-References</h3>
                 <ul>
                     <li><strong>Textbook Alignment Note:</strong> While AHA specifies 10 breaths/min for adults in continuous CPR arrest, 8-10 breaths/min achieves the exact same physiological target range.</li>
+                </ul>
+            </div>
+        `
+    },
+    {
+        id: "2E",
+        title: "2E: Supraglottic Airways - Adult & Pediatric",
+        content: `
+            <div class="protocol-content">
+                <h3>1. Overview & Scope</h3>
+                <ul>
+                    <li><strong>Target Population:</strong> Adult and Pediatric patients.</li>
+                    <li><strong>Entry Criteria (Indications):</strong>
+                        <ul>
+                            <li>Hypoxia/hypoventilation refractory to non-invasive airway management.</li>
+                            <li>Airway protection to reduce aspiration for sustained GCS &lt; 8.</li>
+                            <li>Three unsuccessful oral and/or nasal intubation attempts.</li>
+                            <li><strong>Special Note:</strong> It is not necessary to attempt intubation first if a difficult airway is anticipated/visualized. Supraglottic airways may be used as a first-line airway.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Exclusion Criteria (Contraindications):</strong>
+                        <ul>
+                            <li>Ability to maintain oxygenation/ventilation by less invasive methods (e.g., BVM).</li>
+                            <li>Intact gag reflex.</li>
+                            <li>Known esophageal disease.</li>
+                            <li>Ingestion of caustic substance or extensive airway burns.</li>
+                            <li>Tracheotomy or laryngectomy.</li>
+                            <li>Suspected Foreign Body Airway Obstruction.</li>
+                            <li><strong>Relative Contraindication:</strong> Patient size outside manufacturer-recommended range (may be utilized if the fit allows appropriate oxygenation/ventilation).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Treatment Priorities:</strong> Establish secure airway. Do not use supraglottic airways when other methods work, due to concerns regarding reduction in cerebral arterial flow and impedance of cerebral venous return from cuff pressure effects.</li>
+                </ul>
+
+                <h3>2. General Supportive & Initial Assessment</h3>
+                <ul>
+                    <li><strong>Anatomy & Design:</strong> The King LT-D/LTS-D airway has two cuffs inflating from one port. The smaller distal cuff isolates the laryngopharynx from the esophagus. The larger proximal cuff isolates the laryngopharynx from the oropharynx and nasopharynx.</li>
+                    <li><strong>Removal of the Airway:</strong>
+                        <ul>
+                            <li>Suction MUST always be available during removal.</li>
+                            <li>Anticipate vomiting; position patient in lateral recumbent position unless contraindicated.</li>
+                            <li>A suction catheter up to 18 Fr can be inserted through the gastric access lumen of the King LTS-D.</li>
+                            <li>Completely deflate cuffs prior to removal.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>3. Assessment & Diagnostic Tables</h3>
+                <h4 class="font-bold mt-4 mb-2">Supraglottic Sizing Guide (King LT-D/LTS-D)</h4>
+                <div class="overflow-x-auto mb-4">
+                    <table class="protocol-table w-full text-sm text-left">
+                        <thead>
+                            <tr>
+                                <th>Patient Size</th>
+                                <th>Airway Size</th>
+                                <th>Connector Color</th>
+                                <th>Typical Cuff Inflation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>35-45 in height (12-25 kg)</td><td>Size 2</td><td>Green</td><td>25-35 mL</td></tr>
+                            <tr><td>41-51 in height (25-35 kg)</td><td>Size 2.5</td><td>Orange</td><td>30-40 mL</td></tr>
+                            <tr><td>4 ft - 5 ft height</td><td>Size 3</td><td>Yellow</td><td>45-60 mL</td></tr>
+                            <tr><td>5 ft - 6 ft height</td><td>Size 4</td><td>Red</td><td>60-80 mL</td></tr>
+                            <tr><td>6 ft + height</td><td>Size 5</td><td>Purple</td><td>70-90 mL</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>4. Treatment Steps by Scope of Practice</h3>
+                <ul>
+                    <li><strong>Airway Preparation:</strong> Test cuff inflation by injecting air, then remove all air prior to insertion. Do not introduce lubricant near ventilation portals.</li>
+                    <li><strong>Placement Verification & Documentation:</strong> Document all confirmation methods (absence of epigastric sounds, presence of lung sounds, chest rise/fall, improved oxygenation, condensation, and waveform capnography). Re-verify after any movement.</li>
+                </ul>
+
+                <h3>6. Procedural & Decision Algorithms</h3>
+                <h4 class="font-bold mt-4 mb-2">Insertion Technique (King LT-D/LTS-D)</h4>
+                <ol class="list-decimal pl-5 space-y-1.5 text-sm text-gray-700 mb-4">
+                    <li>Hold connector with dominant hand.</li>
+                    <li>Hold mouth open and apply chin lift with non-dominant hand (unless C-spine contraindicated).</li>
+                    <li>Introduce tip from a lateral right approach.</li>
+                    <li>Advance tip behind tongue base while rotating tube midline (blue orientation line faces chin).</li>
+                    <li>Advance without excessive force until connector aligns with teeth/gums.</li>
+                    <li>Inflate cuffs with supplied syringe (use minimum mL necessary to achieve seal). <strong class="text-rose-600">WARNING: Excessive inflation compromises cerebral blood flow!</strong></li>
+                    <li>Attach bag-valve.</li>
+                    <li>Gently ventilate while withdrawing tube until ventilation is easy and portals align with laryngeal inlet.</li>
+                    <li>Confirm placement via auscultation, physiologic changes, and capnography.</li>
+                    <li>If unable to place in three attempts, utilize BVM ventilation.</li>
+                </ol>
+
+                <h3>7. Clinical Pearls & Cross-References</h3>
+                <ul>
+                    <li><strong>Equipment Note:</strong> Check with local medical oversight for specific equipment protocols if not using the King LT-D.</li>
+                    <li><strong>Textbook Alignment Note:</strong> All advanced airways should ideally be monitored with continuous waveform capnography, though physiologic and auscultatory confirmation is allowed if capnography is unavailable.</li>
                 </ul>
             </div>
         `
@@ -320,6 +414,39 @@ protocolsDatabase[2] = [
                     <li><strong>Treatment Priorities:</strong> Ensure oxygenation/ventilation while facilitating intubation and preventing extubation.</li>
                 </ul>
 
+                <h3>4. Treatment Steps by Scope of Practice</h3>
+                <h4 class="font-bold mt-4 mb-2">The 7 Ps of Rapid Sequence Intubation (RSI)</h4>
+                <div class="space-y-2 mb-4 text-sm">
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <strong class="text-[var(--maroon-main)] block">1. Preparation</strong>
+                        <span class="text-gray-700">Assess airway for difficulties (LEMON criteria), assemble 3-person team, set up rescue tools, select medications.</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <strong class="text-[var(--maroon-main)] block">2. Preoxygenation</strong>
+                        <span class="text-gray-700">Administer 100% high-flow O2 for 3-5 mins to wash out nitrogen and extend safe apnea time.</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <strong class="text-[var(--maroon-main)] block">3. Pre-intubation Optimization</strong>
+                        <span class="text-gray-700">Correct physiological stressors before sedatives (administer IV fluids or vasopressors to prevent cardiovascular collapse).</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <strong class="text-[var(--maroon-main)] block">4. Paralysis with Induction</strong>
+                        <span class="text-gray-700">Simultaneously administer fast-acting sedative (ketamine/etomidate) followed immediately by neuromuscular blocker (rocuronium/succinylcholine).</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <strong class="text-[var(--maroon-main)] block">5. Positioning & Protection</strong>
+                        <span class="text-gray-700">Place in sniffing position to align airway axes for direct visualization.</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <strong class="text-[var(--maroon-main)] block">6. Placement with Proof</strong>
+                        <span class="text-gray-700">Pass ETT through vocal cords and immediately confirm tracheal placement using waveform capnography.</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <strong class="text-[var(--maroon-main)] block">7. Post-intubation Management</strong>
+                        <span class="text-gray-700">Secure tube, obtain chest X-ray for depth, and begin continuous post-intubation sedation and mechanical ventilation.</span>
+                    </div>
+                </div>
+
                 <h3>5. Medication Formulary & Dosages</h3>
                 <div class="overflow-x-auto mb-4">
                     <table class="protocol-table w-full text-sm text-left">
@@ -342,25 +469,25 @@ protocolsDatabase[2] = [
                                 <td><strong>Midazolam</strong> (Induction)</td>
                                 <td>IVP/IOP</td>
                                 <td>0.1 mg/kg (Max 5 mg)</td>
-                                <td>Repeat once if SBP &ge; 100 mmHg.</td>
+                                <td>Repeat once if SBP &gt; 100 mmHg.</td>
                             </tr>
                             <tr>
                                 <td><strong>Midazolam</strong> (Post-Sedation)</td>
                                 <td>IVP/IOP</td>
                                 <td>0.1 mg/kg (Max 5 mg)</td>
-                                <td>Repeat once if SBP &gt; 100 mmHg.</td>
+                                <td>Repeat once if SBP &ge; 100 mmHg.</td>
                             </tr>
                             <tr>
                                 <td><strong>Diazepam</strong> (Post-Sedation)</td>
                                 <td>IVP/IOP</td>
                                 <td>0.1 mg/kg (Max 5 mg)</td>
-                                <td>Repeat once if SBP &gt; 100 mmHg.</td>
+                                <td>Repeat once if SBP &ge; 100 mmHg.</td>
                             </tr>
                             <tr>
                                 <td><strong>Lorazepam</strong> (Post-Sedation)</td>
                                 <td>IVP/IOP</td>
                                 <td>0.1 mg/kg (Max 2 mg)</td>
-                                <td>Repeat once if SBP &gt; 100 mmHg.</td>
+                                <td>Repeat once if SBP &ge; 100 mmHg.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -434,11 +561,11 @@ protocolsDatabase[2] = [
                 <h4 class="font-bold mt-4 mb-2">Airway Anatomy Identification</h4>
                 <div class="space-y-2 mb-4 text-sm">
                     <div class="bg-slate-50 p-3 rounded border border-slate-200">
-                        <strong class="text-maroon-main block">Hyoid Bone</strong>
+                        <strong class="text-[var(--maroon-main)] block">Hyoid Bone</strong>
                         <span class="text-gray-700">Superior neck structure. <span class="text-rose-600 font-bold">WARNING:</span> Do NOT confuse for thyroid cartilage (lacks distinct notch).</span>
                     </div>
                     <div class="bg-slate-50 p-3 rounded border border-slate-200">
-                        <strong class="text-maroon-main block">Thyroid Cartilage</strong>
+                        <strong class="text-[var(--maroon-main)] block">Thyroid Cartilage</strong>
                         <span class="text-gray-700">Mid-neck structure containing prominent notch ("Adam's apple").</span>
                     </div>
                     <div class="bg-emerald-50 p-3 rounded border border-emerald-300">
@@ -446,7 +573,7 @@ protocolsDatabase[2] = [
                         <span class="text-emerald-800">Located directly between the thyroid and cricoid cartilages. Target for incision/puncture.</span>
                     </div>
                     <div class="bg-slate-50 p-3 rounded border border-slate-200">
-                        <strong class="text-maroon-main block">Cricoid Cartilage</strong>
+                        <strong class="text-[var(--maroon-main)] block">Cricoid Cartilage</strong>
                         <span class="text-gray-700">Inferior to the cricothyroid membrane.</span>
                     </div>
                 </div>
@@ -523,6 +650,108 @@ protocolsDatabase[2] = [
                     <li><strong>Movement Reassessment:</strong> Recheck capnography every time the patient is moved.</li>
                     <li><strong>Transfer of Care:</strong> Obtain and document capnography waveform immediately after physical transfer onto destination bed/stretcher.</li>
                 </ul>
+            </div>
+        `
+    },
+    {
+        id: "2K",
+        title: "2K: Stoma/Tracheostomy Management - Adult & Pediatric",
+        content: `
+            <div class="protocol-content">
+                <h3>1. Overview & Scope</h3>
+                <ul>
+                    <li><strong>Target Population:</strong> Adult and Pediatric patients with stomas or tracheostomies.</li>
+                    <li><strong>Entry Criteria (Indications):</strong>
+                        <ul>
+                            <li>Cardio-respiratory arrest from obstruction (e.g., thick plug, clot, kinking).</li>
+                            <li>Audible/visual signs of secretions in the tube.</li>
+                            <li>Signs of respiratory distress.</li>
+                            <li>Suspicion of a blocked/partially blocked tube.</li>
+                            <li>Inability to clear tube by coughing.</li>
+                            <li>Increased ventilation pressures (in ventilated patients).</li>
+                            <li>Patient request for suctioning.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>2. General Supportive & Initial Assessment</h3>
+                <ul>
+                    <li><strong>Assessment of Obstruction:</strong> Early signs include tachypnea, tachycardia, and desaturation. Late signs include cyanosis, bradycardia, and apnea. Do NOT wait for late signs to develop before intervening.</li>
+                    <li><strong>Complications to Monitor For:</strong> Obstruction, aspiration, bleeding, tracheal trauma, pneumothorax, subcutaneous emphysema, dislodged tube, tracheo-esophageal fistula, and infection.</li>
+                </ul>
+
+                <h3>3. Assessment & Diagnostic Tables</h3>
+                <h4 class="font-bold mt-4 mb-2">Recommended Suction Catheter Sizes</h4>
+                <div class="overflow-x-auto mb-4">
+                    <table class="protocol-table w-full text-sm text-left">
+                        <thead>
+                            <tr>
+                                <th>Tracheostomy Tube Size</th>
+                                <th>Catheter Size (Fr)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>3.0 mm</td><td>7 Fr</td></tr>
+                            <tr><td>3.5 mm / 4.0 mm</td><td>8 Fr</td></tr>
+                            <tr><td>4.5 mm / 5.0 mm</td><td>10 Fr</td></tr>
+                            <tr><td>6.0 mm</td><td>10-12 Fr</td></tr>
+                            <tr><td>7.0 mm</td><td>14 Fr</td></tr>
+                            <tr><td>7.5 mm / 8.0 mm</td><td>14-16 Fr</td></tr>
+                            <tr><td>9.0 mm / 10.0 mm</td><td>16 Fr</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>4. Treatment Steps by Scope of Practice</h3>
+                <ul>
+                    <li><strong>General Guidelines:</strong> Suctioning removes mucus and avoids blockages.</li>
+                    <li><strong>Depth Determination:</strong> Use patient's spare tube (if available) to estimate depth and avoid trauma.</li>
+                    <li><strong>Oxygenation:</strong> Oxygenate and ventilate as needed throughout.</li>
+                </ul>
+
+                <h3>5. Medication Formulary & Dosages</h3>
+                <div class="overflow-x-auto mb-4">
+                    <table class="protocol-table w-full text-sm text-left">
+                        <thead>
+                            <tr>
+                                <th>Medication</th>
+                                <th>Route</th>
+                                <th>Dose</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Normal Saline (Sterile)</td>
+                                <td>Tracheal Instillation</td>
+                                <td>1-2 mL</td>
+                                <td>Use ONLY if mucus is very thick/hard to suction. Routine use not necessary.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>6. Procedural & Decision Algorithms</h3>
+                <h4 class="font-bold mt-4 mb-2">Tracheal Suctioning Procedure</h4>
+                <ol class="list-decimal pl-5 space-y-1.5 text-sm text-gray-700 mb-4">
+                    <li>Inform the patient and maintain PPE.</li>
+                    <li>Set suction pressure: 50-100 mmHg for small children; 100-120 mmHg for adults/older children.</li>
+                    <li>Instill 1-2 mL sterile saline ONLY if needed for thick secretions.</li>
+                    <li>Insert catheter gently to estimated depth without suction.</li>
+                    <li>Apply suction (cover opening) and use circular/twirling motion while withdrawing.</li>
+                    <li>Limit duration of suctioning to 5-10 seconds to prevent oxygen loss.</li>
+                    <li>Suction saline from a container to clear catheter if needed.</li>
+                    <li>Deflate tracheostomy cuffs (if applicable) periodically to prevent secretion pooling.</li>
+                    <li>Allow 30 seconds of rest/breathing between attempts.</li>
+                </ol>
+
+                <h4 class="font-bold mt-4 mb-2">Tracheostomy Tube Tie Changes</h4>
+                <p class="text-xs text-rose-700 bg-rose-50 p-2 rounded border border-rose-200 mb-2">High risk of dislodgment. Requires two competent personnel.</p>
+                <ol class="list-decimal pl-5 space-y-1.5 text-sm text-gray-700 mb-4">
+                    <li><strong>Person One:</strong> Secure tube in place. Do not remove hand until new ties are applied.</li>
+                    <li><strong>Person Two:</strong> Change ties and attend to stoma care.</li>
+                    <li>If a tie becomes loose, re-securing it is the immediate priority.</li>
+                </ol>
             </div>
         `
     }
