@@ -1,7 +1,9 @@
 // DRUG MATH CALCULATORS (Bucket 15)
 
-// Ensure Bucket 15 exists so we can add to it safely
-window.protocolsDatabase = window.protocolsDatabase || {};
+// Global database reference fallback
+if (typeof protocolsDatabase === 'undefined') {
+    var protocolsDatabase = {};
+}
 
 // 1. Get the current date and month
 const today = new Date();
@@ -14,9 +16,12 @@ if (currentMonth >= 11 || currentMonth <= 3) {
     isLocked = true;
 }
 
+// 3. Define the protocols list for Bucket 15
+let bucket15Data = [];
+
 if (isLocked) {
     // WHAT THEY SEE DURING LOCKOUT MONTHS
-    protocolsDatabase[15] = [
+    bucket15Data = [
         {
             id: "LOCKED",
             title: "Calculators Disabled",
@@ -50,7 +55,7 @@ if (isLocked) {
     ];
 } else {
     // WHAT THEY SEE WHEN CALCULATORS ARE ACTIVE
-    protocolsDatabase[15] = [
+    bucket15Data = [
         {
             id: "15A",
             title: "Medication Bolus",
@@ -97,4 +102,10 @@ if (isLocked) {
             `
         }
     ];
+}
+
+// Assign to both global variable and window object for 100% compatibility
+protocolsDatabase[15] = bucket15Data;
+if (typeof window !== 'undefined') {
+    window.protocolsDatabase = protocolsDatabase;
 }
