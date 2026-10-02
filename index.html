@@ -361,13 +361,13 @@
             }
         }
 
-        function openCategory(category) {
+function openCategory(category) {
             currentCategory = category;
             const container = document.getElementById('protocol-list-container');
             container.innerHTML = '';
 
-            // Fetch from the external database (now loaded via the script tags)
-            const protocols = window.protocolsDatabase ? (window.protocolsDatabase[category.id] || []) : [];
+            // Fetch directly from the external database we loaded
+            const protocols = typeof protocolsDatabase !== 'undefined' ? (protocolsDatabase[category.id] || []) : [];
 
             if (protocols.length === 0) {
                 container.innerHTML = `
