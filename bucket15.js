@@ -4,10 +4,10 @@
 const today = new Date();
 const currentMonth = today.getMonth() + 1; // (1 = Jan, 12 = Dec)
 
-// 2. Lockout Logic: November (11) through May (5).
-// It will automatically open on June 1st.
+// 2. Lockout Logic: November (11) through March (3).
+// It will automatically open on April 1st.
 let isLocked = false;
-if (currentMonth >= 11 || currentMonth <= 5) {
+if (currentMonth >= 11 || currentMonth <= 3) {
     isLocked = true;
 }
 
@@ -38,7 +38,7 @@ if (isLocked) {
                     <!-- Unlock Date Badge -->
                     <div class="bg-gray-100 border border-gray-200 p-4 rounded-xl shadow-inner inline-block w-full max-w-xs">
                         <p class="font-bold text-xs text-[var(--maroon-main)] uppercase tracking-wider mb-1">Calculators Unlock On</p>
-                        <p class="text-xl font-black text-gray-800">June 1st</p>
+                        <p class="text-xl font-black text-gray-800">April 1st</p>
                     </div>
 
                 </div>
