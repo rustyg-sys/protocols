@@ -1,5 +1,8 @@
 // DRUG MATH CALCULATORS (Bucket 15)
 
+// Ensure Bucket 15 exists so we can add to it safely
+window.protocolsDatabase = window.protocolsDatabase || {};
+
 // 1. Get the current date and month
 const today = new Date();
 const currentMonth = today.getMonth() + 1; // (1 = Jan, 12 = Dec)
@@ -62,8 +65,7 @@ if (isLocked) {
                     </a>
                 </div>
             `
-        }
-        // When you add more calculators, just paste them right below here!
+        },
         {
             id: "15B",
             title: "IV Drip Rate",
@@ -78,8 +80,8 @@ if (isLocked) {
                     </a>
                 </div>
             `
-        }
-    {
+        },
+        {
             id: "15C",
             title: "Rule of Nines",
             content: `
