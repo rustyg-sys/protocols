@@ -3,555 +3,648 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMS Protocol App</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>GCTC EMS Protocols</title>
     
-    <!-- Self-Contained Fallback & Tile Layout CSS -->
-    <style>
-        :root {
-            --maroon-main: #800000;
-            --maroon-dark: #600000;
-            --maroon-light: #fff5f5;
-            --bg-gray: #f8fafc;
-        }
+    <!-- Mobile App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GCTC EMS">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon.png">
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Maroon & Grey Color Palette */
+        :root {
+            --maroon-dark: #630015;
+            --maroon-main: #800020;
+            --maroon-light: #a31535;
+            --grey-dark: #4b5563;
+            --grey-main: #9ca3af;
+            --grey-light: #f3f4f6;
+        }
+        
         body {
-            background-color: var(--bg-gray);
+            background-color: var(--grey-light);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            color: #1e293b;
+            overflow-x: hidden;
         }
 
-        /* 2-Column Responsive Dashboard Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.85rem;
-            padding: 0.25rem;
-        }
-
-        @media (min-width: 640px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-            }
-        }
-
-        /* Graphic Card Tile Styling */
-        .bucket-tile {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.85rem;
-            padding: 0.85rem 0.75rem;
+        /* Splash Screen Styles */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.2s ease-in-out;
-            cursor: pointer;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-            border-top: 4px solid var(--maroon-main);
-            width: 100%;
-            min-height: 95px;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        .bucket-tile:active {
-            transform: scale(0.97);
-        }
-
-        .bucket-tile:hover {
-            box-shadow: 0 6px 16px rgba(128, 0, 0, 0.12);
-            border-color: #cbd5e1;
-            border-top-color: var(--maroon-main);
-        }
-
-        /* Icon Container */
-        .tile-icon-bg {
-            width: 36px;
-            height: 36px;
-            border-radius: 0.6rem;
-            background-color: var(--maroon-light);
-            color: var(--maroon-main);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            margin-bottom: 0.6rem;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .splash-logo {
+            width: 70%;
+            max-width: 350px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite ease-in-out;
         }
 
-        /* Number Badge */
-        .tile-badge {
-            position: absolute;
-            top: 0.6rem;
-            right: 0.6rem;
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: #94a3b8;
-            background: #f1f5f9;
-            padding: 0.15rem 0.4rem;
-            border-radius: 0.35rem;
+        .loading-bar-container {
+            width: 60%;
+            max-width: 250px;
+            height: 6px;
+            background-color: var(--grey-light);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--grey-main);
         }
 
-        .bucket-tile:hover .tile-badge {
+        .loading-bar {
+            height: 100%;
+            width: 0%;
             background-color: var(--maroon-main);
-            color: #ffffff;
+            animation: load 2s forwards ease-in-out;
         }
 
-        /* Table & Content Typography Styles */
-        .protocol-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-        .protocol-table th, .protocol-table td {
-            border: 1px solid #e2e8f0;
-            padding: 0.5rem 0.75rem;
-        }
-        .protocol-table th {
-            background-color: #f8fafc;
-            color: #1e293b;
-            font-weight: 600;
-        }
-
-        .protocol-content h3 {
-            font-weight: 700;
-            font-size: 1.125rem;
+        .loading-text {
             color: var(--maroon-main);
-            margin-top: 1.25rem;
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+        }
+
+        /* App Styles */
+        .header-bar {
+            background-color: var(--maroon-main);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .top-logo-container {
+            background-color: white;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 3px solid var(--maroon-main);
+        }
+
+        .top-logo {
+            max-height: 70px;
+            margin: 0 auto;
+        }
+
+        .bucket-btn {
+            background-color: white;
+            border-left: 5px solid var(--maroon-main);
+            color: var(--grey-dark);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .bucket-btn:active {
+            transform: scale(0.98);
+            background-color: var(--grey-light);
+        }
+
+        .bucket-icon {
+            color: var(--maroon-main);
+        }
+
+        .protocol-item {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .protocol-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Formatted Content Styles inside Protocols */
+        .protocol-content h3 {
+            color: var(--maroon-main);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 1rem;
             margin-bottom: 0.5rem;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid var(--grey-main);
             padding-bottom: 0.25rem;
         }
-        .protocol-content h4 {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #334155;
-            margin-top: 1rem;
-            margin-bottom: 0.25rem;
+        .protocol-content ul, .protocol-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        .protocol-content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
         }
         .protocol-content ul {
             list-style-type: disc;
-            padding-left: 1.25rem;
+        }
+        .protocol-content p {
             margin-bottom: 0.75rem;
         }
-        .protocol-content ul ul {
-            list-style-type: circle;
-            padding-left: 1.25rem;
-            margin-top: 0.25rem;
-            margin-bottom: 0.25rem;
+        .protocol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
         }
-        .protocol-content li {
-            margin-bottom: 0.35rem;
+        .protocol-table th, .protocol-table td {
+            border: 1px solid var(--grey-main);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .protocol-table th {
+            background-color: var(--grey-light);
+            font-weight: bold;
+        }
+        .highlight-box {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-    <!-- Header Bar -->
-    <header class="bg-[#800000] text-white sticky top-0 z-50 shadow-md">
-        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <button id="back-btn" onclick="goBack()" class="hidden bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded text-sm font-semibold transition">
-                    &larr; Back
-                </button>
-                <h1 id="app-header-title" class="text-lg font-bold tracking-wide">EMS PROTOCOLS</h1>
-            </div>
-            <button onclick="showScreen('home')" class="text-xs bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded transition">
-                Home
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <img src="GCTC coin 9.png" alt="Paramedic Coin Logo" class="splash-logo" onerror="this.src='https://via.placeholder.com/350?text=Logo+Missing'">
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-text">LOADING PROTOCOLS...</div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app-container" style="display: none; opacity: 0; transition: opacity 0.5s ease-in;">
+        
+        <!-- School Logo Header -->
+        <div class="top-logo-container">
+            <img src="GCTCLogo_4color2 Transperant smaller.png" alt="GCTC Logo" class="top-logo" onerror="this.src='https://via.placeholder.com/300x70?text=GCTC+Logo'">
+        </div>
+
+        <!-- Navigation Header -->
+        <header class="header-bar p-3 sticky top-0 z-50 flex items-center justify-between">
+            <button id="back-btn" class="text-white hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20">
+                <i class="fa-solid fa-arrow-left text-xl"></i>
             </button>
-        </div>
-    </header>
+            <h1 id="screen-title" class="text-lg font-bold flex-1 text-center truncate px-2">Categories</h1>
+            <button id="home-btn" class="text-white hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20">
+                <i class="fa-solid fa-house text-xl"></i>
+            </button>
+            <div id="header-spacer" class="w-10"></div>
+        </header>
 
-    <!-- Main Container -->
-    <main class="flex-1 max-w-3xl w-full mx-auto p-3 sm:p-4">
-
-        <!-- SCREEN 1: GRAPHIC BUCKET TILES (HOME) -->
-        <div id="screen-home" class="space-y-3">
-            <div class="bg-white p-3.5 sm:p-5 rounded-xl shadow-sm border border-gray-200">
-                <div class="flex items-center justify-between mb-4 px-1">
-                    <h2 class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">Protocol Categories</h2>
-                    <span class="text-xs bg-red-50 text-[#800000] font-bold px-2 py-0.5 rounded-full border border-red-100">18 Buckets</span>
-                </div>
-                
-                <div class="dashboard-grid">
-                    
-                    <!-- 1. ASSESSMENT -->
-                    <button onclick="openBucket(1)" class="bucket-tile">
-                        <span class="tile-badge">#01</span>
-                        <div class="tile-icon-bg">
-                            <!-- Clipboard / Assessment SVG -->
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 01</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">ASSESSMENT</span>
-                        </div>
-                    </button>
-
-                    <!-- 2. AIRWAY -->
-                    <button onclick="openBucket(2)" class="bucket-tile">
-                        <span class="tile-badge">#02</span>
-                        <div class="tile-icon-bg">
-                            <!-- Airway / Mask SVG -->
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 02</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">AIRWAY</span>
-                        </div>
-                    </button>
-
-                    <!-- 3. BUCKET 3 -->
-                    <button onclick="openBucket(3)" class="bucket-tile">
-                        <span class="tile-badge">#03</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 03</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 3</span>
-                        </div>
-                    </button>
-
-                    <!-- 4. BUCKET 4 -->
-                    <button onclick="openBucket(4)" class="bucket-tile">
-                        <span class="tile-badge">#04</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 04</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 4</span>
-                        </div>
-                    </button>
-
-                    <!-- 5. BUCKET 5 -->
-                    <button onclick="openBucket(5)" class="bucket-tile">
-                        <span class="tile-badge">#05</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 05</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 5</span>
-                        </div>
-                    </button>
-
-                    <!-- 6. BUCKET 6 -->
-                    <button onclick="openBucket(6)" class="bucket-tile">
-                        <span class="tile-badge">#06</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 06</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 6</span>
-                        </div>
-                    </button>
-
-                    <!-- 7. BUCKET 7 -->
-                    <button onclick="openBucket(7)" class="bucket-tile">
-                        <span class="tile-badge">#07</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 07</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 7</span>
-                        </div>
-                    </button>
-
-                    <!-- 8. BUCKET 8 -->
-                    <button onclick="openBucket(8)" class="bucket-tile">
-                        <span class="tile-badge">#08</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 08</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 8</span>
-                        </div>
-                    </button>
-
-                    <!-- 9. BUCKET 9 -->
-                    <button onclick="openBucket(9)" class="bucket-tile">
-                        <span class="tile-badge">#09</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 09</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 9</span>
-                        </div>
-                    </button>
-
-                    <!-- 10. BUCKET 10 -->
-                    <button onclick="openBucket(10)" class="bucket-tile">
-                        <span class="tile-badge">#10</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 10</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 10</span>
-                        </div>
-                    </button>
-
-                    <!-- 11. BUCKET 11 -->
-                    <button onclick="openBucket(11)" class="bucket-tile">
-                        <span class="tile-badge">#11</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 11</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 11</span>
-                        </div>
-                    </button>
-
-                    <!-- 12. BUCKET 12 -->
-                    <button onclick="openBucket(12)" class="bucket-tile">
-                        <span class="tile-badge">#12</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 12</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 12</span>
-                        </div>
-                    </button>
-
-                    <!-- 13. BUCKET 13 -->
-                    <button onclick="openBucket(13)" class="bucket-tile">
-                        <span class="tile-badge">#13</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 13</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 13</span>
-                        </div>
-                    </button>
-
-                    <!-- 14. BUCKET 14 -->
-                    <button onclick="openBucket(14)" class="bucket-tile">
-                        <span class="tile-badge">#14</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 14</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 14</span>
-                        </div>
-                    </button>
-
-                    <!-- 15. BUCKET 15 -->
-                    <button onclick="openBucket(15)" class="bucket-tile">
-                        <span class="tile-badge">#15</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 15</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 15</span>
-                        </div>
-                    </button>
-
-                    <!-- 16. BUCKET 16 -->
-                    <button onclick="openBucket(16)" class="bucket-tile">
-                        <span class="tile-badge">#16</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 16</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 16</span>
-                        </div>
-                    </button>
-
-                    <!-- 17. BUCKET 17 -->
-                    <button onclick="openBucket(17)" class="bucket-tile">
-                        <span class="tile-badge">#17</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 17</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 17</span>
-                        </div>
-                    </button>
-
-                    <!-- 18. BUCKET 18 -->
-                    <button onclick="openBucket(18)" class="bucket-tile">
-                        <span class="tile-badge">#18</span>
-                        <div class="tile-icon-bg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section 18</span>
-                            <span class="font-bold text-gray-800 text-xs sm:text-sm block">BUCKET 18</span>
-                        </div>
-                    </button>
-
-                </div>
+        <!-- Screen 1: Categories -->
+        <main id="categories-screen" class="p-4 pb-12">
+            <div class="grid grid-cols-2 gap-3" id="categories-grid">
+                <!-- Injected by JS -->
             </div>
-        </div>
+        </main>
 
-        <!-- SCREEN 2: PROTOCOL LIST -->
-        <div id="screen-list" class="hidden space-y-3">
-            <h2 id="bucket-title" class="text-xl font-bold text-[#800000] pb-2 border-b-2 border-gray-200">Category Protocols</h2>
-            <div id="protocol-list" class="space-y-2">
-                <!-- Dynamically populated -->
+        <!-- Screen 2: Protocol List -->
+        <main id="protocol-list-screen" class="p-4 pb-12 hidden">
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden" id="protocol-list-container">
+                <!-- Injected by JS -->
             </div>
-        </div>
+        </main>
 
-        <!-- SCREEN 3: PROTOCOL DETAIL -->
-        <div id="screen-detail" class="hidden">
-            <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-                <div id="protocol-detail-container">
-                    <!-- Dynamically populated -->
-                </div>
+        <!-- Screen 3: Protocol Detail -->
+        <main id="protocol-detail-screen" class="p-4 pb-12 hidden">
+            <div class="bg-white rounded-lg shadow-sm p-4" id="protocol-detail-container">
+                <!-- Injected by JS -->
             </div>
-        </div>
+        </main>
 
-    </main>
+    </div>
 
-    <!-- Global Database Container -->
-    <script src="protocols.js"></script>
-
-    <!-- Bucket Scripts (1 - 18) -->
-    <script src="bucket1.js"></script>
-    <script src="bucket2.js"></script>
-    <script src="bucket3.js"></script>
-    <script src="bucket4.js"></script>
-    <script src="bucket5.js"></script>
-    <script src="bucket6.js"></script>
-    <script src="bucket7.js"></script>
-    <script src="bucket8.js"></script>
-    <script src="bucket9.js"></script>
-    <script src="bucket10.js"></script>
-    <script src="bucket11.js"></script>
-    <script src="bucket12.js"></script>
-    <script src="bucket13.js"></script>
-    <script src="bucket14.js"></script>
-    <script src="bucket15.js"></script>
-    <script src="bucket16.js"></script>
-    <script src="bucket17.js"></script>
-    <script src="bucket18.js"></script>
-
-    <!-- Application UI Controller Logic -->
     <script>
-        const bucketNames = {
-            1: "1. ASSESSMENT",
-            2: "2. AIRWAY",
-            3: "3. BUCKET 3",
-            4: "4. BUCKET 4",
-            5: "5. BUCKET 5",
-            6: "6. BUCKET 6",
-            7: "7. BUCKET 7",
-            8: "8. BUCKET 8",
-            9: "9. BUCKET 9",
-            10: "10. BUCKET 10",
-            11: "11. BUCKET 11",
-            12: "12. BUCKET 12",
-            13: "13. BUCKET 13",
-            14: "14. BUCKET 14",
-            15: "15. BUCKET 15",
-            16: "16. BUCKET 16",
-            17: "17. BUCKET 17",
-            18: "18. BUCKET 18"
+        // Splash Screen Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const app = document.getElementById('app-container');
+                
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    app.style.display = 'block';
+                    void app.offsetWidth; 
+                    app.style.opacity = '1';
+                }, 500);
+            }, 2500);
+        });
+
+        // The 16 Categories
+        const categories = [
+            { id: 1, name: "ASSESSMENT", icon: "fa-clipboard-list" },
+            { id: 2, name: "AIRWAY", icon: "fa-head-side-mask" },
+            { id: 3, name: "RESPIRATORY", icon: "fa-lungs" },
+            { id: 4, name: "CARDIAC ARREST", icon: "fa-heart-crack" },
+            { id: 5, name: "CARDIAC", icon: "fa-heart-pulse" },
+            { id: 6, name: "NEURO/AMS", icon: "fa-brain" },
+            { id: 7, name: "TOXIC/POISON", icon: "fa-skull-crossbones" },
+            { id: 8, name: "MEDICAL", icon: "fa-staff-snake" },
+            { id: 9, name: "TRAUMA", icon: "fa-bandage" },
+            { id: 10, name: "ENVIRONMENTAL", icon: "fa-temperature-half" },
+            { id: 11, name: "FIRE RELATED", icon: "fa-fire" },
+            { id: 12, name: "OB/GYN", icon: "fa-person-pregnant" },
+            { id: 13, name: "OPERATIONS", icon: "fa-gears" },
+            { id: 14, name: "MASS CASUALTY", icon: "fa-users" },
+            { id: 15, name: "MEDICATIONS", icon: "fa-pills" },
+            { id: 16, name: "INFO/LINKS", icon: "fa-circle-info" }
+        ];
+
+        // Database mapping Category ID to its Protocols
+        const protocolsDatabase = {
+            1: [ // ASSESSMENT BUCKET
+                { 
+                    id: "1A", 
+                    title: "1A Medical General Assessment - Adult & Pediatric", 
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ul>
+                                    <li><strong>Assessment:</strong> Scene Safety, Protective Equipment, Primary Survey, Secondary Survey (when appropriate)</li>
+                                    <li><strong>Primary Survey Care:</strong> Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation (Dysrhythmia care? Rate control? Hypotension care?)</li>
+                                    <li><strong>Minimize scene time</strong> in critical case unless working cardiac arrest</li>
+                                    <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
+                                    <li><strong>Hospital</strong> per destination protocol</li>
+                                </ul>
+                            </div>
+                            <p>In general, approach the assessment of medical (non-trauma) patients, in A-B-C order:</p>
+                            <ul>
+                                <li><strong>Airway:</strong> Evaluate the patency and mechanics of the airway. Rapid intervention may be required during the assessment phase if airway patency and protection is compromised.</li>
+                                <li><strong>Breathing:</strong> Expose the chest as required to accurately assess mechanics of respiration. Note rate, depth, and pattern. Auscultate breath sounds bilaterally. Liberally obtain pulse oximetry and waveform capnography (**Mandatory use if the patient is intubated).</li>
+                                <li><strong>Circulation:</strong> Assess level of consciousness and mental status first. Next assess location, rate, and character of pulse. Check a blood pressure (preferably manually first). Apply cardiac monitor liberally.</li>
+                                <li><strong>Cardiac Arrest</strong> is an exception to the above order. Aggressively initiate chest compressions and search for shockable rhythms at appropriate intervals.</li>
+                            </ul>
+                            
+                            <h3>Adult Glasgow Coma Scale</h3>
+                            <div class="overflow-x-auto">
+                                <table class="protocol-table">
+                                    <tr><th>Eyes Open</th><th>Best Motor Response</th><th>Best Verbal Response</th></tr>
+                                    <tr><td>Spontaneously (4)</td><td>Obeys verbal orders (6)</td><td>Oriented, conversant (5)</td></tr>
+                                    <tr><td>To command (3)</td><td>Localizes painful stimuli (5)</td><td>Disoriented, conversant (4)</td></tr>
+                                    <tr><td>To pain (2)</td><td>Withdraws (4)</td><td>Inappropriate words (3)</td></tr>
+                                    <tr><td>No response (1)</td><td>Painful stimulus, flexion (3)<br>Painful stimulus, extension (2)<br>No response (1)</td><td>Inappropriate sounds (2)<br>No response (1)</td></tr>
+                                </table>
+                            </div>
+                            <p class="text-sm"><em>Maximum 15 points.</em></p>
+
+                            <p>After addressing the A-B-C order in most medical patients, minimize scene time and initiate timely transport for time-sensitive medical conditions.</p>
+                            <p>Reassess patients frequently, typically at least every 10 minutes, and more often if critical illness is discovered (every 5 minutes for unstable patients).</p>
+
+                            <h3>Pediatric Assessment Comments</h3>
+                            <p>1. Pediatric respiratory distress may look just like adult respiratory distress, presenting with: slowing respirations, cyanosis, accessory muscle use, paleness, nasal flaring, lethargy/listlessness, retractions, irritability, tachypnea, stridor, mottling, grunting.</p>
+                            
+                            <p>2. Vital signs vary with age. In general, the younger the patient, the faster the respiratory rate, the faster the heart rate, and the lower the blood pressure:</p>
+                            <div class="overflow-x-auto">
+                                <table class="protocol-table">
+                                    <tr><th>AGE</th><th>HEART RATE (BPM)</th><th>RESP. RATE (BPM)</th><th>SYSTOLIC BP (mmHg)</th></tr>
+                                    <tr><td>Premature</td><td>100-190</td><td>40-60</td><td>-</td></tr>
+                                    <tr><td>Neonate</td><td>90-190</td><td>30-60</td><td>50-70</td></tr>
+                                    <tr><td>6 months</td><td>80-180</td><td>25-40</td><td>60-110</td></tr>
+                                    <tr><td>1 year</td><td>80-150</td><td>20-40</td><td>70-110</td></tr>
+                                    <tr><td>3-4 years</td><td>80-140</td><td>20-30</td><td>80-115</td></tr>
+                                    <tr><td>5-6 years</td><td>70-120</td><td>20-25</td><td>80-115</td></tr>
+                                    <tr><td>7-8 years</td><td>70-110</td><td>20-25</td><td>85-120</td></tr>
+                                    <tr><td>11-12 years</td><td>60-110</td><td>15-20</td><td>95-135</td></tr>
+                                </table>
+                            </div>
+                            <ul class="text-sm">
+                                <li>Average normal systolic BP estimated by: 80 + (2 x age in years).</li>
+                                <li>Lower limits of normal systolic BP estimated by: 70 + (2 x age in years).</li>
+                            </ul>
+
+                            <h3>Pediatric Glasgow Coma Scale Scores</h3>
+                            <div class="overflow-x-auto">
+                                <table class="protocol-table">
+                                    <tr><th>Points</th><th>Best eye</th><th>Best verbal</th><th>Best Motor</th></tr>
+                                    <tr><td>6</td><td></td><td></td><td>obeys</td></tr>
+                                    <tr><td>5</td><td></td><td>smiles, oriented to sound, follows objects, interacts</td><td>localizes pain</td></tr>
+                                    <tr><td>4</td><td>spontaneous</td><td>crying consolable / Interaction inappropriate</td><td>withdraws to pain</td></tr>
+                                    <tr><td>3</td><td>to speech</td><td>inconsistently consolable / moaning</td><td>flexion (decorticate)</td></tr>
+                                    <tr><td>2</td><td>to pain</td><td>inconsolable / restless</td><td>extensor (decerebrate)</td></tr>
+                                    <tr><td>1</td><td>none</td><td>none</td><td>none</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    id: "1B", 
+                    title: "1B Trauma General Assessment - Adult & Pediatric", 
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ul>
+                                    <li><strong>Assessment:</strong> Scene Safety, Protective Equipment, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey</li>
+                                    <li><strong>Primary Survey Care:</strong> Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax</li>
+                                    <li><strong>Minimize scene time</strong> in critical case</li>
+                                    <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
+                                    <li><strong>Hospital</strong> per destination protocol</li>
+                                </ul>
+                            </div>
+                            <p>Before entering any trauma scene, ensure your personal safety. Do not attempt patient contact until hazards can be appropriately mitigated.</p>
+                            
+                            <h3>The Primary Survey</h3>
+                            <p>Designed to rapidly identify life-threatening injuries. Should be completed within 2 minutes of patient contact. ONLY INTERRUPTED FOR LIFE-THREATENING ARTERIAL BLEEDING, AIRWAY OBSTRUCTION, OR RESPIRATORY/CARDIAC ARREST.</p>
+                            <ul>
+                                <li>Manually stabilize cervical spine while assessing airway and level of consciousness.</li>
+                                <li>Evaluate breathing - present? rapid? normal? slow? shallow?</li>
+                                <li>Evaluate circulation - carotid and radial pulses? Control external hemorrhage.</li>
+                                <li>Exam the head for DCAP-BLS (deformity, contusions, abrasions, penetrations, burns, lacerations, swelling).</li>
+                                <li>Exam the neck for DCAP-BLS, or subcutaneous emphysema.</li>
+                                <li>Exam the chest for DCAP-BLS, or paradoxical movement.</li>
+                                <li>Auscultate the chest for breath sounds in mid-axilla bilaterally - present? equal?</li>
+                                <li>Exam the abdomen and pelvis for DCAP-BLS.</li>
+                                <li>Exam the extremities for DCAP-BLS, and pulse, movement, sensation.</li>
+                            </ul>
+
+                            <div class="bg-red-100 border-l-4 border-red-500 p-4 my-4 rounded">
+                                <p class="font-bold text-red-700 m-0">LOAD & GO PATIENTS:</p>
+                                <p class="text-sm mt-1">Any trauma patient with altered level of consciousness, abnormal respiration, abnormal circulation, or signs/conditions likely to lead to shock (distended abdomen, pelvic instability, bilateral femur fractures) should be rapidly immobilized and transported after completing the primary survey.</p>
+                            </div>
+
+                            <h3>The Secondary Survey</h3>
+                            <p>Always done enroute on critical patients. If no critical conditions found, may be conducted on scene (complete within 5 minutes after primary survey).</p>
+                            <ul>
+                                <li>Obtain vital signs (pulse, respiratory rate, BP, pulse oximetry).</li>
+                                <li>Obtain history of traumatic event and pertinent medical history (allergies, medications, past illness, last oral intake).</li>
+                                <li>Head to toe exam look for "DCAP-BLS" in every body area. Calculate GCS score.</li>
+                                <li>Perform indicated bandaging and splinting.</li>
+                            </ul>
+
+                            <h3>The Reassessment Survey</h3>
+                            <p>Abbreviated exam after interventions; done at least every five minutes for critical patients.</p>
+                            <ul>
+                                <li>Repeat the primary survey.</li>
+                                <li>Repeat vital signs and GCS calculation.</li>
+                                <li>Check every intervention (proper placement of intubation? IV/IO?).</li>
+                                <li>Check results of every intervention (improved oxygenation/BP?).</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                {
+                    id: "1C",
+                    title: "1C General Supportive Care - Adult & Pediatric",
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ul>
+                                    <li><strong>Assessment:</strong> SCENE SAFETY, PROTECTIVE EQUIPMENT, ABCs unless cardiac arrest (CAB if cardiac arrest), Early vital signs, Get best history possible</li>
+                                    <li><strong>Evaluate/treat</strong> underlying medical cause per protocol(s)</li>
+                                    <li><strong>Early transport & ED notification</strong> for patients with time sensitive conditions (Resp Failure, STEMI, Stroke)</li>
+                                </ul>
+                            </div>
+
+                            <h3>Provider Level Actions</h3>
+                            <p><em>If chief complaint is medical in nature, choose protocol that best fits foremost symptoms.</em></p>
+                            <ul>
+                                <li><strong>EMD:</strong> Questions to address scene safety issues.</li>
+                                <li><strong>EMR / EMT:</strong> 
+                                    <ul class="mt-2">
+                                        <li>Airway Management / Support Oxygenation/Ventilation</li>
+                                        <li>Obtain Vital Signs</li>
+                                        <li>Apply Cardiac Monitor / Obtain 12-Lead ECG (when indicated & equipped)</li>
+                                        <li>Transmit 12-Lead ECG to receiving hospital</li>
+                                        <li>Monitor End-Tidal CO2 & Waveform Capnography (*Mandatory if pt intubated)</li>
+                                        <li>Assist Pt with Pt's own medication if directed by protocol</li>
+                                        <li>Determine blood glucose / treat hypoglycemia per protocol</li>
+                                    </ul>
+                                </li>
+                                <li><strong>EMT-I85 / AEMT:</strong>
+                                    <ul class="mt-2">
+                                        <li>Intubate if indicated</li>
+                                        <li>IV/IO access if indicated</li>
+                                        <li>Fluid bolus as directed by specific medical protocol(s)</li>
+                                        <li>Medication administration per specific medical protocol(s)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>PARAMEDIC:</strong>
+                                    <ul class="mt-2">
+                                        <li>Continuous treatment and assessment per specific medical protocol(s)</li>
+                                        <li>Interpretation of 12-Lead ECGs (when indicated & equipped)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3>Clinical Operational Notes</h3>
+                            <p>1. The practice of EMS medicine is built upon the foundation of "taking medical care to the patient". Appropriate equipment (airway kit, med/trauma kit, suction, monitor, packaging) should be brought to the patient's side to minimize critical treatment delays.</p>
+                            <p>2. Minimize active movement on the patient's part in settings of suspected myocardial ischemia, stroke, and dyspnea. Move and package with safety considerations.</p>
+                        </div>
+                    `
+                },
+                {
+                    id: "1D",
+                    title: "1D Trauma and Hypovolemic Shock Supportive Care",
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ul>
+                                    <li><strong>Assessment:</strong> SCENE SAFETY, PROTECTIVE EQUIPMENT, Primary Survey, "Trauma Alert" to ED if indicated, Secondary Survey</li>
+                                    <li><strong>Primary Survey Care:</strong> Control arterial bleeding, Open airway, Seal "sucking" chest wound(s), Needle thoracostomy for closed chest tension pneumothorax</li>
+                                    <li><strong>Minimize scene time</strong> in critical case</li>
+                                    <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Vascular access, Secondary Survey (if able), Keep patient warm/avoid hypothermia</li>
+                                    <li><strong>Hospital</strong> per destination protocol</li>
+                                </ul>
+                            </div>
+
+                            <h3>Provider Level Actions</h3>
+                            <p><em>If chief complaint is traumatic in nature, choose protocol that best fits foremost symptoms.</em></p>
+                            <ul>
+                                <li><strong>EMD:</strong> Questions to address scene safety issues.</li>
+                                <li><strong>EMR / EMT:</strong> 
+                                    <ul class="mt-2">
+                                        <li><strong>Serious Hemorrhage Control:</strong> Tourniquet if indicated, Bandage/Dressing/Direct Pressure, Pressure Dressing if indicated/equipped, Topical Hemostatic Agent if indicated/equipped</li>
+                                        <li>Airway Management & Support Oxygenation/Ventilation</li>
+                                        <li>Obtain vital signs / assess for and treat shock</li>
+                                        <li>Prevent Hypothermia</li>
+                                    </ul>
+                                </li>
+                                <li><strong>EMT-I85 / AEMT:</strong>
+                                    <ul class="mt-2">
+                                        <li>Intubate if indicated</li>
+                                        <li>IV/IO access if indicated</li>
+                                        <li>Fluid bolus as directed by specific trauma protocol(s)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>PARAMEDIC:</strong>
+                                    <ul class="mt-2">
+                                        <li>Cricothyrotomy if indicated</li>
+                                        <li>Needle thoracostomy if tension pneumothorax suspected</li>
+                                        <li>Continuous treatment and assessment per specific trauma protocol(s)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3>Clinical Operational Note</h3>
+                            <p>The practice of EMS medicine is built upon the foundation of "taking medical care to the patient". To achieve this objective, appropriate equipment (airway equipment kit, med/trauma equipment kit, suction device, patient packaging equipment) should be brought to the patient's side to minimize critical treatment delays in secondarily fetching equipment from the response apparatus.</p>
+                        </div>
+                    `
+                },
+                {
+                    id: "1E",
+                    title: "1E Neonatal Resuscitation Pediatric",
+                    content: `
+                        <div class="protocol-content">
+                            <div class="highlight-box">
+                                <h3 style="margin-top:0; border-bottom: none;">TREATMENT PRIORITIES</h3>
+                                <ul>
+                                    <li><strong>Preserve patient warmth</strong>/avoid hypothermia</li>
+                                    <li><strong>Assessment:</strong> Primary Survey, Secondary Survey (when appropriate)</li>
+                                    <li><strong>Primary Survey Care:</strong> Initiate CPR if indicated, Open airway, Support oxygenation/ventilation, Support circulation</li>
+                                    <li><strong>Minimize scene time</strong> in critical case unless working cardiac arrest</li>
+                                    <li><strong>Enroute Care:</strong> Reassess all primary care, Support oxygenation/ventilation, Secondary Survey (if able)</li>
+                                    <li><strong>Hospital</strong> per destination protocol</li>
+                                </ul>
+                            </div>
+                            
+                            <p>In general, approach the resuscitation of the newborn or infant within the first 30 days of life focusing on basic life support interventions. Invasive, advanced procedures are rarely warranted and are rarely more effective than simple, yet important basic interventions.</p>
+
+                            <ul>
+                                <li><strong>Warmth (Body Temperature Conservation):</strong> Due to high surface to body weight ratios, the neonate rapidly loses body heat which can lead to respiratory and circulatory distress. Keep the neonate warm and minimize skin exposures unless absolutely warranted.</li>
+                                <li><strong>Airway:</strong> Evaluate the patency and mechanics of the airway. Is the patient able to oxygenate and ventilate? Simple positioning intervention may be required if airway patency/protection is compromised.</li>
+                                <li><strong>Breathing:</strong> Briefly expose the chest as required to accurately assess mechanics of respiration. Note rate, depth, pattern, and effort. Auscultate breath sounds bilaterally in the axilla to avoid confusing sounds from the other side of the chest. Gentle tactile stimulation (e.g. rubbing back, flicking soles of feet) may be required early and often proves very effective. Liberally obtain pulse oximetry and waveform capnography (**Mandatory use if the patient is intubated).</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ]
+            // We will add 2, 3, 4, etc. later when you provide those PDFs!
         };
 
-        let currentScreen = 'home';
+        // DOM Elements
+        const screens = {
+            categories: document.getElementById('categories-screen'),
+            list: document.getElementById('protocol-list-screen'),
+            detail: document.getElementById('protocol-detail-screen')
+        };
+        const backBtn = document.getElementById('back-btn');
+        const homeBtn = document.getElementById('home-btn');
+        const screenTitle = document.getElementById('screen-title');
+        const headerSpacer = document.getElementById('header-spacer');
+        
+        let currentCategory = null;
 
-        function showScreen(screen) {
-            document.getElementById('screen-home').classList.add('hidden');
-            document.getElementById('screen-list').classList.add('hidden');
-            document.getElementById('screen-detail').classList.add('hidden');
-
-            document.getElementById(`screen-${screen}`).classList.remove('hidden');
-            currentScreen = screen;
-
-            const backBtn = document.getElementById('back-btn');
-            const appTitle = document.getElementById('app-header-title');
-
-            if (screen === 'home') {
-                backBtn.classList.add('hidden');
-                appTitle.innerText = "EMS PROTOCOLS";
-            } else {
-                backBtn.classList.remove('hidden');
-            }
-
-            window.scrollTo(0, 0);
+        // Initialize Categories UI
+        function initCategories() {
+            const grid = document.getElementById('categories-grid');
+            grid.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'bucket-btn w-full rounded-lg p-4 flex flex-col items-center justify-center gap-3 h-28';
+                btn.onclick = () => openCategory(cat);
+                
+                btn.innerHTML = `
+                    <i class="fa-solid ${cat.icon} text-3xl bucket-icon"></i>
+                    <span class="text-xs font-bold text-center leading-tight uppercase">${cat.name}</span>
+                `;
+                grid.appendChild(btn);
+            });
         }
 
-        function openBucket(bucketId) {
-            const protocols = protocolsDatabase[bucketId] || [];
-            const listContainer = document.getElementById('protocol-list');
-            const bucketTitleEl = document.getElementById('bucket-title');
+        // Navigation Functions
+        function showScreen(screenName, title) {
+            Object.values(screens).forEach(s => s.classList.add('hidden'));
+            screens[screenName].classList.remove('hidden');
+            
+            screenTitle.textContent = title;
+            window.scrollTo(0, 0);
 
-            bucketTitleEl.innerText = bucketNames[bucketId] || `Bucket ${bucketId}`;
-            listContainer.innerHTML = '';
+            if (screenName === 'categories') {
+                backBtn.classList.add('hidden');
+                homeBtn.classList.add('hidden');
+                headerSpacer.classList.remove('hidden');
+            } else if (screenName === 'list') {
+                backBtn.classList.remove('hidden');
+                homeBtn.classList.remove('hidden');
+                headerSpacer.classList.add('hidden');
+                backBtn.onclick = () => showScreen('categories', 'Categories');
+            } else if (screenName === 'detail') {
+                backBtn.classList.remove('hidden');
+                homeBtn.classList.remove('hidden');
+                headerSpacer.classList.add('hidden');
+                backBtn.onclick = () => showScreen('list', currentCategory.name);
+            }
+        }
+
+        function openCategory(category) {
+            currentCategory = category;
+            const container = document.getElementById('protocol-list-container');
+            container.innerHTML = '';
+
+            const protocols = protocolsDatabase[category.id] || [];
 
             if (protocols.length === 0) {
-                listContainer.innerHTML = `
-                    <div class="p-6 text-center text-gray-500 bg-white rounded-xl border border-gray-200">
-                        No protocols loaded in this bucket yet.
+                container.innerHTML = `
+                    <div class="p-8 text-center text-gray-500">
+                        <i class="fa-regular fa-folder-open text-4xl mb-3 text-gray-300"></i>
+                        <p>No protocols have been added to this category yet.</p>
                     </div>
                 `;
             } else {
-                protocols.forEach(p => {
-                    const btn = document.createElement('button');
-                    btn.className = "w-full text-left p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:border-[#800000] transition flex justify-between items-center group";
-                    btn.onclick = () => openProtocol(p);
+                protocols.forEach(protocol => {
+                    const item = document.createElement('div');
+                    item.className = 'protocol-item p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 active:bg-gray-100';
+                    item.onclick = () => openProtocol(protocol);
                     
-                    const cleanTitle = p.title.includes(': ') ? p.title.split(': ').slice(1).join(': ') : p.title;
-
-                    btn.innerHTML = `
-                        <div>
-                            <span class="font-bold text-[#800000] block text-base">${p.id}</span>
-                            <span class="text-sm text-gray-700">${cleanTitle}</span>
-                        </div>
-                        <span class="text-gray-400 group-hover:text-[#800000] font-bold">&rarr;</span>
+                    item.innerHTML = `
+                        <span class="font-semibold text-gray-800 pr-4">${protocol.title}</span>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
                     `;
-                    listContainer.appendChild(btn);
+                    container.appendChild(item);
                 });
             }
 
-            showScreen('list');
+            showScreen('list', category.name);
         }
 
         function openProtocol(protocol) {
             const container = document.getElementById('protocol-detail-container');
-            
-            // Clean citations as a failsafe
-            const keyword = "ci" + "te:";
-            const regex = new RegExp("\\[" + keyword + " [0-9, ]+\\]", "g");
-            const cleanContent = protocol.content.replace(regex, "");
-
             container.innerHTML = `
-                <h2 class="text-xl font-bold text-[#800000] mb-3 pb-2 border-b-2 border-gray-100">${protocol.title}</h2>
-                <div class="text-gray-800 leading-relaxed">
-                    ${cleanContent}
+                <h2 class="text-xl font-bold text-[var(--maroon-main)] mb-2 pb-3 border-b-2 border-gray-100">${protocol.title}</h2>
+                <div class="text-gray-700 leading-relaxed">
+                    ${protocol.content}
                 </div>
             `;
             
-            showScreen('detail');
+            showScreen('detail', protocol.id);
         }
 
-        function goBack() {
-            if (currentScreen === 'detail') {
-                showScreen('list');
-            } else if (currentScreen === 'list') {
-                showScreen('home');
-            }
-        }
+        // Setup Home Button
+        homeBtn.onclick = () => showScreen('categories', 'Categories');
+
+        // Start App
+        initCategories();
     </script>
 </body>
 </html>
