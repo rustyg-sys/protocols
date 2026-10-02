@@ -1,1 +1,1 @@
-const protocolsDatabase = {};
+var protocolsDatabase = {};
