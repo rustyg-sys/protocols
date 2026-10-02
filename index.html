@@ -10,11 +10,48 @@
         :root {
             --maroon-main: #800000;
             --maroon-dark: #600000;
+            --maroon-light: #fef2f2;
         }
 
         .bg-maroon { background-color: var(--maroon-main); }
         .text-maroon { color: var(--maroon-main); }
         .border-maroon { border-color: var(--maroon-main); }
+
+        /* Custom Dashboard Card Tile Styling */
+        .bucket-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            .bucket-grid {
+                gap: 1rem;
+            }
+        }
+
+        .bucket-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid var(--maroon-main);
+            border-radius: 0.75rem;
+            padding: 0.875rem 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+        }
+
+        .bucket-card:hover {
+            border-color: #cbd5e1;
+            border-top-color: var(--maroon-main);
+            box-shadow: 0 4px 12px rgba(128, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
 
         /* Custom styling for embedded protocol tables */
         .protocol-table {
@@ -84,102 +121,303 @@
     </header>
 
     <!-- Main Container -->
-    <main class="flex-1 max-w-3xl w-full mx-auto p-4">
+    <main class="flex-1 max-w-3xl w-full mx-auto p-3 sm:p-4">
 
         <!-- SCREEN 1: BUCKET GRID (HOME) -->
-        <div id="screen-home" class="space-y-4">
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Protocol Categories</h2>
+        <div id="screen-home" class="space-y-3">
+            <div class="bg-white p-3.5 sm:p-5 rounded-xl shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">Protocol Categories</h2>
+                    <span class="text-xs bg-red-50 text-maroon font-bold px-2 py-0.5 rounded-full border border-red-100">18 Buckets</span>
+                </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <button onclick="openBucket(1)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">1. ASSESSMENT</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
-                    </button>
-                    
-                    <button onclick="openBucket(2)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">2. AIRWAY</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
-                    </button>
-
-                    <button onclick="openBucket(3)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">3. BUCKET 3</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
-                    </button>
-
-                    <button onclick="openBucket(4)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">4. BUCKET 4</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                <div class="bucket-grid">
+                    <!-- Bucket 1 -->
+                    <button onclick="openBucket(1)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                01
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">ASSESSMENT</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(5)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">5. BUCKET 5</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 2 -->
+                    <button onclick="openBucket(2)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                02
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">AIRWAY</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(6)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">6. BUCKET 6</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 3 -->
+                    <button onclick="openBucket(3)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                03
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 3</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(7)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">7. BUCKET 7</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 4 -->
+                    <button onclick="openBucket(4)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                04
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 4</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(8)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">8. BUCKET 8</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 5 -->
+                    <button onclick="openBucket(5)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                05
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 5</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(9)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">9. BUCKET 9</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 6 -->
+                    <button onclick="openBucket(6)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                06
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 6</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(10)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">10. BUCKET 10</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 7 -->
+                    <button onclick="openBucket(7)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                07
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 7</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(11)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">11. BUCKET 11</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 8 -->
+                    <button onclick="openBucket(8)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                08
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 8</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(12)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">12. BUCKET 12</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 9 -->
+                    <button onclick="openBucket(9)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                09
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 9</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(13)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">13. BUCKET 13</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 10 -->
+                    <button onclick="openBucket(10)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                10
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 10</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(14)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">14. BUCKET 14</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 11 -->
+                    <button onclick="openBucket(11)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                11
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 11</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(15)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">15. BUCKET 15</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 12 -->
+                    <button onclick="openBucket(12)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                12
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 12</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(16)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">16. BUCKET 16</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 13 -->
+                    <button onclick="openBucket(13)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                13
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 13</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(17)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">17. BUCKET 17</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 14 -->
+                    <button onclick="openBucket(14)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                14
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 14</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
 
-                    <button onclick="openBucket(18)" class="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-maroon hover:shadow-md transition text-left flex items-center justify-between group">
-                        <span class="font-bold text-gray-800 group-hover:text-maroon">18. BUCKET 18</span>
-                        <span class="text-gray-400 group-hover:text-maroon">&rarr;</span>
+                    <!-- Bucket 15 -->
+                    <button onclick="openBucket(15)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                15
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 15</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
+                    </button>
+
+                    <!-- Bucket 16 -->
+                    <button onclick="openBucket(16)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                16
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 16</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
+                    </button>
+
+                    <!-- Bucket 17 -->
+                    <button onclick="openBucket(17)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                17
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 17</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
+                    </button>
+
+                    <!-- Bucket 18 -->
+                    <button onclick="openBucket(18)" class="bucket-card group">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <div class="w-8 h-8 rounded-lg bg-red-50 text-maroon font-extrabold flex items-center justify-center text-xs shrink-0 group-hover:bg-maroon group-hover:text-white transition-colors">
+                                18
+                            </div>
+                            <div class="truncate">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-tight">Section</span>
+                                <span class="font-bold text-gray-800 text-xs sm:text-sm group-hover:text-maroon transition-colors truncate block">BUCKET 18</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-maroon group-hover:text-white transition-all text-xs font-bold shrink-0 ml-1">
+                            &rarr;
+                        </div>
                     </button>
                 </div>
             </div>
