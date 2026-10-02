@@ -63,6 +63,21 @@ if (isLocked) {
                 </div>
             `
         }
+        {
+            id: "15B",
+            title: "IV Drip Rate",
+            content: `
+                <div class="protocol-content text-center py-8">
+                    <i class="fa-solid fa-droplet text-4xl text-[var(--maroon-main)] mb-4"></i>
+                    <h3 style="border:none; margin-top:0;">IV Drip Rate</h3>
+                    <p class="text-gray-600 mb-6">Launch the interactive IV Drip Rate tool.</p>
+                    
+                    <a href="volume.html" class="inline-block bg-[var(--maroon-main)] text-white font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-80 transition">
+                        Open Calculator
+                    </a>
+                </div>
+            `
+        }
         // When you add more calculators, just paste them right below here!
     ];
 }
