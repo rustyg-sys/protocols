@@ -267,20 +267,37 @@
 
     <!-- Main Application Script -->
     <script>
-        // Splash Screen Logic
+      // Smart Splash Screen & Hash Navigation Logic
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                const app = document.getElementById('app-container');
-                
-                splash.style.opacity = '0';
+            const splash = document.getElementById('splash-screen');
+            const app = document.getElementById('app-container');
+            
+            // Function to instantly show the app and route to the correct bucket
+            const showAppContent = () => {
+                splash.style.display = 'none';
+                app.style.display = 'block';
+                app.style.opacity = '1';
+
+                // Check if returning from a calculator directly to a bucket (e.g., #bucket15)
+                if (window.location.hash) {
+                    const bucketId = parseInt(window.location.hash.replace('#bucket', ''));
+                    const targetCat = categories.find(c => c.id === bucketId);
+                    if (targetCat) {
+                        openCategory(targetCat);
+                    }
+                }
+            };
+
+            // Check if splash screen was already shown in this browsing session
+            if (sessionStorage.getItem('splash_shown')) {
+                showAppContent();
+            } else {
+                sessionStorage.setItem('splash_shown', 'true');
                 setTimeout(() => {
-                    splash.style.display = 'none';
-                    app.style.display = 'block';
-                    void app.offsetWidth; 
-                    app.style.opacity = '1';
-                }, 500);
-            }, 2500);
+                    splash.style.opacity = '0';
+                    setTimeout(showAppContent, 500);
+                }, 2500);
+            }
         });
 
         // The 18 Categories mapped to FontAwesome icons
