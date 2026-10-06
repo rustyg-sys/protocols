@@ -10,7 +10,7 @@ const today = new Date();
 const currentMonth = today.getMonth() + 1; // (1 = Jan, 12 = Dec)
 
 // 2. Lockout Logic: November (11) through March (3).
-// It will automatically open on April 1st.
+// Automatically opens on April 1st.
 let isLocked = false;
 if (currentMonth >= 11 || currentMonth <= 3) {
     isLocked = true;
@@ -103,6 +103,21 @@ if (isLocked) {
         },
         {
             id: "15D",
+            title: "Weight-Based Drip",
+            content: `
+                <div class="protocol-content text-center py-8">
+                    <i class="fa-solid fa-weight-scale text-4xl text-[var(--maroon-main)] mb-4"></i>
+                    <h3 style="border:none; margin-top:0;">Weight-Based Drip</h3>
+                    <p class="text-gray-600 mb-6">Launch the interactive Weight-Based Drip Rate tool.</p>
+                    
+                    <a href="wbdrip.html" class="inline-block bg-[var(--maroon-main)] text-white font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-80 transition">
+                        Open Calculator
+                    </a>
+                </div>
+            `
+        },
+        {
+            id: "15E",
             title: "Rule of Nines",
             content: `
                 <div class="protocol-content text-center py-8">
@@ -119,7 +134,7 @@ if (isLocked) {
     ];
 }
 
-// Assign to both global variable and window object for 100% compatibility
+// Assign to global variable and window object
 protocolsDatabase[15] = bucket15Data;
 if (typeof window !== 'undefined') {
     window.protocolsDatabase = protocolsDatabase;
