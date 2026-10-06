@@ -378,7 +378,22 @@
             }
         }
 
-        function openCategory(category) {
+      function openCategory(category) {
+            // --- NEW REDIRECT LOGIC FOR APP-IFIED BUCKETS ---
+            // If they click Bucket 14, take them to the Meds App
+            if (category.id === 14) {
+                window.location.href = 'bucket14.html';
+                return;
+            }
+            
+            // If they click Bucket 15, route to the Drug Math hub logic 
+            // (Assuming bucket15.js handles rendering the calculator links inside the app)
+            if (category.id === 15) {
+                // If you have a separate HTML file for Bucket 15, it would be: window.location.href = 'bucket15.html'; return;
+                // Otherwise, let the normal logic below handle it if bucket15.js renders standard links to medbolus.html, etc.
+            }
+            // ------------------------------------------------
+
             currentCategory = category;
             const container = document.getElementById('protocol-list-container');
             container.innerHTML = '';
@@ -397,7 +412,15 @@
                 protocols.forEach(protocol => {
                     const item = document.createElement('div');
                     item.className = 'protocol-item p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 active:bg-gray-100';
-                    item.onclick = () => openProtocol(protocol);
+                    
+                    // NEW CHECK: If the protocol has a custom URL, redirect. Otherwise open normal protocol detail.
+                    item.onclick = () => {
+                        if(protocol.customUrl) {
+                            window.location.href = protocol.customUrl;
+                        } else {
+                            openProtocol(protocol);
+                        }
+                    };
                     
                     item.innerHTML = `
                         <span class="font-semibold text-gray-800 pr-4">${protocol.title}</span>
