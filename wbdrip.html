@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weight-Based Drip Calculator</title>
+    
+    <!-- Mobile App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --maroon-main: #800020;
+            --grey-light: #f3f4f6;
+        }
+        body {
+            background-color: var(--grey-light);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+        }
+        .header-bar {
+            background-color: var(--maroon-main);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom styles to remove the number input spinners */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        
+        .math-font {
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        /* Focus glow for inputs - Maroon */
+        .math-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.3);
+            border-color: var(--maroon-main);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header with Smart Back Button -->
+    <header class="header-bar p-3 sticky top-0 z-50 flex items-center justify-between">
+        <a href="index.html#bucket15" onclick="if(window.history.length > 1) { window.history.back(); return false; }" class="text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20 transition">
+            <i class="fa-solid fa-arrow-left text-xl"></i>
+        </a>
+        <h1 class="text-lg font-bold flex-1 text-center truncate pr-10">Weight-Based Drip</h1>
+    </header>
+
+    <!-- Calculator Main Container -->
+    <main class="flex-1 w-full mx-auto p-4 flex items-start justify-center pt-8">
+
+        <div class="bg-white shadow-xl rounded-2xl p-6 sm:p-8 max-w-5xl w-full border border-gray-200">
+            
+            <div class="mb-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 tracking-tight">Weight-Based Medication Drip Calculator</h2>
+                <p class="text-gray-500 mt-2 text-sm">Enter the values below to calculate the required drops per minute.</p>
+            </div>
+
+            <div class="flex flex-col xl:flex-row items-center justify-center overflow-x-auto py-6">
+                
+                <!-- Result Output Side -->
+                <div class="flex items-center text-xl md:text-2xl math-font text-gray-700 mb-8 xl:mb-0 xl:mr-6 whitespace-nowrap">
+                    <span>gtt/min</span>
+                    <span class="mx-3">=</span>
+                    <span id="result-display" class="font-bold text-3xl text-[var(--maroon-main)] min-w-[3rem] text-center bg-gray-50 px-3 py-1 rounded border border-gray-200 shadow-inner transition-colors">?</span>
+                </div>
+
+                <div class="flex flex-col items-center min-w-max">
+                    
+                    <!-- Numerator (Top of fraction) -->
+                    <div class="flex flex-row items-center space-x-2 sm:space-x-4 border-b-2 border-black pb-3 w-full justify-center px-4">
+                        
+                        <div class="flex flex-col items-center">
+                            <input type="number" id="dose" 
+                                   class="math-input w-24 sm:w-32 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                                   placeholder="0" step="any">
+                            <label for="dose" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider whitespace-nowrap">Dose (mcg/kg/min)</label>
+                        </div>
+
+                        <span class="text-2xl font-bold text-gray-700 math-font sm:pb-5">×</span>
+
+                        <div class="flex flex-col items-center">
+                            <input type="number" id="weight" 
+                                   class="math-input w-20 sm:w-28 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                                   placeholder="0" step="any">
+                            <label for="weight" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider whitespace-nowrap">Weight (kg)</label>
+                        </div>
+
+                        <span class="text-2xl font-bold text-gray-700 math-font sm:pb-5">×</span>
+
+                        <div class="flex flex-col items-center">
+                            <input type="number" id="drop-factor" 
+                                   class="math-input w-24 sm:w-32 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                                   placeholder="0" step="any">
+                            <label for="drop-factor" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider whitespace-nowrap">Drop Factor (gtt/mL)</label>
+                        </div>
+
+                    </div>
+
+                    <!-- Denominator (Bottom of fraction) -->
+                    <div class="flex flex-col items-center pt-3 w-full px-4">
+                        <div class="flex flex-col items-center">
+                            <input type="number" id="concentration" 
+                                   class="math-input w-36 sm:w-48 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                                   placeholder="0" step="any">
+                            <label for="concentration" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider whitespace-nowrap">Concentration (mcg/mL)</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Info / Error Message Area -->
+            <div id="message-area" class="mt-4 text-center min-h-[1.5rem] text-sm text-red-500 font-medium transition-colors"></div>
+
+        </div>
+
+    </main>
+
+    <!-- Calculator Logic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get DOM elements
+            const doseInput = document.getElementById('dose');
+            const weightInput = document.getElementById('weight');
+            const dropFactorInput = document.getElementById('drop-factor');
+            const concentrationInput = document.getElementById('concentration');
+            const resultDisplay = document.getElementById('result-display');
+            const messageArea = document.getElementById('message-area');
+
+            // Array of inputs for easy event binding
+            const inputs = [doseInput, weightInput, dropFactorInput, concentrationInput];
+
+            // Function to perform the calculation
+            function calculateDripRate() {
+                const dose = parseFloat(doseInput.value);
+                const weight = parseFloat(weightInput.value);
+                const dropFactor = parseFloat(dropFactorInput.value);
+                const concentration = parseFloat(concentrationInput.value);
+
+                // Clear previous messages
+                messageArea.textContent = "";
+                messageArea.className = "mt-4 text-center min-h-[1.5rem] text-sm text-red-500 font-medium transition-colors";
+
+                // Check if any input is empty or not a number
+                if (isNaN(dose) || isNaN(weight) || isNaN(dropFactor) || isNaN(concentration)) {
+                    resultDisplay.textContent = "?";
+                    resultDisplay.classList.add('text-[var(--maroon-main)]');
+                    resultDisplay.classList.remove('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+                    resultDisplay.classList.add('bg-gray-50', 'border-gray-200');
+                    return; // Wait for user to enter all fields
+                }
+
+                // Check for division by zero (Concentration cannot be 0)
+                if (concentration === 0) {
+                    resultDisplay.textContent = "Error";
+                    messageArea.textContent = "Concentration cannot be zero.";
+                    return;
+                }
+                
+                // Prevent negative inputs
+                if (dose < 0 || weight < 0 || dropFactor < 0 || concentration < 0) {
+                    resultDisplay.textContent = "Error";
+                    messageArea.textContent = "Values cannot be negative.";
+                    return;
+                }
+
+                // Perform calculation: (Dose * Weight * Drop Factor) / Concentration
+                const dripRate = (dose * weight * dropFactor) / concentration;
+
+                // Format the output (Round to nearest whole number for drops)
+                const formattedRate = Math.round(dripRate);
+
+                // Update UI
+                resultDisplay.textContent = formattedRate;
+                
+                // Add success color to result
+                resultDisplay.classList.remove('text-[var(--maroon-main)]', 'bg-gray-50', 'border-gray-200');
+                resultDisplay.classList.add('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+                
+                messageArea.className = "mt-4 text-center min-h-[1.5rem] text-sm text-emerald-600 font-bold tracking-wide transition-colors";
+                messageArea.textContent = `Set rate to ${formattedRate} drops per minute.`;
+            }
+
+            // Attach input event listeners to all fields to calculate in real-time
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateDripRate);
+            });
+        });
+    </script>
+</body>
+</html>
