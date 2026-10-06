@@ -215,3 +215,130 @@ protocolsDatabase[16] = [
                         <option value="2">2 mL (Thermal, Adult)</option>
                         <option value="3">3 mL (Pediatric)</option>
                         <option value="4">4 mL (Electrical/Severe)</option>
+                    </select>
+                </div>
+                
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-200 shadow-sm mt-4 space-y-4">
+                    <div class="flex justify-between items-center border-b border-orange-200 pb-3">
+                        <h3 class="text-xs font-bold text-orange-800 uppercase tracking-wider">Total 24h Fluids</h3>
+                        <div class="text-2xl font-bold text-gray-800"><span id="burn_24h">0</span> <span class="text-xs font-normal text-gray-500">mL</span></div>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-orange-200 pb-3">
+                        <h3 class="text-xs font-bold text-orange-800 uppercase tracking-wider">1st 8h Total</h3>
+                        <div class="text-2xl font-bold text-gray-800"><span id="burn_8h_tot">0</span> <span class="text-xs font-normal text-gray-500">mL</span></div>
+                    </div>
+                    <div class="flex justify-between items-center pt-1">
+                        <h3 class="text-xs font-bold text-rose-600 uppercase tracking-wider">1st 8h Drip Rate</h3>
+                        <div class="text-2xl font-bold text-rose-600"><span id="burn_8h_rate">0</span> <span class="text-xs font-normal text-rose-400">mL/hr</span></div>
+                    </div>
+                </div>
+            </div>
+        `
+    },
+    {
+        id: "calc_map",
+        title: "Mean Arterial Pressure (MAP)",
+        content: `
+            <p class="text-gray-500 mb-6 text-sm">Calculates the average pressure in a patient's arteries during one cardiac cycle.</p>
+            <div class="space-y-6 pb-8">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Systolic (mmHg)</label>
+                        <input type="number" id="map_sbp" oninput="calcMAP()" class="w-full text-xl p-4 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#800020] outline-none" placeholder="120">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Diastolic (mmHg)</label>
+                        <input type="number" id="map_dbp" oninput="calcMAP()" class="w-full text-xl p-4 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#800020] outline-none" placeholder="80">
+                    </div>
+                </div>
+                
+                <div class="bg-[#fdf2f4] p-6 rounded-xl border border-[#a31535] flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-[#800020] uppercase tracking-wider mb-1">Calculated MAP</h3>
+                        <p class="text-xs text-[#a31535]">(SBP + 2DBP) ÷ 3</p>
+                    </div>
+                    <div class="text-4xl font-bold text-gray-800"><span id="map_out">0</span> <span class="text-base text-gray-500 font-normal">mmHg</span></div>
+                </div>
+            </div>
+        `
+    },
+    {
+        id: "calc_mv",
+        title: "Minute Volume",
+        content: `
+            <p class="text-gray-500 mb-6 text-sm">Calculates the volume of gas inhaled or exhaled from a person's lungs per minute.</p>
+            <div class="space-y-6 pb-8">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Tidal Volume (mL)</label>
+                        <input type="number" id="mv_tv" oninput="calcMV()" class="w-full text-xl p-4 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sky-600 outline-none" placeholder="500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Resp. Rate (per min)</label>
+                        <input type="number" id="mv_rr" oninput="calcMV()" class="w-full text-xl p-4 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sky-600 outline-none" placeholder="12">
+                    </div>
+                </div>
+                
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200">
+                    <h3 class="text-xs font-bold text-sky-800 uppercase tracking-wider mb-4 border-b border-sky-200 pb-2">Minute Volume (TV × RR)</h3>
+                    <div class="flex justify-between items-center">
+                        <div class="text-2xl font-bold text-gray-800"><span id="mv_out_ml">0</span> <span class="text-sm text-gray-500 font-normal">mL/min</span></div>
+                        <div class="text-3xl font-bold text-sky-700 border-l-2 border-sky-200 pl-4"><span id="mv_out_l">0.00</span> <span class="text-sm text-sky-600 font-normal">L/min</span></div>
+                    </div>
+                </div>
+            </div>
+        `
+    },
+    {
+        id: "calc_ke",
+        title: "Kinetic Energy",
+        content: `
+            <p class="text-gray-500 mb-6 text-sm">Calculates relative kinetic energy units dissipated during rapid deceleration (Trauma).</p>
+            <div class="space-y-6 pb-8">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Mass/Weight (lbs)</label>
+                        <input type="number" id="ke_mass" oninput="calcKE()" class="w-full text-xl p-4 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none" placeholder="150">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Velocity (mph)</label>
+                        <input type="number" id="ke_vel" oninput="calcKE()" class="w-full text-xl p-4 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none" placeholder="40">
+                    </div>
+                </div>
+                
+                <div class="bg-amber-50 p-6 rounded-xl border border-amber-200 text-center">
+                    <h3 class="text-xs font-bold text-amber-800 uppercase tracking-wider mb-2">Kinetic Energy Units</h3>
+                    <div class="text-5xl font-bold text-amber-600"><span id="ke_out">0</span></div>
+                    <p class="text-[10px] text-amber-600 mt-2">Force = ½ Mass × Velocity²</p>
+                </div>
+            </div>
+        `
+    },
+    {
+        id: "calc_ohms",
+        title: "Ohm's Law",
+        content: `
+            <p class="text-gray-500 mb-6 text-sm">Calculates electrical current passing through tissues based on voltage and resistance.</p>
+            <div class="space-y-6 pb-8">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Voltage (Volts)</label>
+                        <input type="number" id="ohm_v" oninput="calcOhm()" class="w-full text-xl p-4 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none" placeholder="120">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-2">Resistance (Ohms)</label>
+                        <input type="number" id="ohm_r" oninput="calcOhm()" class="w-full text-xl p-4 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none" placeholder="100000">
+                    </div>
+                </div>
+                
+                <div class="bg-yellow-50 p-6 rounded-xl border border-yellow-200 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-yellow-800 uppercase tracking-wider mb-1">Current (I)</h3>
+                        <p class="text-xs text-yellow-600">Amperes (I = V / R)</p>
+                    </div>
+                    <div class="text-4xl font-bold text-gray-800"><span id="ohm_out">0.000</span> <span class="text-base text-gray-500 font-normal">A</span></div>
+                </div>
+            </div>
+        `
+    }
+];
