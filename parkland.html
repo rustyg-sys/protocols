@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkland Formula Calculator</title>
+    
+    <!-- Mobile App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --maroon-main: #800020;
+            --grey-light: #f3f4f6;
+        }
+        body {
+            background-color: var(--grey-light);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+        }
+        .header-bar {
+            background-color: var(--maroon-main);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom styles to remove the number input spinners for a cleaner math look */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            font-family: 'Times New Roman', Times, serif; 
+        }
+        
+        .math-font {
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        /* Subtle focus glow for inputs - Maroon */
+        .math-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.3);
+            border-color: var(--maroon-main);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header with Smart Back Button -->
+    <header class="header-bar p-3 sticky top-0 z-50 flex items-center justify-between">
+        <a href="index.html#bucket15" onclick="if(window.history.length > 1) { window.history.back(); return false; }" class="text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20 transition">
+            <i class="fa-solid fa-arrow-left text-xl"></i>
+        </a>
+        <h1 class="text-lg font-bold flex-1 text-center truncate pr-10">Parkland Formula</h1>
+    </header>
+
+    <!-- Calculator Main Container -->
+    <main class="flex-1 w-full mx-auto p-4 flex items-start justify-center pt-8">
+
+        <div class="bg-white shadow-xl rounded-2xl p-6 sm:p-8 max-w-4xl w-full border border-gray-200">
+            
+            <div class="mb-10 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 tracking-tight">Parkland Formula Calculator</h2>
+                <p class="text-gray-500 mt-2 text-sm">Calculate fluid resuscitation for burn victims over the first 24 hours.</p>
+            </div>
+
+            <div class="flex flex-col xl:flex-row items-center justify-center overflow-x-auto py-6 border-b-2 border-gray-100 pb-10">
+                
+                <!-- Result Output Side -->
+                <div class="flex items-center text-xl md:text-2xl math-font text-gray-700 mb-8 xl:mb-0 xl:mr-6 whitespace-nowrap">
+                    <span>Total Fluid (mL)</span>
+                    <span class="mx-3">=</span>
+                    <span id="result-display" class="font-bold text-3xl text-[var(--maroon-main)] min-w-[5rem] text-center bg-gray-50 px-3 py-1 rounded border border-gray-200 shadow-inner transition-colors">?</span>
+                </div>
+
+                <!-- Mathematical Equation Side -->
+                <div class="flex flex-row items-center space-x-3 sm:space-x-5 px-4 min-w-max">
+                    
+                    <!-- Constant -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-16 sm:w-20 p-2 text-center text-2xl text-gray-800 math-font font-bold">
+                            4
+                        </div>
+                        <label class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider whitespace-nowrap">mL</label>
+                    </div>
+
+                    <span class="text-2xl font-bold text-gray-700 math-font pb-5">×</span>
+
+                    <!-- Weight Input -->
+                    <div class="flex flex-col items-center">
+                        <input type="number" id="weight" 
+                               class="math-input w-24 sm:w-32 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                               placeholder="0" step="any">
+                        <label for="weight" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider whitespace-nowrap">Weight (kg)</label>
+                    </div>
+
+                    <span class="text-2xl font-bold text-gray-700 math-font pb-5">×</span>
+
+                    <!-- TBSA Input -->
+                    <div class="flex flex-col items-center">
+                        <input type="number" id="tbsa" 
+                               class="math-input w-24 sm:w-32 p-2 border-2 border-gray-300 rounded-lg text-center text-xl text-[var(--maroon-main)] font-bold transition-all bg-gray-50" 
+                               placeholder="0" step="any" max="100">
+                        <label for="tbsa" class="text-xs text-gray-500 mt-1 font-sans font-medium uppercase tracking-wider whitespace-nowrap">TBSA (%)</label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">Administration Breakdown</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- First 8 Hours Card -->
+                    <div class="bg-red-50 rounded-xl p-5 border border-red-100 flex flex-col items-center shadow-sm">
+                        <h4 class="text-[var(--maroon-main)] font-bold mb-2">First 8 Hours</h4>
+                        <p class="text-sm text-gray-600 mb-3 text-center">Give 1/2 of total volume</p>
+                        <div class="flex flex-col items-center w-full bg-white rounded p-3 border border-red-50">
+                            <span class="text-gray-500 text-xs uppercase tracking-wider mb-1">Total Volume</span>
+                            <span id="first-8-total" class="font-bold text-xl text-gray-800">-- mL</span>
+                        </div>
+                        <div class="mt-3 flex flex-col items-center w-full bg-white rounded p-3 border border-red-50">
+                            <span class="text-gray-500 text-xs uppercase tracking-wider mb-1">Infusion Rate</span>
+                            <span id="first-8-rate" class="font-bold text-2xl text-[var(--maroon-main)]">-- mL/hr</span>
+                        </div>
+                    </div>
+
+                    <!-- Next 16 Hours Card -->
+                    <div class="bg-gray-50 rounded-xl p-5 border border-gray-200 flex flex-col items-center shadow-sm">
+                        <h4 class="text-gray-800 font-bold mb-2">Next 16 Hours</h4>
+                        <p class="text-sm text-gray-500 mb-3 text-center">Give remaining 1/2 of total volume</p>
+                        <div class="flex flex-col items-center w-full bg-white rounded p-3 border border-gray-100">
+                            <span class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total Volume</span>
+                            <span id="next-16-total" class="font-bold text-xl text-gray-700">-- mL</span>
+                        </div>
+                        <div class="mt-3 flex flex-col items-center w-full bg-white rounded p-3 border border-gray-100">
+                            <span class="text-gray-400 text-xs uppercase tracking-wider mb-1">Infusion Rate</span>
+                            <span id="next-16-rate" class="font-bold text-2xl text-gray-800">-- mL/hr</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info / Error Message Area -->
+            <div id="message-area" class="mt-6 text-center min-h-[1.5rem] text-sm text-red-500 font-medium"></div>
+
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get DOM elements
+            const weightInput = document.getElementById('weight');
+            const tbsaInput = document.getElementById('tbsa');
+            
+            const resultDisplay = document.getElementById('result-display');
+            const first8Total = document.getElementById('first-8-total');
+            const first8Rate = document.getElementById('first-8-rate');
+            const next16Total = document.getElementById('next-16-total');
+            const next16Rate = document.getElementById('next-16-rate');
+            const messageArea = document.getElementById('message-area');
+
+            const inputs = [weightInput, tbsaInput];
+
+            // Helper to format numbers nicely
+            function formatNumber(num) {
+                return parseFloat(num.toFixed(1)).toLocaleString('en-US');
+            }
+
+            function resetOutputs() {
+                resultDisplay.textContent = "?";
+                resultDisplay.classList.add('text-[var(--maroon-main)]', 'bg-gray-50', 'border-gray-200');
+                resultDisplay.classList.remove('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+                
+                first8Total.textContent = "-- mL";
+                first8Rate.textContent = "-- mL/hr";
+                next16Total.textContent = "-- mL";
+                next16Rate.textContent = "-- mL/hr";
+            }
+
+            function calculateParkland() {
+                const weight = parseFloat(weightInput.value);
+                const tbsa = parseFloat(tbsaInput.value);
+
+                // Clear messages
+                messageArea.textContent = "";
+
+                if (isNaN(weight) || isNaN(tbsa)) {
+                    resetOutputs();
+                    return;
+                }
+
+                // Validation
+                if (weight <= 0 || tbsa <= 0) {
+                    resetOutputs();
+                    messageArea.textContent = "Values must be greater than zero.";
+                    return;
+                }
+
+                if (tbsa > 100) {
+                    resetOutputs();
+                    messageArea.textContent = "TBSA cannot exceed 100%.";
+                    return;
+                }
+
+                // Core Parkland Formula Calculation
+                const totalFluid = 4 * weight * tbsa;
+                
+                // Breakdown Calculations
+                const halfFluid = totalFluid / 2;
+                const rateFirst8 = halfFluid / 8;
+                const rateNext16 = halfFluid / 16;
+
+                // Update UI - Main Equation
+                resultDisplay.textContent = formatNumber(totalFluid);
+                resultDisplay.classList.remove('text-[var(--maroon-main)]', 'bg-gray-50', 'border-gray-200');
+                resultDisplay.classList.add('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+
+                // Update UI - Breakdown Cards
+                first8Total.textContent = `${formatNumber(halfFluid)} mL`;
+                first8Rate.textContent = `${formatNumber(rateFirst8)} mL/hr`;
+                
+                next16Total.textContent = `${formatNumber(halfFluid)} mL`;
+                next16Rate.textContent = `${formatNumber(rateNext16)} mL/hr`;
+            }
+
+            // Attach event listeners
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateParkland);
+            });
+        });
+    </script>
+</body>
+</html>
