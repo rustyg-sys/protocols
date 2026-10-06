@@ -410,7 +410,7 @@
             showScreen('list', category.name);
         }
 
-        function openProtocol(protocol) {
+    function openProtocol(protocol) {
             // Fail-safe citation stripper just in case a tag sneaks through
             const cleanContent = protocol.content.replace(/\+\]/g, "");
 
@@ -422,7 +422,8 @@
                 </div>
             `;
             
-            showScreen('detail', protocol.id);
+            // FIX: Changed 'protocol.id' to 'protocol.title' so the header shows the actual name!
+            showScreen('detail', protocol.title); 
         }
 
         // Setup Home Button
