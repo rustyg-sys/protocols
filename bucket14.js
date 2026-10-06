@@ -31,4 +31,98 @@ const medicationsData = [
     { name: "Ketamine", class: "Dissociative Anesthetic", moa: "Blocks NMDA receptors, causing a trance-like state (dissociation), amnesia, and profound analgesia.", ind: "Excited delirium, pain management, RSI induction.", contra: "Conditions where significant elevation in BP is dangerous (e.g., severe hypertension).", adv: "Emergence reactions (hallucinations), increased HR/BP, hypersalivation, laryngospasm.", int: "Enhanced sedation with CNS depressants.", dose: "Pain: 0.1-0.3 mg/kg IV. RSI: 1-2 mg/kg IV. Excited Delirium: 4 mg/kg IM.", dur: "Onset: < 1 min (IV). Peak: 1 min. Duration: 10-15 mins.", spec: "Does not depress respiratory drive like opioids/benzodiazepines." },
     { name: "Labetalol", class: "Alpha and Beta Adrenergic Blocker", moa: "Lowers BP by blocking Alpha-1, Beta-1, and Beta-2 receptors.", ind: "Hypertensive emergencies, acute ischemic stroke (BP control).", contra: "Asthma/COPD, bradycardia, 2nd/3rd degree heart block, cardiogenic shock.", adv: "Hypotension, bradycardia, bronchospasm, dizziness.", int: "Calcium channel blockers can cause severe hypotension/bradycardia.", dose: "Adult: 10-20 mg IV push over 1-2 mins. May repeat or double dose every 10 mins (max 300mg).", dur: "Onset: 2-5 mins. Peak: 5-15 mins. Duration: 2-4 hours.", spec: "Monitor BP every 5 mins. Patient must be supine." },
     { name: "Lidocaine", class: "Antidysrhythmic (Class Ib), Local Anesthetic", moa: "Decreases automaticity by slowing phase 4 depolarization; raises ventricular fibrillation threshold.", ind: "V-Fib, pulseless V-Tach, stable V-Tach, IO infusion pain control.", contra: "2nd/3rd degree AV block, idioventricular rhythm, hypersensitivity to 'caines'.", adv: "Seizures (toxicity), confusion, hypotension, bradycardia.", int: "Metabolic clearance decreased in liver disease.", dose: "Arrest: 1-1.5 mg/kg IV/IO. IO Pain: 40mg slow push.", dur: "Onset: 1-5 mins. Peak: 5-10 mins. Duration: Variable (15-120 mins).", spec: "Reduce maintenance infusion dose by 50% in patients >70 yrs or with liver failure." },
-    { name: "Lorazepam", class: "Benzodiazepine (Schedule IV)", moa: "Enhances GABA, causing sedation, anxiolysis, amnesia, and anticonvulsant effects.", ind: "
+    { name: "Lorazepam", class: "Benzodiazepine (Schedule IV)", moa: "Enhances GABA, causing sedation, anxiolysis, amnesia, and anticonvulsant effects.", ind: "Status epilepticus, severe anxiety, sedation.", contra: "Hypersensitivity, acute narrow-angle glaucoma, severe hypotension.", adv: "Respiratory depression, hypotension, excessive sedation.", int: "Synergistic with CNS depressants/alcohol.", dose: "Adult: 2-4 mg IV/IM. Ped: 0.05-0.1 mg/kg IV/IM.", dur: "Onset: 2-5 mins (IV). Peak: 15-20 mins. Duration: 6-8 hours.", spec: "Longer duration of action than Diazepam. Must be diluted with equal volume of NS for IV administration in some formulations." },
+    { name: "Magnesium Sulfate", class: "Electrolyte, Antidysrhythmic, Anticonvulsant", moa: "Reduces striated muscle contractions; blocks peripheral neuromuscular transmission.", ind: "Torsades de Pointes, Eclampsia (seizures), severe asthma exacerbation.", contra: "Heart blocks, myocardial damage, renal impairment.", adv: "Hypotension, respiratory depression, flushing, loss of deep tendon reflexes.", int: "Enhances effects of CNS depressants and neuromuscular blockers.", dose: "Arrest (Torsades): 1-2g IV. Eclampsia: 4g IV over 10-20 mins. Asthma: 2g IV over 10 mins.", dur: "Onset: Immediate. Peak: Varies. Duration: 30 mins.", spec: "Calcium chloride is the antidote for magnesium toxicity (respiratory depression)." },
+    { name: "Methyl-Prednisone", class: "Corticosteroid", moa: "Potent synthetic glucocorticoid that suppresses acute and chronic inflammation.", ind: "Anaphylaxis, severe asthma, COPD exacerbation.", contra: "Systemic fungal infections, premature infants.", adv: "Hyperglycemia, fluid retention, hypertension.", int: "None significant in single emergency dose.", dose: "Adult: 125 mg IV/IM. Ped: 1-2 mg/kg IV/IM.", dur: "Onset: 1-2 hours. Peak: Varies. Duration: 8-24 hours.", spec: "Requires reconstitution. Does not act immediately; use bronchodilators/epinephrine for acute relief." },
+    { name: "Midazolam", class: "Benzodiazepine (Schedule IV)", moa: "Enhances GABA, providing sedation, amnesia, and anticonvulsant properties.", ind: "Seizures, sedation for pacing/cardioversion, RSI premedication, chemical restraint.", contra: "Hypotension, narrow-angle glaucoma, shock.", adv: "Respiratory depression, apnea, hypotension.", int: "Enhanced by CNS depressants.", dose: "Adult: 2-5 mg IV/IM/IN. Ped: 0.1-0.2 mg/kg IV/IM/IN.", dur: "Onset: 1-3 mins (IV). Peak: 5-7 mins. Duration: 20-30 mins.", spec: "Shortest acting benzo. Flumazenil is reversal agent. Excellent for IN (intranasal) administration." },
+    { name: "Morphine", class: "Opioid Analgesic (Schedule II)", moa: "Binds to opiate receptors in CNS; reduces preload and afterload by increasing venous capacitance.", ind: "Severe pain, chest pain associated with ACS, pulmonary edema.", contra: "Hypotension, head injury, respiratory depression, undiagnosed abdominal pain.", adv: "Hypotension, respiratory depression, nausea, vomiting, pinpoint pupils.", int: "CNS depressants enhance effects.", dose: "Adult: 2-10 mg slow IV. Ped: 0.1 mg/kg IV.", dur: "Onset: 1-2 mins. Peak: 20 mins. Duration: 2-4 hours.", spec: "Causes histamine release, which can drop BP. Reversible with Naloxone." },
+    { name: "Naloxone", class: "Opioid Antagonist", moa: "Competitively binds to opiate receptors, displacing opioid molecules.", ind: "Opioid overdose with respiratory depression.", contra: "Hypersensitivity.", adv: "Acute withdrawal syndrome, combativeness, vomiting, tachycardia, diaphoresis.", int: "Reverses analgesia.", dose: "Adult: 0.4-2.0 mg IV/IM/IN, titrate to adequate respiratory rate. Ped: 0.1 mg/kg.", dur: "Onset: < 2 mins (IV). Peak: Varies. Duration: 30-60 mins.", spec: "Half-life is shorter than most opioids; patient may relapse into coma and require additional doses." },
+    { name: "Nitroglycerin (Paste, Spray, Tablets)", class: "Vasodilator", moa: "Relaxes vascular smooth muscle, decreasing preload and afterload; decreases myocardial oxygen demand.", ind: "ACS chest pain, pulmonary edema/CHF.", contra: "Hypotension (SBP < 90), use of ED meds (Viagra, Cialis) in past 24-48 hrs, right ventricular infarction.", adv: "Headache, hypotension, reflex tachycardia, syncope.", int: "Severe hypotension with alcohol and phosphodiesterase inhibitors (ED meds).", dose: "Tablet/Spray: 0.4 mg SL q 5 mins (max 3 doses). Paste: 1-2 inches topically.", dur: "Onset: 1-3 mins. Peak: 5-10 mins. Duration: 20-30 mins (SL), hours (Paste).", spec: "Always check BP before and after administration. Wear gloves when applying paste." },
+    { name: "NorEpinepherine", class: "Sympathomimetic", moa: "Potent alpha agonist (vasoconstriction) and beta-1 agonist (inotropy).", ind: "Cardiogenic shock, neurogenic shock, severe septic shock (hemodynamically significant hypotension).", contra: "Hypovolemia (without volume replacement).", adv: "Hypertension, reflex bradycardia, tissue necrosis (extravasation), increased myocardial oxygen demand.", int: "Alpha/beta blockers antagonize. MAOIs potentiate.", dose: "Adult: 0.1-0.5 mcg/kg/min IV infusion, titrated to effect.", dur: "Onset: 1-3 mins. Peak: Varies. Duration: 1 min after infusion stops.", spec: "First-line pressor for sepsis. Monitor BP continuously. Ensure patent large-bore IV." },
+    { name: "Ondansetron", class: "Antiemetic", moa: "Blocks serotonin 5-HT3 receptors in the GI tract and chemoreceptor trigger zone.", ind: "Nausea and vomiting.", contra: "Hypersensitivity, prolonged QT syndrome.", adv: "Headache, dizziness, QT prolongation.", int: "Other QT-prolonging drugs (Amiodarone, Haloperidol).", dose: "Adult: 4-8 mg IV/IM/PO/ODT. Ped: 0.15 mg/kg IV.", dur: "Onset: 15-30 mins. Peak: 2 hours. Duration: 3-6 hours.", spec: "Non-sedating. Highly effective for prophylactic use before administering opioids." },
+    { name: "Oxygen", class: "Naturally occurring atmospheric gas", moa: "Reverses hypoxemia.", ind: "Hypoxia, suspected hypoxia, respiratory distress, shock, trauma, CO poisoning.", contra: "None in emergency setting. Use caution in COPD (titrate to SpO2 88-92%).", adv: "Dry mucous membranes, potential oxygen toxicity with prolonged high concentrations.", int: "None.", dose: "Nasal Cannula: 1-6 L/min. NRB: 10-15 L/min. BVM: 15 L/min.", dur: "Onset: Immediate. Peak: Immediate. Duration: Depleted rapidly when removed.", spec: "Treat the patient, not the pulse oximeter. High concentrations in neonates can cause retrolental fibroplasia." },
+    { name: "Pancuronium", class: "Nondepolarizing Neuromuscular Blocker", moa: "Competitively binds to acetylcholine receptors, preventing muscle contraction (paralysis).", ind: "Maintenance of paralysis after intubation.", contra: "Inability to control airway, hypersensitivity.", adv: "Tachycardia, hypertension, prolonged paralysis, apnea.", int: "Enhanced by magnesium sulfate, general anesthetics.", dose: "Adult: 0.06-0.1 mg/kg IV.", dur: "Onset: 3-5 mins. Peak: 3-5 mins. Duration: 45-60 mins.", spec: "Long-acting paralytic. Does NOT provide sedation or analgesia; always sedate patient concurrently." },
+    { name: "Promethazine HCI", class: "Antiemetic, Phenothiazine, Antihistamine", moa: "Blocks H1 receptors and alters dopamine in the CNS; has anticholinergic properties.", ind: "Nausea, vomiting, motion sickness, potentiate effects of analgesics.", contra: "Coma, severe CNS depression, children < 2 years.", adv: "Tissue necrosis (if IV infiltrates), sedation, dystonia, QT prolongation.", int: "Potentiates CNS depressants.", dose: "Adult: 12.5-25 mg deep IM or slow IV (diluted).", dur: "Onset: 5-20 mins (IV). Peak: Varies. Duration: 4-6 hours.", spec: "High risk of tissue injury with IV administration; give deeply IM if possible or highly diluted in flowing IV line." },
+    { name: "Rocuronium", class: "Nondepolarizing Neuromuscular Blocker", moa: "Competitively binds to acetylcholine receptors, paralyzing skeletal muscle.", ind: "RSI (Rapid Sequence Intubation), maintenance of paralysis.", contra: "Inability to control airway, hypersensitivity.", adv: "Apnea, transient tachycardia.", int: "Effects enhanced by magnesium sulfate.", dose: "Adult/Ped: 1 mg/kg IV.", dur: "Onset: 1-2 mins. Peak: 1-2 mins. Duration: 30-45 mins.", spec: "Does NOT provide sedation or analgesia. Used often as an alternative to Succinylcholine when contraindicated." },
+    { name: "Sodium Bicarbonate", class: "Alkalinizing Agent", moa: "Buffers metabolic acidosis by reacting with hydrogen ions to form water and carbon dioxide.", ind: "Tricyclic antidepressant overdose, hyperkalemia, prolonged cardiac arrest (with known acidosis), crush injuries.", contra: "Alkalosis, hypocalcemia.", adv: "Metabolic alkalosis, tissue necrosis (extravasation), hypernatremia.", int: "Deactivates catecholamines (Epi/Dopamine) and precipitates with Calcium in same IV line.", dose: "Adult/Ped: 1 mEq/kg IV push. May repeat 0.5 mEq/kg q 10 mins.", dur: "Onset: Immediate. Peak: Immediate. Duration: 1-2 hours.", spec: "Ensure adequate ventilation (flush out CO2) for it to work properly." },
+    { name: "Succinylcholine", class: "Depolarizing Neuromuscular Blocker", moa: "Binds to acetylcholine receptors causing initial depolarization (fasciculations) followed by paralysis.", ind: "RSI (Rapid Sequence Intubation).", contra: "Malignant hyperthermia, hyperkalemia, burns/crush injuries > 72 hours old, neuromuscular disease (e.g., ALS).", adv: "Hyperkalemia, bradycardia, fasciculations, increased ICP/IOP.", int: "Enhances digitalis toxicity.", dose: "Adult: 1.5-2 mg/kg rapid IV. Ped: 1-2 mg/kg IV.", dur: "Onset: < 1 minute. Peak: 1 min. Duration: 5-10 mins.", spec: "Does NOT provide sedation or analgesia. Have Atropine ready for bradycardia (esp in children)." },
+    { name: "Tranexamic Acid (TXA)", class: "Antifibrinolytic", moa: "Inhibits plasminogen activation, preventing the breakdown of fibrin clots.", ind: "Severe hemorrhage (trauma) < 3 hours from injury, massive bleeding.", contra: "Injury > 3 hours old, subarachnoid hemorrhage, active intravascular clotting.", adv: "Hypotension (if pushed too fast), thromboembolic events, visual disturbances.", int: "Risk of clotting increased with estrogen/oral contraceptives.", dose: "Adult: 1g in 100mL NS infused over 10 mins. Ped: Varies by protocol (often 15 mg/kg).", dur: "Onset: Unknown. Peak: Varies. Duration: 7-8 hours.", spec: "MUST be given over 10 minutes; rapid push causes severe hypotension." },
+    { name: "Vecuronium", class: "Nondepolarizing Neuromuscular Blocker", moa: "Competitively blocks acetylcholine at the neuromuscular junction.", ind: "Maintenance of paralysis after intubation.", contra: "Inability to control airway.", adv: "Apnea, prolonged paralysis.", int: "Enhanced by magnesium sulfate.", dose: "Adult: 0.1 mg/kg IV.", dur: "Onset: 1-3 mins. Peak: 3-5 mins. Duration: 30-45 mins.", spec: "Reconstitute powder. Does NOT provide sedation or analgesia." }
+];
+
+// Map the data dynamically into your protocol HTML format
+protocolsDatabase[14] = medicationsData.map((med, index) => {
+    return {
+        id: `med_${index}`,
+        title: med.name,
+        content: `
+            <div class="mb-5">
+                <span class="font-semibold text-gray-600 uppercase tracking-wider text-xs">Class:</span>
+                <span class="bg-[#fbe5e9] text-[var(--maroon-main)] px-3 py-1 rounded-full font-semibold text-xs border border-[#a31535] ml-2">${med.class}</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-purple-500"></span> Mechanism of Action
+                        </h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">${med.moa}</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span> Indications
+                        </h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">${med.ind}</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-red-500"></span> Contraindications
+                        </h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">${med.contra}</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-yellow-500"></span> Adverse Reactions
+                        </h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">${med.adv}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full" style="background-color: var(--maroon-main)"></span> Dosage & Admin
+                        </h3>
+                        <div class="bg-gray-50 border border-gray-200 p-3 rounded-lg text-sm text-gray-800 leading-relaxed font-mono font-medium shadow-inner">${med.dose}</div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Drug Interactions
+                        </h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">${med.int}</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-teal-500"></span> Duration of Action
+                        </h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">${med.dur}</p>
+                    </div>
+
+                    <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 shadow-sm mt-4">
+                        <h3 class="text-sm font-bold text-amber-900 uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+                            Special Considerations
+                        </h3>
+                        <p class="text-amber-800 text-sm leading-relaxed">${med.spec}</p>
+                    </div>
+                </div>
+            </div>
+        `
+    };
+});
