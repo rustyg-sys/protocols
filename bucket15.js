@@ -88,6 +88,21 @@ if (isLocked) {
         },
         {
             id: "15C",
+            title: "Non-Weight-Based Drip",
+            content: `
+                <div class="protocol-content text-center py-8">
+                    <i class="fa-solid fa-clock-rotate-left text-4xl text-[var(--maroon-main)] mb-4"></i>
+                    <h3 style="border:none; margin-top:0;">Non-Weight-Based Drip</h3>
+                    <p class="text-gray-600 mb-6">Launch the interactive Non-Weight-Based Drip Rate tool.</p>
+                    
+                    <a href="nwdrip.html" class="inline-block bg-[var(--maroon-main)] text-white font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-80 transition">
+                        Open Calculator
+                    </a>
+                </div>
+            `
+        },
+        {
+            id: "15D",
             title: "Rule of Nines",
             content: `
                 <div class="protocol-content text-center py-8">
